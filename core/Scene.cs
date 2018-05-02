@@ -32,7 +32,7 @@ namespace SceneGraph.Core
             Filename = path;
             AssetRoot = string.IsNullOrWhiteSpace(assetPath)?Path.GetDirectoryName(Filename):assetPath;
 
-            Root = new GraphNode(new Element(null, base.RootNode, 0), null);
+            Root = new GraphNode(new Element(null, base.RootNode, 0), null, this);
             
             MeshHandlers = new DX11ResourceHandler<DX11IndexedGeometry>[base.Meshes.Count];
             for (int i = 0; i < base.Meshes.Count; i++)
@@ -69,8 +69,6 @@ namespace SceneGraph.Core
         public void InitGraph()
         {
             int counter = 0;
-            //Root.Element.Scene = this;
-            Root.Scene = this;
             TraverseGraph(Root, ref counter);
             Root.LastDescendantID = counter;
         }

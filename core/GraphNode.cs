@@ -7,8 +7,8 @@ namespace SceneGraph.Core
 {
     public class GraphNode
     {
-        public Scene Scene { get; internal set; }
-        public Element Element { get; private set; }
+        public Scene Scene { get; }
+        public Element Element { get; }
         public GraphNode Parent { get; private set; }
         public GraphNode[] Children { get; internal set; }
         internal int LastDescendantID { get; set; }
@@ -96,8 +96,6 @@ namespace SceneGraph.Core
             for (int i = 0; i < left.Children.Length; i++)
                 MergeTransforms(left.Children[i], right.Children[i]);
         }
-
-        
 
         public void Transform(Matrix transient)
         {
