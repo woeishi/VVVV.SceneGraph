@@ -16,6 +16,8 @@ namespace SceneGraph.Core
         public int ID => Element.ID;
         public string Name => Element.Name;
 
+        public Matrix Local { get; private set; }
+        public Matrix Accumulated { get; private set; }
         List<Transform> Transforms;
 
         //only in use when initally parsing the scene
@@ -27,9 +29,10 @@ namespace SceneGraph.Core
             Children = new GraphNode[Element.Node.Children.Count];
 
             Transforms = new List<Transform>();
-            Transforms.Add(new Transform(Element.Node.LocalTransform, Element.Node.LocalTransform, this));
+            Transforms.Add(new Transform(Element.Node.LocalTransform, this));
 
-            LocalCache = Element.Node.LocalTransform;
+            Local = Element.Node.LocalTransform;
+            Accumulated = Element.Node.RelativeTransform;
         }
 
         public static GraphNode CloneGraph(GraphNode original)
@@ -55,7 +58,8 @@ namespace SceneGraph.Core
             LastDescendantID = other.LastDescendantID;
 
             Transforms = other.Transforms;
-            LocalCache = other.LocalCache;
+            Local = other.Local;
+            Accumulated = other.Accumulated;
         }
 
         public void Fork()
@@ -79,7 +83,7 @@ namespace SceneGraph.Core
             var ri = right.Transforms.Count - 1;
             while (li>=0 && ri>=0)
             {
-                if (left.Transforms[li].Local != right.Transforms[ri].Local)
+                if (left.Transforms[li].LocalSpace != right.Transforms[ri].LocalSpace)
                     break;
                 li--;
                 ri--;
@@ -93,35 +97,26 @@ namespace SceneGraph.Core
                 MergeTransforms(left.Children[i], right.Children[i]);
         }
 
-        Matrix LocalCache = Matrix.Identity;
-        public Matrix Local
-        {
-            get { return LocalCache; }
-        }
-        public Matrix Accumulated
-        {
-            get { return Transforms[0].Accumulated; }
-            private set { Transforms[0].Accumulated = value; }
-        }
+        
 
         public void Transform(Matrix transient)
         {
             //TO-DO graph is dirty mechanism
             //LocalTransient = transient;
-            Transforms[0].Local = transient;
+            Transforms[0].LocalSpace = transient;
             UpdateTransformGraph();
         }
 
         public void UpdateTransformGraph()
         {
-            LocalCache = Transforms[0].Local;
+            Local = Transforms[0].LocalSpace;
             for (int i = 1; i < Transforms.Count; i++)
-                LocalCache *= Transforms[i].Local;
+                Local *= Transforms[i].LocalSpace;
 
             if (Parent != null)
-                Accumulated = LocalCache * Parent.Accumulated;
+                Accumulated = Local * Parent.Accumulated;
             else
-                Accumulated = LocalCache;
+                Accumulated = Local;
 
             foreach (var c in this.Children)
                 c.UpdateTransformGraph();
