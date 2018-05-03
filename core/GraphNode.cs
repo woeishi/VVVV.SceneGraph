@@ -83,7 +83,7 @@ namespace SceneGraph.Core
             var ri = right.Transforms.Count - 1;
             while (li>=0 && ri>=0)
             {
-                if (left.Transforms[li].LocalSpace != right.Transforms[ri].LocalSpace)
+                if (left.Transforms[li].Matrix != right.Transforms[ri].Matrix)
                     break;
                 li--;
                 ri--;
@@ -101,15 +101,15 @@ namespace SceneGraph.Core
         {
             //TO-DO graph is dirty mechanism
             //LocalTransient = transient;
-            Transforms[0].LocalSpace = transient;
+            Transforms[0].Matrix = transient;
             UpdateTransformGraph();
         }
 
         public void UpdateTransformGraph()
         {
-            Local = Transforms[0].LocalSpace;
+            Local = Transforms[0].Matrix;
             for (int i = 1; i < Transforms.Count; i++)
-                Local *= Transforms[i].LocalSpace;
+                Local *= Transforms[i].Matrix;
 
             if (Parent != null)
                 Accumulated = Local * Parent.Accumulated;

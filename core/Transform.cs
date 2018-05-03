@@ -5,18 +5,18 @@ namespace SceneGraph.Core
     internal class Transform
     {
         internal GraphNode Owner { get; }
-        internal Matrix LocalSpace { get; set; }
+        internal Matrix Matrix { get; set; }
 
         internal Transform(Matrix local, GraphNode creator)
         {
             Owner = creator;
-            LocalSpace = local;
+            Matrix = local;
         }
 
         internal Transform(Transform other, GraphNode creator)
         {
             Owner = creator;
-            LocalSpace = other.LocalSpace;
+            Matrix = other.Matrix;
         }
     }
 }
