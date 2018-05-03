@@ -28,13 +28,13 @@ namespace SceneGraph.Core
             Scene = scene;
             Element = element;
             Parent = parent;
-            Children = new GraphNode[Element.Node.Children.Count];
+            Children = new GraphNode[Element.ChildCount];
 
             Transforms = new List<Transform>();
-            Transforms.Add(new Transform(Element.Node.LocalTransform, this));
-            AccumulatedTransform = new Transform(Element.Node.RelativeTransform, this);
+            Transforms.Add(new Transform(Element.Local, this));
+            AccumulatedTransform = new Transform(Element.Accumulated, this);
 
-            Local = Element.Node.LocalTransform;
+            Local = Element.Local;
         }
 
         public static GraphNode CloneGraph(GraphNode original)

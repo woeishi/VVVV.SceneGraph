@@ -10,7 +10,11 @@ namespace SceneGraph.Core
     {
         internal AssimpNode Node { get; }
         public int ID { get; }
-        public string Name { get; }
+        public virtual string Name { get; internal set; }
+        public virtual int ChildCount { get; internal set; }
+
+        public virtual Matrix Local { get; internal set; }
+        public virtual Matrix Accumulated { get; internal set; }
 
         internal Element(Scene scene, AssimpNode self, int id)
         {
@@ -20,6 +24,11 @@ namespace SceneGraph.Core
             //fixes c4d -> fbx
             var bytes = Encoding.Default.GetBytes(self.Name);
             Name = Encoding.UTF8.GetString(bytes);
+
+            ChildCount = self.Children.Count;
+
+            Local = self.LocalTransform;
+            Accumulated = self.RelativeTransform;
         }
     }
 }

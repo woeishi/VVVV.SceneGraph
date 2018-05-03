@@ -11,7 +11,6 @@ namespace SceneGraph.Core
     public class MeshElement : Element
     {
         public int MeshCount => Node.MeshCount;
-        public IReadOnlyList<int> MeshIndices => Node.MeshIndices.AsReadOnly();
 
         public int[] MeshIDs { get; }
         public AssimpMesh[] Meshes { get; }
