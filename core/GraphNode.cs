@@ -16,9 +16,11 @@ namespace SceneGraph.Core
         public int ID => Element.ID;
         public string Name => Element.Name;
 
-        public Matrix Local { get; private set; }
-        public Matrix Accumulated { get; private set; }
         List<Transform> Transforms;
+        Transform AccumulatedTransform;
+        
+        public Matrix Local { get; private set; }
+        public Matrix Accumulated => AccumulatedTransform.Matrix;
 
         //only in use when initally parsing the scene
         internal GraphNode(Element element, GraphNode parent = null, Scene scene = null)
@@ -30,9 +32,9 @@ namespace SceneGraph.Core
 
             Transforms = new List<Transform>();
             Transforms.Add(new Transform(Element.Node.LocalTransform, this));
+            AccumulatedTransform = new Transform(Element.Node.RelativeTransform, this);
 
             Local = Element.Node.LocalTransform;
-            Accumulated = Element.Node.RelativeTransform;
         }
 
         public static GraphNode CloneGraph(GraphNode original)
@@ -59,7 +61,7 @@ namespace SceneGraph.Core
 
             Transforms = other.Transforms;
             Local = other.Local;
-            Accumulated = other.Accumulated;
+            AccumulatedTransform = other.AccumulatedTransform;
         }
 
         public void Fork()
@@ -68,7 +70,17 @@ namespace SceneGraph.Core
             Transforms = new List<Transform>();
             Transforms.Add(new Transform(tmp[0], this));
             Transforms.AddRange(tmp);
+            //from the fork onward all nodes have to hold their own accumulated transform
+            CloneAccumulated(this);
         }
+        void CloneAccumulated(GraphNode node)
+        {
+            var m = node.Accumulated;
+            node.AccumulatedTransform = new Transform(m, node);
+            foreach (var c in node.Children)
+                CloneAccumulated(c);
+        }
+
         public GraphNode Merge(GraphNode part)
         {
             var pointer = this.ID;
@@ -112,9 +124,9 @@ namespace SceneGraph.Core
                 Local *= Transforms[i].Matrix;
 
             if (Parent != null)
-                Accumulated = Local * Parent.Accumulated;
+                AccumulatedTransform.Matrix = Local * Parent.Accumulated;
             else
-                Accumulated = Local;
+                AccumulatedTransform.Matrix = Local;
 
             foreach (var c in this.Children)
                 c.UpdateTransformGraph();
