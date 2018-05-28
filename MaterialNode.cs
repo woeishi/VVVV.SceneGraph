@@ -143,7 +143,7 @@ namespace VVVV.SceneGraph
                     {
                         FSelected.Add(input[i]);
                         trash.RemoveAll(t => t.ID == input[i].ID);
-                        FBinSize[i] = (input[i].Element as MeshElement).MeshCount;
+                        FBinSize[i] = 1;// (input[i].Element as MeshElement).MeshCount;
                     }
                     else
                         FBinSize[i] = 0;
@@ -154,8 +154,8 @@ namespace VVVV.SceneGraph
                     FDirtyScenes.Add(t.Scene);
                 }
 
-                foreach (var n in FSelected)
-                    (n.Element as MeshElement).ReleaseTexture(FNodePath);
+                //foreach (var n in FSelected)
+                //    (n.Element as MeshElement).ReleaseTexture(FNodePath);
 
                 FMatID.SliceCount = 0;
                 FAmbient.SliceCount = 0;
@@ -169,15 +169,22 @@ namespace VVVV.SceneGraph
                     if (FSelected[i].Element is MeshElement)
                     {
                         var element = (MeshElement)FSelected[i].Element;
-                        FMatID.AddRange(element.MaterialIDs);
-                        foreach (var mat in element.Materials)
-                        {
-                            FAmbient.Add(mat.AmbientColor);
-                            FDiffuse.Add(mat.DiffuseColor);
-                            FSpecular.Add(mat.SpecularColor);
-                            FSpecPow.Add(mat.SpecularPower);
-                            FAvailableTex.Add(mat.TextureType.Select(e => e.ToString()).ToSpread());
-                        }
+                        //FMatID.AddRange(element.MaterialIDs);
+                        //foreach (var mat in element.Materials)
+                        //{
+                        //    FAmbient.Add(mat.AmbientColor);
+                        //    FDiffuse.Add(mat.DiffuseColor);
+                        //    FSpecular.Add(mat.SpecularColor);
+                        //    FSpecPow.Add(mat.SpecularPower);
+                        //    FAvailableTex.Add(mat.TextureType.Select(e => e.ToString()).ToSpread());
+                        //}
+                        FMatID.Add(element.MaterialID);
+                        FAmbient.Add(element.Material.AmbientColor);
+                        FDiffuse.Add(element.Material.DiffuseColor);
+                        FSpecular.Add(element.Material.SpecularColor);
+                        FSpecPow.Add(element.Material.SpecularPower);
+                        FAvailableTex.Add(element.Material.TextureType.Select(e => e.ToString()).ToSpread());
+
                     }
                 }
                 foreach (var s in FDirtyScenes)
@@ -195,38 +202,33 @@ namespace VVVV.SceneGraph
                 foreach (var io in FPathPins.Values)
                     io?.IOObject.ResizeAndDismiss(FAmbient.SliceCount, () => string.Empty);
 
-                int incr = 0;
+                
                 for (int i = 0; i < FSelected.SliceCount; i++)
                 {
                     if (FSelected[i].Element is MeshElement)
                     {
-                        var element = (MeshElement)FSelected[i].Element;
-                        foreach (var mat in element.Materials)
+                        var mat = (FSelected[i].Element as MeshElement).Material;
+                        foreach (var key in FPathPins.Keys)
                         {
-                            foreach (var key in FPathPins.Keys)
+                            if (FPathPins[key] != null)
                             {
-                                if (FPathPins[key] != null)
+                                bool hit = false;
+                                for (int t = 0; t < mat.TextureType.Count; t++)
                                 {
-                                    bool hit = false;
-                                    for (int t = 0; t < mat.TextureType.Count; t++)
+                                    if (mat.TextureType[t].ToString() == key)
                                     {
-                                        if (mat.TextureType[t].ToString() == key)
-                                        {
-                                            FPathPins[key].IOObject[incr] = System.IO.Path.Combine(FSelected[i].Scene.AssetRoot,mat.TexturePath[t]);
-                                            hit = true;
-                                            break;
-                                        }
+                                        FPathPins[key].IOObject[i] = System.IO.Path.Combine(FSelected[i].Scene.AssetRoot,mat.TexturePath[t]);
+                                        hit = true;
+                                        break;
                                     }
-                                    if (!hit)
-                                        FPathPins[key].IOObject[incr] = string.Empty;
                                 }
+                                if (!hit)
+                                    FPathPins[key].IOObject[i] = string.Empty;
                             }
-                            incr++;
                         }
+                        
                     }
                 }
-
-
             }
         }
 
@@ -252,27 +254,23 @@ namespace VVVV.SceneGraph
                     try
                     {
                         var me = n.Element as MeshElement;
-                        for (int m = 0; m < me.Materials.Length; m++)
+                        foreach (var key in FTexPins.Keys)
                         {
-                            foreach (var key in FTexPins.Keys)
+                            if (FTexPins[key] != null)
                             {
-                                if (FTexPins[key] != null)
+                                var slot = 1000;
+                                for (int t = 0; t < me.Material.TextureType.Count; t++)
                                 {
-                                    var slot = 1000;
-                                    for (int t = 0; t < me.Materials[m].TextureType.Count; t++)
+                                    if (me.Material.TextureType[t].ToString() == key)
                                     {
-                                        if (me.Materials[m].TextureType[t].ToString() == key)
-                                        {
-                                            slot = t;
-                                            break;
-                                        }
+                                        slot = t;
+                                        break;
                                     }
-                                    FTexPins[key].IOObject[incr][context] = me.GetTexture(context, m, slot, FNodePath);
                                 }
-                                
+                                FTexPins[key].IOObject[incr][context] = me.GetTexture(context, slot, FNodePath);
                             }
-                            incr++;
                         }
+                        incr++;
                     }
                     catch (Exception e)
                     {

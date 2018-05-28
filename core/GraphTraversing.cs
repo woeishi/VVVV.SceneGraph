@@ -22,7 +22,9 @@ namespace SceneGraph.Core
         {
             if (node != null && (limit < 0 || depth <= limit))
             {
-                if ((node.Element as MeshElement)?.MeshCount > 0)
+                //if ((node.Element as MeshElement)?.MeshCount > 0)
+                //    yield return node;
+                if (node.Element is MeshElement)
                     yield return node;
                 depth++;
                 foreach (var c in node.Children)

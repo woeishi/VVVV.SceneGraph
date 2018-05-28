@@ -75,23 +75,41 @@ namespace SceneGraph.Core
 
         void TraverseGraph(GraphNode n, ref int counter)
         {
+            int id = 0;
             for (int i = 0; i < n.Children.Length; i++)
             {
                 counter++;
                 Element element;
-                if (n.Element.Node.Children[i].MeshCount > 0)
-                    element = new MeshElement(this, n.Element.Node.Children[i], counter);
-                else
+                id = i;
+                if (n.Element is MeshContainerElement)
                 {
-                    var cam = this.Cameras.Where(c => c.Name == n.Element.Node.Children[i].Name).FirstOrDefault();
-                    if (cam != null)
-                        element = new CameraElement(this, n.Element.Node.Children[i], counter, cam);
-                    else
-                        element = new Element(this, n.Element.Node.Children[i], counter);
+
+                    var mce = n.Element as MeshContainerElement;
+                    var mpe = new MeshElement(this, n.Element.Node, counter, mce.MeshIDs[i]);
+                    n.Children[i] = new GraphNode(mpe, n, this);
+                    n.Children[i].LastDescendantID = counter;
+                    id -= mce.MeshIDs.Length;
                 }
-                n.Children[i] = new GraphNode(element, n, this);
-                TraverseGraph(n.Children[i], ref counter);
-                n.Children[i].LastDescendantID = counter;
+
+                if (id >= 0) //prepending meshes in children list
+                {
+                    if (n.Element.Node.Children[id].MeshCount > 0)
+                    {
+                        //element = new MeshElement(this, n.Element.Node.Children[i], counter);
+                        element = new MeshContainerElement(this, n.Element.Node.Children[id], counter);
+                    }
+                    else
+                    {
+                        var cam = this.Cameras.Where(c => c.Name == n.Element.Node.Children[id].Name).FirstOrDefault();
+                        if (cam != null)
+                            element = new CameraElement(this, n.Element.Node.Children[id], counter, cam);
+                        else
+                            element = new Element(this, n.Element.Node.Children[id], counter);
+                    }
+                    n.Children[i] = new GraphNode(element, n, this);
+                    TraverseGraph(n.Children[i], ref counter);
+                    n.Children[i].LastDescendantID = counter;
+                }
             }
         }
 

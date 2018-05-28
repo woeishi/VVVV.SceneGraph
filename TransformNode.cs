@@ -24,8 +24,6 @@ namespace VVVV.SceneGraph
         [Input("GraphNodeInternal", Visibility = PinVisibility.False)]
         ISpread<GraphNode> FGraphNodeInternal;
 
-        ISpread<bool> FPerMesh;
-
         [Output("Transform", Order = 49)]
         ISpread<Matrix> FTransform;
 
@@ -45,15 +43,13 @@ namespace VVVV.SceneGraph
         public int PinStartIndex = 50;
         IIOContainer<ISpread<Matrix>> FLocal;
         IIOContainer<ISpread<Matrix>> FAncestral;
-#pragma warning restore
+        #pragma warning restore
         #endregion fields & pins
 
         public void OnImportsSatisfied()
         {
             FSelected.SliceCount = 0;
             IsNested = !FGraphNodeInternal.GetType().Namespace.Contains("VVVV.Hosting");
-
-            FPerMesh = FIOFactory.CreateDiffSpread<bool>(new InputAttribute("Per Mesh") { DefaultBoolean = IsNested, Visibility = IsNested?PinVisibility.False:PinVisibility.OnlyInspector });
 
             var attr = new ConfigAttribute($"Enable Local and Parent") { DefaultBoolean = !IsNested };
             var toggle = FIOFactory.CreateDiffSpread<bool>(attr);
@@ -83,49 +79,39 @@ namespace VVVV.SceneGraph
             if (string.IsNullOrEmpty(FNodePath))
                 FNodePath = FHost.GetNodePath(false);
 
-            if (FGraphNode.IsChanged || FPerMesh.IsChanged || (IsNested && GraphChanged) || PinsChanged)
+            if (FGraphNode.IsChanged || (IsNested && GraphChanged) || PinsChanged)
             {
                 var input = IsNested ? FGraphNodeInternal : FGraphNode;
 
                 FSelected.AssignFrom(input);
-                spreadMax = 0;
-                for (int i = 0; i < FSelected.CombineWith(FPerMesh); i++)
-                    spreadMax += FPerMesh[i] ? (FSelected[i]?.Element as MeshElement)?.MeshCount ?? 0 : 1;
-
-                FTransform.SliceCount = spreadMax;
+                FTransform.SliceCount = FSelected.SliceCount;
                 if (FLocal != null)
                 {
-                    FLocal.IOObject.SliceCount = spreadMax;
-                    FAncestral.IOObject.SliceCount = spreadMax;
+                    FLocal.IOObject.SliceCount = FSelected.SliceCount;
+                    FAncestral.IOObject.SliceCount = FSelected.SliceCount;
                 }
             }
 
-            int incr = 0;
             for (int i = 0; i < FSelected.SliceCount; i++)
             {
                 if (FSelected[i] != null && FSelected[i].Element != null)
                 {
-                    int loop = FPerMesh[i] ? (FSelected[i]?.Element as MeshElement)?.MeshCount ?? 0 : 1;
-                    for (int l = 0; l < loop; l++)
+                    FTransform[i] = FSelected[i].Accumulated;
+                    if (FLocal != null)
                     {
-                        FTransform[incr] = FSelected[i].Accumulated;
-                        if (FLocal != null)
-                        {
-                            FLocal.IOObject[incr] = FSelected[i].Local;
-                            FAncestral.IOObject[incr] = FSelected[i].Parent?.Accumulated ?? Matrix.Identity;
-                        }
-                        incr++;
+                        FLocal.IOObject[i] = FSelected[i].Local;
+                        FAncestral.IOObject[i] = FSelected[i].Parent?.Accumulated ?? Matrix.Identity;
                     }
                 }
-                //else
-                //{
-                //    FTransform[incr] = Matrix.Identity;
-                //    if (FLocal != null)
-                //    {
-                //        FLocal.IOObject[i] = Matrix.Identity;
-                //        FParent.IOObject[i] = Matrix.Identity;
-                //    }
-                //}
+                else
+                {
+                    FTransform[i] = Matrix.Identity;
+                    if (FLocal != null)
+                    {
+                        FLocal.IOObject[i] = Matrix.Identity;
+                        FAncestral.IOObject[i] = Matrix.Identity;
+                    }
+                }
             }
         }
     }

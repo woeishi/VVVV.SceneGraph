@@ -81,20 +81,33 @@ namespace VVVV.SceneGraph
             }
         }
 
-        GraphNodeControl Populate(ItemCollection collection, GraphNode node, int sliceIndex)
+        GraphViewItem Populate(ItemCollection collection, GraphNode node, int sliceIndex)
         {
-            var tn = new GraphNodeControl(node, sliceIndex);
+            GraphViewItem gnc;
+            if (node.Element is MeshElement)
+            {
+                var mpe = node.Element as MeshElement;
+                gnc = new MeshElementControl(mpe.Mesh, mpe.MeshID, mpe.Material);
+
+                for (int t = 0; t < mpe.Material.TexturePath.Count; t++)
+                    gnc.Items.Add(new TextureSlotControl(mpe.Material, t));
+            }
+            else
+            {
+                gnc = new GraphNodeControl(node, sliceIndex);
             
-            foreach (var c in node.Children)
-                Populate(tn.Items, c, sliceIndex);
-            if (tn.Items.Count > 0)
-                tn.IsExpanded = true;
+                foreach (var c in node.Children)
+                    Populate(gnc.Items, c, sliceIndex);
+                if (gnc.Items.Count > 0)
+                    gnc.IsExpanded = true;
 
-            SetElementInfo(tn.Items, node);
+            }
 
-            tn.Selected += GraphNodeSelected;
-            collection.Add(tn);
-            return tn;
+            //SetElementInfo(tn.Items, node);
+
+            gnc.Selected += GraphNodeSelected;
+            collection.Add(gnc);
+            return gnc;
         }
 
         private void GraphNodeSelected(object sender, RoutedEventArgs e)
@@ -109,23 +122,23 @@ namespace VVVV.SceneGraph
             e.Handled = true;
         }
 
-        void SetElementInfo(ItemCollection collection, GraphNode node)
-        {
-            if (node.Element is MeshElement)
-            {
-                MeshElement me = node.Element as MeshElement;
-                for (int i = 0; i < me.MeshCount; i++)
-                {
-                    var texCount = me.Materials[i].TexturePath.Count;
-                    var mec = new MeshElementControl(me.Meshes[i], me.MeshIDs[i], me.Materials[i]);
+        //void SetElementInfo(ItemCollection collection, GraphNode node)
+        //{
+        //    if (node.Element is MeshElement)
+        //    {
+        //        MeshElement me = node.Element as MeshElement;
+        //        for (int i = 0; i < me.MeshCount; i++)
+        //        {
+        //            var texCount = me.Materials[i].TexturePath.Count;
+        //            var mec = new MeshElementControl(me.Meshes[i], me.MeshIDs[i], me.Materials[i]);
 
-                    for (int t = 0; t < texCount; t++)
-                        mec.Items.Add(new TextureSlotControl(me.Materials[i], t));
+        //            for (int t = 0; t < texCount; t++)
+        //                mec.Items.Add(new TextureSlotControl(me.Materials[i], t));
 
-                    collection.Add(mec);
-                }
-            }
-        }
+        //            collection.Add(mec);
+        //        }
+        //    }
+        //}
 
         internal class GraphViewItem : TreeViewItem
         {
@@ -155,7 +168,9 @@ namespace VVVV.SceneGraph
                 Stack.Children.Add(Secondary);
 
                 this.Header = Stack;
-            } 
+            }
+
+            public virtual void AddMetaInfo(string meta) { } 
         }
 
         internal class GraphNodeControl : GraphViewItem
@@ -173,12 +188,12 @@ namespace VVVV.SceneGraph
                
                 this.Secondary.Text = $"[id {node.ID}]";
 
-                var me = node.Element as MeshElement;
-                if (me != null)
-                    this.Secondary.Text += $" - Meshes: {me.MeshCount}";
+                //var me = node.Element as MeshElement;
+                //if (me != null)
+                //    this.Secondary.Text += $" - Meshes: {me.MeshCount}";
             }
 
-            public void AddMetaInfo(string meta)
+            public override void AddMetaInfo(string meta)
             {
                 this.Secondary.Text += " - " + meta;
             }
@@ -187,9 +202,8 @@ namespace VVVV.SceneGraph
         internal class MeshElementControl : GraphViewItem
         {
             internal MeshElementControl(AssimpNet.AssimpMesh mesh, int meshID, AssimpNet.AssimpMaterial material)
-                :base($"Mesh {meshID}")
+                :base($"Mesh_{meshID}", true)
             {
-                this.Focusable = false;
                 if (mesh.UvChannelCount > 0)
                     this.Secondary.Text += " - Has UVs";
                 this.Secondary.Text += $" - Vertices: {mesh.VerticesCount} - MaterialID: {mesh.MaterialIndex}";

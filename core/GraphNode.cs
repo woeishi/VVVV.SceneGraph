@@ -37,6 +37,12 @@ namespace SceneGraph.Core
             Local = Element.Local;
         }
 
+        internal GraphNode(MeshElement element, GraphNode parent = null, Scene scene = null) : this(element as Element, parent, scene)
+        {
+            Transforms[0] = new Transform(Matrix.Identity, this);
+            Local = Matrix.Identity;
+        }
+
         public static GraphNode CloneGraph(GraphNode original)
         {
             var graph = original.Root();

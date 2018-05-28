@@ -70,14 +70,16 @@ namespace VVVV.SceneGraph
                 {
                     if (FGraphNode[i] != null)
                     {
-                        var current = FGraphNode[i].ExpandMeshNodes(FRecLimit[i], 0).ToSpread();
-                        for (int e = 0; e < current.SliceCount; e++)
-                        {
-                            FSelected.Add(current[e]);
-
-                            foreach (var m in (current[e].Element as MeshElement)?.Meshes)
-                                FName.Add(current[e].Name);
-                        }
+                        FSelected.AddRange(FGraphNode[i].ExpandMeshNodes(FRecLimit[i], 0));
+                        foreach (var n in FSelected)
+                            FName.Add(n.Name);
+                        //var current = FGraphNode[i].ExpandMeshNodes(FRecLimit[i], 0).ToSpread();
+                        //for (int e = 0; e < current.SliceCount; e++)
+                        //{
+                        //    FSelected.Add(current[e]);
+                        //    foreach (var m in (current[e].Element as MeshElement)?.Meshes)
+                        //        FName.Add(current[e].Name);
+                        //}
                     }
                 }
                 graphChanged = true;

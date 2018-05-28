@@ -192,7 +192,7 @@ namespace VVVV.SceneGraph
                     {
                         FSelected.Add(input[i]);
                         trash.RemoveAll(t => t.ID == input[i].ID);
-                        FBinSize[i] = (input[i].Element as MeshElement).MeshCount;
+                        FBinSize[i] = 1;
                     }
                     else
                         FBinSize[i] = 0;
@@ -206,11 +206,7 @@ namespace VVVV.SceneGraph
 
                 FMeshID.SliceCount = 0;
                 foreach (var n in FSelected)
-                {
-                    var meshEl = (n?.Element as MeshElement);
-                    if (meshEl != null)
-                        FMeshID.AddRange(meshEl.MeshIDs);
-                }
+                    FMeshID.Add((n.Element as MeshElement).MeshID);
                
                 FGeometry.ResizeAndDismiss(FMeshID.SliceCount, () => new DX11Resource<DX11IndexedGeometry>());
 
@@ -242,30 +238,27 @@ namespace VVVV.SceneGraph
                 if (FVerticesCount != null)
                     FVerticesCount.IOObject.SliceCount = FGeometry.SliceCount;
 
-                int incr = 0;
                 for (int i = 0; i < FSelected.SliceCount; i++)
                 {
-                    foreach (var mesh in (FSelected[i].Element as MeshElement)?.Meshes)
+                    var mpe = FSelected[i].Element as MeshElement;
+                    var mesh = mpe.Mesh;
+                    if (FMin != null)
                     {
-                        if (FMin != null)
-                        {
-                            FMin.IOObject[incr] = mesh.BoundingBox.Minimum;
-                            FMax.IOObject[incr] = mesh.BoundingBox.Maximum;
-                        }
-                        if (FBones != null)
-                        {
-                            FBones.IOObject[incr].AssignFrom(mesh.BoneMatrices);
-                            FBoneNames.IOObject[incr].AssignFrom(mesh.BoneNames);
-                        }
-                        if (FColorChannelCount != null)
-                        {
-                            FColorChannelCount.IOObject[incr] = mesh.ColorChannelCount;
-                            FUvChannelCount.IOObject[incr] = mesh.UvChannelCount;
-                        }
-                        if (FVerticesCount != null)
-                            FVerticesCount.IOObject[incr] = mesh.VerticesCount;
-                        incr++;
+                        FMin.IOObject[i] = mesh.BoundingBox.Minimum;
+                        FMax.IOObject[i] = mesh.BoundingBox.Maximum;
                     }
+                    if (FBones != null)
+                    {
+                        FBones.IOObject[i].AssignFrom(mesh.BoneMatrices);
+                        FBoneNames.IOObject[i].AssignFrom(mesh.BoneNames);
+                    }
+                    if (FColorChannelCount != null)
+                    {
+                        FColorChannelCount.IOObject[i] = mesh.ColorChannelCount;
+                        FUvChannelCount.IOObject[i] = mesh.UvChannelCount;
+                    }
+                    if (FVerticesCount != null)
+                        FVerticesCount.IOObject[i] = mesh.VerticesCount;
                 }
                 PinsChanged = false;
             }
@@ -290,11 +283,8 @@ namespace VVVV.SceneGraph
                 foreach (var n in FSelected)
                 {
                     var me = n.Element as MeshElement;
-                    for (int m = 0; m < me.MeshCount; m++)
-                    {
-                        FGeometry[incr][context] = me.GetGeometry(context, m, FNodePath);
+                        FGeometry[incr][context] = me.GetGeometry(context, FNodePath);
                         incr++;
-                    }
                 }
             }
         }
