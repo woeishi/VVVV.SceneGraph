@@ -81,6 +81,7 @@ namespace VVVV.SceneGraph
 
             if (FGraphNode.IsChanged || (IsNested && GraphChanged) || PinsChanged)
             {
+                PinsChanged = false;
                 var input = IsNested ? FGraphNodeInternal : FGraphNode;
 
                 FSelected.AssignFrom(input);
