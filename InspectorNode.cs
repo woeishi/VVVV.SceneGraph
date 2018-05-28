@@ -17,6 +17,8 @@ namespace VVVV.SceneGraph
                 Author = "woei")]
     public class InspektorNode : System.Windows.Forms.UserControl, IPluginEvaluate, IDisposable
     {
+        #region fields & pins
+        #pragma warning disable 0649
         [Input("Graph In")]
         IDiffSpread<GraphNode> FInput;
 
@@ -28,8 +30,10 @@ namespace VVVV.SceneGraph
 
         ElementHost WPFHost;
         StackPanel FStackPanel;
-        TreeView View = new TreeView();
         bool NeedsFlush = false;
+        #pragma warning restore
+        #endregion fields & pins
+
         public InspektorNode()
         {
             WPFHost = new ElementHost();
@@ -81,16 +85,12 @@ namespace VVVV.SceneGraph
             }
         }
 
-        GraphViewItem Populate(ItemCollection collection, GraphNode node, int sliceIndex)
+        GraphNodeControl Populate(ItemCollection collection, GraphNode node, int sliceIndex)
         {
-            GraphViewItem gnc;
+            GraphNodeControl gnc;
             if (node.Element is MeshElement)
             {
-                var mpe = node.Element as MeshElement;
-                gnc = new MeshElementControl(mpe.Mesh, mpe.MeshID, mpe.Material);
-
-                for (int t = 0; t < mpe.Material.TexturePath.Count; t++)
-                    gnc.Items.Add(new TextureSlotControl(mpe.Material, t));
+                gnc = new MeshElementControl(node, sliceIndex);
             }
             else
             {
@@ -100,10 +100,7 @@ namespace VVVV.SceneGraph
                     Populate(gnc.Items, c, sliceIndex);
                 if (gnc.Items.Count > 0)
                     gnc.IsExpanded = true;
-
             }
-
-            //SetElementInfo(tn.Items, node);
 
             gnc.Selected += GraphNodeSelected;
             collection.Add(gnc);
@@ -121,24 +118,6 @@ namespace VVVV.SceneGraph
             }
             e.Handled = true;
         }
-
-        //void SetElementInfo(ItemCollection collection, GraphNode node)
-        //{
-        //    if (node.Element is MeshElement)
-        //    {
-        //        MeshElement me = node.Element as MeshElement;
-        //        for (int i = 0; i < me.MeshCount; i++)
-        //        {
-        //            var texCount = me.Materials[i].TexturePath.Count;
-        //            var mec = new MeshElementControl(me.Meshes[i], me.MeshIDs[i], me.Materials[i]);
-
-        //            for (int t = 0; t < texCount; t++)
-        //                mec.Items.Add(new TextureSlotControl(me.Materials[i], t));
-
-        //            collection.Add(mec);
-        //        }
-        //    }
-        //}
 
         internal class GraphViewItem : TreeViewItem
         {
@@ -169,14 +148,13 @@ namespace VVVV.SceneGraph
 
                 this.Header = Stack;
             }
-
-            public virtual void AddMetaInfo(string meta) { } 
         }
 
         internal class GraphNodeControl : GraphViewItem
         {
             public GraphNode GraphNode { get; }
             public int SliceIndex { get; }
+
             internal GraphNodeControl(GraphNode node, int sliceIndex) : base(node.Name, true)
             {
                 GraphNode = node;
@@ -185,30 +163,27 @@ namespace VVVV.SceneGraph
                 this.BorderThickness = new Thickness(0, 0, 0, 1);
                 this.Margin = new Thickness(0, 2, 0, 2);
 
-               
                 this.Secondary.Text = $"[id {node.ID}]";
-
-                //var me = node.Element as MeshElement;
-                //if (me != null)
-                //    this.Secondary.Text += $" - Meshes: {me.MeshCount}";
             }
 
-            public override void AddMetaInfo(string meta)
+            public void AddMetaInfo(string meta)
             {
                 this.Secondary.Text += " - " + meta;
             }
         }
 
-        internal class MeshElementControl : GraphViewItem
+        internal class MeshElementControl : GraphNodeControl
         {
-            internal MeshElementControl(AssimpNet.AssimpMesh mesh, int meshID, AssimpNet.AssimpMaterial material)
-                :base($"Mesh_{meshID}", true)
+            internal MeshElementControl(GraphNode node, int sliceIndex)
+                :base(node, sliceIndex)
             {
-                if (mesh.UvChannelCount > 0)
+                var me = node.Element as MeshElement;
+
+                if (me.Mesh.UvChannelCount > 0)
                     this.Secondary.Text += " - Has UVs";
-                this.Secondary.Text += $" - Vertices: {mesh.VerticesCount} - MaterialID: {mesh.MaterialIndex}";
-                if (material.TextureType.Count > 0)
-                    this.Secondary.Text += $" - Textures: {material.TextureType.Count}";
+                this.Secondary.Text += $" - Vertices: {me.Mesh.VerticesCount} - MaterialID: {me.Mesh.MaterialIndex}";
+                if (me.Material.TextureType.Count > 0)
+                    this.Secondary.Text += $" - Textures: {me.Material.TextureType.Count}";
 
                 var grid = new Grid();
                 grid.Margin = new Thickness(1, 3, 1, 3);
@@ -218,27 +193,30 @@ namespace VVVV.SceneGraph
                 grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
 
                 var lAmb = new Label();
-                var cAmb = material.AmbientColor.ToColor();
+                var cAmb = me.Material.AmbientColor.ToColor();
                 lAmb.Background = new SolidColorBrush(Color.FromArgb(cAmb.A, cAmb.R, cAmb.G, cAmb.B));
                 Grid.SetRow(lAmb, 0);
                 Grid.SetColumn(lAmb, 0);
                 grid.Children.Add(lAmb);
 
                 var lDiff = new Label();
-                var cDiff = material.DiffuseColor.ToColor();
+                var cDiff = me.Material.DiffuseColor.ToColor();
                 lDiff.Background = new SolidColorBrush(Color.FromArgb(cDiff.A, cDiff.R, cDiff.G, cDiff.B));
                 Grid.SetRow(lDiff, 0);
                 Grid.SetColumn(lDiff, 1);
                 grid.Children.Add(lDiff);
 
                 var lSpec = new Label();
-                var cSpec = material.SpecularColor.ToColor();
+                var cSpec = me.Material.SpecularColor.ToColor();
                 lSpec.Background = new SolidColorBrush(Color.FromArgb(cSpec.A, cSpec.R, cSpec.G, cSpec.B));
                 Grid.SetRow(lSpec, 0);
                 Grid.SetColumn(lSpec, 2);
                 grid.Children.Add(lSpec);
 
                 this.Stack.Children.Add(grid);
+
+                for (int t = 0; t < me.Material.TexturePath.Count; t++)
+                    this.Items.Add(new TextureSlotControl(me.Material, t));
             }
         }
 
