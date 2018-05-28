@@ -56,6 +56,11 @@ namespace SceneGraph.Core
         {
             FMeshHandler.Release(nodePath, context);
         }
+
+        internal void PurgeGeometry()
+        {
+            FMeshHandler.Purge();
+        }
         #endregion Mesh
 
         #region Texture

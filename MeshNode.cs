@@ -42,7 +42,6 @@ namespace VVVV.SceneGraph
         string FNodePath = string.Empty;
 
         Spread<GraphNode> FSelected = new Spread<GraphNode>();
-        HashSet<Scene> FDirtyScenes = new HashSet<Scene>();
 
         [Import]
         IIOFactory FIOFactory;
@@ -183,14 +182,16 @@ namespace VVVV.SceneGraph
 
                 var trash = new Spread<GraphNode>(FSelected.SliceCount);
                 trash.AssignFrom(FSelected);
+
                 FSelected.SliceCount = 0;
+                FMeshID.SliceCount = 0;
                 FBinSize.SliceCount = input.SliceCount;
-                
                 for (int i = 0; i < input.SliceCount; i++)
                 {
                     if (input[i] != null && (input[i].Element is MeshElement))
                     {
                         FSelected.Add(input[i]);
+                        FMeshID.Add((input[i].Element as MeshElement).MeshID);
                         trash.RemoveAll(t => t.ID == input[i].ID);
                         FBinSize[i] = 1;
                     }
@@ -201,18 +202,10 @@ namespace VVVV.SceneGraph
                 foreach (var t in trash)
                 {
                     (t.Element as MeshElement).ReleaseGeometry(FNodePath);
-                    FDirtyScenes.Add(t.Scene);
+                    (t.Element as MeshElement).PurgeGeometry();
                 }
 
-                FMeshID.SliceCount = 0;
-                foreach (var n in FSelected)
-                    FMeshID.Add((n.Element as MeshElement).MeshID);
-               
-                FGeometry.ResizeAndDismiss(FMeshID.SliceCount, () => new DX11Resource<DX11IndexedGeometry>());
-
-                foreach (var s in FDirtyScenes)
-                    s.PurgeMeshes();
-                FDirtyScenes.Clear();
+                FGeometry.ResizeAndDismiss(FSelected.SliceCount, () => new DX11Resource<DX11IndexedGeometry>());
             }
 
             if (PinsChanged || FInvalidate)
@@ -240,8 +233,7 @@ namespace VVVV.SceneGraph
 
                 for (int i = 0; i < FSelected.SliceCount; i++)
                 {
-                    var mpe = FSelected[i].Element as MeshElement;
-                    var mesh = mpe.Mesh;
+                    var mesh = (FSelected[i].Element as MeshElement).Mesh;
                     if (FMin != null)
                     {
                         FMin.IOObject[i] = mesh.BoundingBox.Minimum;
@@ -269,10 +261,8 @@ namespace VVVV.SceneGraph
             foreach (var n in FSelected)
             {
                 (n.Element as MeshElement).ReleaseTexture(FNodePath);
-                FDirtyScenes.Add(n.Scene);
+                (n.Element as MeshElement).PurgeGeometry();
             }
-            foreach (var s in FDirtyScenes)
-                s.PurgeTextures();
         }
 
         public void Update(DX11RenderContext context)
@@ -299,13 +289,8 @@ namespace VVVV.SceneGraph
             foreach (var n in FSelected)
             {
                 (n.Element as MeshElement).ReleaseGeometry(FNodePath, context);
-                FDirtyScenes.Add(n.Scene);
+                (n.Element as MeshElement).PurgeGeometry();
             }
-
-            //issue cleanup
-            foreach (var s in FDirtyScenes)
-                s.PurgeMeshes();
-            FDirtyScenes.Clear();
         }
     }
 }
