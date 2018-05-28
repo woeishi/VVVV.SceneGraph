@@ -83,6 +83,12 @@ namespace SceneGraph.Core
             else if (textureSlot < FTextureHandler.Length)
                 FTextureHandler[textureSlot].Release(nodePath, context);
         }
+
+        internal void PurgeTextures()
+        {
+            foreach (var th in FTextureHandler)
+                th.Purge();
+        }
         #endregion Texture
     }
 }

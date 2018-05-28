@@ -55,7 +55,6 @@ namespace VVVV.SceneGraph
         string FNodePath = string.Empty;
 
         Spread<GraphNode> FSelected = new Spread<GraphNode>();
-        HashSet<Scene> FDirtyScenes = new HashSet<Scene>();
 
         [Import]
         IIOFactory FIOFactory;
@@ -136,6 +135,12 @@ namespace VVVV.SceneGraph
                 var trash = new Spread<GraphNode>(FSelected.SliceCount);
                 trash.AssignFrom(FSelected);
                 FSelected.SliceCount = 0;
+                FMatID.SliceCount = 0;
+                FAmbient.SliceCount = 0;
+                FDiffuse.SliceCount = 0;
+                FSpecular.SliceCount = 0;
+                FSpecPow.SliceCount = 0;
+                FAvailableTex.SliceCount = 0;
                 FBinSize.SliceCount = input.SliceCount;
                 for (int i = 0; i < input.SliceCount; i++)
                 {
@@ -143,7 +148,15 @@ namespace VVVV.SceneGraph
                     {
                         FSelected.Add(input[i]);
                         trash.RemoveAll(t => t.ID == input[i].ID);
-                        FBinSize[i] = 1;// (input[i].Element as MeshElement).MeshCount;
+
+                        var element = (MeshElement)FSelected[i].Element;
+                        FMatID.Add(element.MaterialID);
+                        FAmbient.Add(element.Material.AmbientColor);
+                        FDiffuse.Add(element.Material.DiffuseColor);
+                        FSpecular.Add(element.Material.SpecularColor);
+                        FSpecPow.Add(element.Material.SpecularPower);
+                        FAvailableTex.Add(element.Material.TextureType.Select(e => e.ToString()).ToSpread());
+                        FBinSize[i] = 1;
                     }
                     else
                         FBinSize[i] = 0;
@@ -151,45 +164,8 @@ namespace VVVV.SceneGraph
                 foreach (var t in trash)
                 {
                     (t.Element as MeshElement).ReleaseTexture(FNodePath);
-                    FDirtyScenes.Add(t.Scene);
+                    (t.Element as MeshElement).PurgeTextures();
                 }
-
-                //foreach (var n in FSelected)
-                //    (n.Element as MeshElement).ReleaseTexture(FNodePath);
-
-                FMatID.SliceCount = 0;
-                FAmbient.SliceCount = 0;
-                FDiffuse.SliceCount = 0;
-                FSpecular.SliceCount = 0;
-                FSpecPow.SliceCount = 0;
-                FAvailableTex.SliceCount = 0;
-
-                for (int i = 0; i < FSelected.SliceCount; i++)
-                {
-                    if (FSelected[i].Element is MeshElement)
-                    {
-                        var element = (MeshElement)FSelected[i].Element;
-                        //FMatID.AddRange(element.MaterialIDs);
-                        //foreach (var mat in element.Materials)
-                        //{
-                        //    FAmbient.Add(mat.AmbientColor);
-                        //    FDiffuse.Add(mat.DiffuseColor);
-                        //    FSpecular.Add(mat.SpecularColor);
-                        //    FSpecPow.Add(mat.SpecularPower);
-                        //    FAvailableTex.Add(mat.TextureType.Select(e => e.ToString()).ToSpread());
-                        //}
-                        FMatID.Add(element.MaterialID);
-                        FAmbient.Add(element.Material.AmbientColor);
-                        FDiffuse.Add(element.Material.DiffuseColor);
-                        FSpecular.Add(element.Material.SpecularColor);
-                        FSpecPow.Add(element.Material.SpecularPower);
-                        FAvailableTex.Add(element.Material.TextureType.Select(e => e.ToString()).ToSpread());
-
-                    }
-                }
-                foreach (var s in FDirtyScenes)
-                    s.PurgeMeshes();
-                FDirtyScenes.Clear();
             }
 
             if (PinsChanged || FInvalidate)
@@ -237,10 +213,8 @@ namespace VVVV.SceneGraph
             foreach (var n in FSelected)
             {
                 (n.Element as MeshElement).ReleaseTexture(FNodePath);
-                FDirtyScenes.Add(n.Scene);
+                (n.Element as MeshElement).PurgeTextures();
             }
-            foreach (var s in FDirtyScenes)
-                s.PurgeTextures();
         }
 
         public void Update(DX11RenderContext context)
@@ -290,10 +264,8 @@ namespace VVVV.SceneGraph
             foreach (var n in FSelected)
             {
                 (n.Element as MeshElement).ReleaseTexture(FNodePath, context);
-                FDirtyScenes.Add(n.Scene);
+                (n.Element as MeshElement).PurgeTextures();
             }
-            foreach (var s in FDirtyScenes)
-                s.PurgeTextures();
         }
     }
 }
