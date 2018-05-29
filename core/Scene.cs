@@ -20,7 +20,7 @@ namespace SceneGraph.Core
         {
             Filename = path;
             AssetRoot = Path.GetDirectoryName(Filename);
-            Root = null;// new GraphNode(new Element(null, null, 0), null);
+            Root = null;
 
             MeshHandlers = new DX11ResourceHandler<DX11IndexedGeometry>[0];
             TextureHandlers = null;
@@ -80,10 +80,9 @@ namespace SceneGraph.Core
             {
                 counter++;
                 Element element;
-                id = i;
-                if (n.Element is MeshContainerElement)
+                id = i; //assimp child id and graphnode child id differ with meshcontainers
+                if (n.Element is MeshContainerElement) //attach meshes as children before further nodes
                 {
-
                     var mce = n.Element as MeshContainerElement;
                     var mpe = new MeshElement(this, n.Element.Node, counter, mce.MeshIDs[i]);
                     n.Children[i] = new GraphNode(mpe, n, this);
@@ -91,11 +90,10 @@ namespace SceneGraph.Core
                     id -= mce.MeshIDs.Length;
                 }
 
-                if (id >= 0) //prepending meshes in children list
+                if (id >= 0) //prepended meshes in children list
                 {
                     if (n.Element.Node.Children[id].MeshCount > 0)
                     {
-                        //element = new MeshElement(this, n.Element.Node.Children[i], counter);
                         element = new MeshContainerElement(this, n.Element.Node.Children[id], counter);
                     }
                     else
@@ -111,19 +109,6 @@ namespace SceneGraph.Core
                     n.Children[i].LastDescendantID = counter;
                 }
             }
-        }
-
-        public void PurgeMeshes()
-        {
-            foreach (var mh in MeshHandlers)
-                mh.Purge();
-        }
-
-        public void PurgeTextures()
-        {
-            foreach (var tha in TextureHandlers)
-                foreach (var th in tha)
-                    th.Purge();
         }
     }
 }
