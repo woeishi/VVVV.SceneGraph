@@ -31,18 +31,25 @@ namespace VVVV.SceneGraph
         ElementHost WPFHost;
         StackPanel FStackPanel;
         bool NeedsFlush = false;
+
+        FontFamily FFont = new FontFamily("Verdana");
+        int FSize = 8;
         #pragma warning restore
         #endregion fields & pins
 
         public InspektorNode()
         {
+            FStackPanel = new StackPanel();
+            FStackPanel.VerticalAlignment = VerticalAlignment.Stretch;
+
+            var scrollview = new ScrollViewer();
+            scrollview.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+            scrollview.Content = FStackPanel;
+
             WPFHost = new ElementHost();
             WPFHost.Dock = System.Windows.Forms.DockStyle.Fill;
             WPFHost.BackColor = System.Drawing.Color.LightGray;
-            FStackPanel = new StackPanel();
-            FStackPanel.VerticalAlignment = VerticalAlignment.Stretch;
-            FStackPanel.CanVerticallyScroll = true;
-            WPFHost.Child = FStackPanel;
+            WPFHost.Child = scrollview;
             Controls.Add(WPFHost);
         }
 
@@ -63,16 +70,21 @@ namespace VVVV.SceneGraph
                 {
                     FOutput[i] = FInput[i];
                     FSelectedName[i] = FOutput[i]?.Name ?? string.Empty;
-                    var tv = new TreeView();
-                    tv.Background = Brushes.LightGray;
-                    tv.Padding = new Thickness(0, 4, 0, 4);
-                    tv.BorderThickness = new Thickness(0, 0, 0, 1);
                     if (FInput[i] != null)
                     {
+                        var tv = new TreeView();
+                        tv.Background = Brushes.LightGray;
+                        tv.Padding = new Thickness(0, 4, 0, 4);
+                        tv.BorderThickness = new Thickness(0, 0, 0, 1);
                         var gnc = Populate(tv.Items, FInput[i], i);
-                        gnc.AddMetaInfo(FInput[i].Scene.Filename);
                         gnc.Focus();
-                        FStackPanel.Children.Add(tv);
+                        var group = new GroupBox();
+                        group.BorderThickness = new Thickness(0);
+                        group.Header = FInput[i].Scene.Filename;
+                        group.FontFamily = FFont;
+                        group.FontSize = FSize;
+                        group.Content = tv;
+                        FStackPanel.Children.Add(group);
                     }
                 }
                 NeedsFlush = true;
@@ -165,23 +177,21 @@ namespace VVVV.SceneGraph
 
                 this.Secondary.Text = $"[id {node.ID}]";
             }
-
-            public void AddMetaInfo(string meta)
-            {
-                this.Secondary.Text += " - " + meta;
-            }
         }
 
         internal class MeshElementControl : GraphNodeControl
         {
-            internal MeshElementControl(GraphNode node, int sliceIndex)
-                :base(node, sliceIndex)
+            internal MeshElementControl(GraphNode node, int sliceIndex) : base(node, sliceIndex)
             {
                 var me = node.Element as MeshElement;
 
+                this.Secondary.Text += $" - Vertices: {me.Mesh.VerticesCount}";
+
                 if (me.Mesh.UvChannelCount > 0)
-                    this.Secondary.Text += " - Has UVs";
-                this.Secondary.Text += $" - Vertices: {me.Mesh.VerticesCount} - MaterialID: {me.Mesh.MaterialIndex}";
+                    this.Secondary.Text += $" - {me.Mesh.UvChannelCount} UVs";
+
+                this.Secondary.Text += $" - MaterialID: {me.Mesh.MaterialIndex}";
+
                 if (me.Material.TextureType.Count > 0)
                     this.Secondary.Text += $" - Textures: {me.Material.TextureType.Count}";
 
@@ -193,24 +203,24 @@ namespace VVVV.SceneGraph
                 grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
 
                 var lAmb = new Label();
-                var cAmb = me.Material.AmbientColor.ToColor();
-                lAmb.Background = new SolidColorBrush(Color.FromArgb(cAmb.A, cAmb.R, cAmb.G, cAmb.B));
                 Grid.SetRow(lAmb, 0);
                 Grid.SetColumn(lAmb, 0);
+                var cAmb = me.Material.AmbientColor.ToColor();
+                lAmb.Background = new SolidColorBrush(Color.FromArgb(cAmb.A, cAmb.R, cAmb.G, cAmb.B));
                 grid.Children.Add(lAmb);
 
                 var lDiff = new Label();
-                var cDiff = me.Material.DiffuseColor.ToColor();
-                lDiff.Background = new SolidColorBrush(Color.FromArgb(cDiff.A, cDiff.R, cDiff.G, cDiff.B));
                 Grid.SetRow(lDiff, 0);
                 Grid.SetColumn(lDiff, 1);
+                var cDiff = me.Material.DiffuseColor.ToColor();
+                lDiff.Background = new SolidColorBrush(Color.FromArgb(cDiff.A, cDiff.R, cDiff.G, cDiff.B));
                 grid.Children.Add(lDiff);
 
                 var lSpec = new Label();
-                var cSpec = me.Material.SpecularColor.ToColor();
-                lSpec.Background = new SolidColorBrush(Color.FromArgb(cSpec.A, cSpec.R, cSpec.G, cSpec.B));
                 Grid.SetRow(lSpec, 0);
                 Grid.SetColumn(lSpec, 2);
+                var cSpec = me.Material.SpecularColor.ToColor();
+                lSpec.Background = new SolidColorBrush(Color.FromArgb(cSpec.A, cSpec.R, cSpec.G, cSpec.B));
                 grid.Children.Add(lSpec);
 
                 this.Stack.Children.Add(grid);
