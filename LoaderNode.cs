@@ -91,7 +91,6 @@ namespace VVVV.SceneGraph
                             try
                             {
                                 FScene[i] = new Scene(filename, FAssetRoot[i], true, false);
-                                FScene[i].InitGraph();
                                 FRoot[i] = FScene[i].Root;
                                 FIsValid[i] = true;
                             }

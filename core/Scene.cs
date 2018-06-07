@@ -54,6 +54,8 @@ namespace SceneGraph.Core
                     TextureHandlers[i][t] = new DX11ResourceHandler<DX11Texture2D>((ctx) => { return DX11Texture2D.FromFile(ctx, texPath); });
                 }
             }
+
+            ParseGraph();
         }
 
         public new void Dispose()
@@ -66,7 +68,7 @@ namespace SceneGraph.Core
             base.Dispose();
         }
 
-        public void InitGraph()
+        void ParseGraph()
         {
             int counter = 0;
             TraverseGraph(Root, ref counter);
