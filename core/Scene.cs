@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using System.Xml.Linq;
 
 using AssimpNet;
 using FeralTic.DX11.Resources;
@@ -12,6 +13,8 @@ namespace SceneGraph.Core
         public string Filename { get; }
         public string AssetRoot { get; set; }
         public GraphNode Root { get; private set; }
+
+        internal XElement XmlRoot { get; private set; }
 
         internal DX11ResourceHandler<DX11IndexedGeometry>[] MeshHandlers { get; }
         internal DX11ResourceHandler<DX11Texture2D>[][] TextureHandlers { get; }
@@ -56,6 +59,7 @@ namespace SceneGraph.Core
             }
 
             ParseGraph();
+            XmlRoot = Root.ToXElement();
         }
 
         public new void Dispose()

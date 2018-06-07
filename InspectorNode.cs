@@ -185,15 +185,15 @@ namespace VVVV.SceneGraph
             {
                 var me = node.Element as MeshElement;
 
-                this.Secondary.Text += $" - Vertices: {me.Mesh.VerticesCount}";
+                this.Secondary.Text += $" - vertices: {me.Mesh.VerticesCount}";
 
                 if (me.Mesh.UvChannelCount > 0)
                     this.Secondary.Text += $" - {me.Mesh.UvChannelCount} UVs";
 
-                this.Secondary.Text += $" - MaterialID: {me.Mesh.MaterialIndex}";
+                this.Secondary.Text += $" - materialId: {me.Mesh.MaterialIndex}";
 
                 if (me.Material.TextureType.Count > 0)
-                    this.Secondary.Text += $" - Textures: {me.Material.TextureType.Count}";
+                    this.Secondary.Text += $" - textures: {me.Material.TextureType.Count}";
 
                 var grid = new Grid();
                 grid.Margin = new Thickness(1, 3, 1, 3);
