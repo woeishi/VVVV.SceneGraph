@@ -79,7 +79,10 @@ namespace VVVV.SceneGraph
                     FType[i] = input[i]?.Element.GetType().Name??string.Empty;
                     FParent[i] = input[i]?.Parent ?? input[i];
                     FParentName[i] = input[i]?.Parent?.Name ?? string.Empty;
-                    FChildren[i].AssignFrom(input[i]?.Children);
+                    if (input[i] != null)
+                        FChildren[i].AssignFrom(input[i].Children);
+                    else
+                        FChildren[i] = new Spread<GraphNode>(0);
                     FScenePath[i] = input[i]?.Scene.Filename??string.Empty;
                     FChildrenNames[i].AssignFrom(input[i]?.Children.Select(c => c?.Name??string.Empty).ToSpread()??new Spread<string>(0));
                 }
