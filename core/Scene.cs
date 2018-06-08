@@ -81,29 +81,22 @@ namespace SceneGraph.Core
                 counter++;
                 Element element;
                 id = i; //assimp child id and graphnode child id differ with meshcontainers
-                if (n.Element is MeshContainerElement) //attach meshes as children before further nodes
+                if (n.Element.Node.MeshCount > 0) //attach meshes as children before further nodes
                 {
-                    var mce = n.Element as MeshContainerElement;
-                    var mpe = new MeshElement(this, n.Element.Node, counter, mce.MeshIDs[i]);
+                    var mpe = new MeshElement(this, n.Element.Node, counter, n.Element.Node.MeshIndices[i]);
                     n.Children[i] = new GraphNode(mpe, n, this);
                     n.Children[i].LastDescendantID = counter;
-                    id -= mce.MeshIDs.Length;
+                    id -= n.Element.Node.MeshCount;
                 }
 
                 if (id >= 0) //prepended meshes in children list
                 {
-                    if (n.Element.Node.Children[id].MeshCount > 0)
-                    {
-                        element = new MeshContainerElement(this, n.Element.Node.Children[id], counter);
-                    }
+                    var cam = this.Cameras.Where(c => c.Name == n.Element.Node.Children[id].Name).FirstOrDefault();
+                    if (cam != null)
+                        element = new CameraElement(this, n.Element.Node.Children[id], counter, cam);
                     else
-                    {
-                        var cam = this.Cameras.Where(c => c.Name == n.Element.Node.Children[id].Name).FirstOrDefault();
-                        if (cam != null)
-                            element = new CameraElement(this, n.Element.Node.Children[id], counter, cam);
-                        else
-                            element = new Element(this, n.Element.Node.Children[id], counter);
-                    }
+                        element = new Element(this, n.Element.Node.Children[id], counter);
+                    
                     n.Children[i] = new GraphNode(element, n, this);
                     TraverseGraph(n.Children[i], ref counter);
                     n.Children[i].LastDescendantID = counter;

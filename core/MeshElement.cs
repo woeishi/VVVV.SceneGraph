@@ -8,18 +8,6 @@ using SceneGraph.DX11;
 
 namespace SceneGraph.Core
 {
-    public class MeshContainerElement : Element
-    {
-        public int[] MeshIDs { get; }
-
-        internal MeshContainerElement(Scene scene, AssimpNode self, int id) : base(scene, self, id)
-        {
-            this.ChildCount += self.MeshCount;
-
-            MeshIDs = self.MeshIndices.ToArray();
-        }
-    }
-
     public class MeshElement : Element
     {
         public int MeshID { get; }
@@ -35,15 +23,13 @@ namespace SceneGraph.Core
             this.Name = $"Mesh_{meshId}";
 
             MeshID = meshId;
-            for (int i = 0; i < self.MeshCount; i++)
-            {
-                Mesh = scene.Meshes[MeshID];
-                FMeshHandler = scene.MeshHandlers[MeshID];
+            
+            Mesh = scene.Meshes[MeshID];
+            FMeshHandler = scene.MeshHandlers[MeshID];
 
-                MaterialID = Mesh.MaterialIndex;
-                Material = scene.Materials[MaterialID];
-                FTextureHandler = scene.TextureHandlers[MaterialID];
-            }
+            MaterialID = Mesh.MaterialIndex;
+            Material = scene.Materials[MaterialID];
+            FTextureHandler = scene.TextureHandlers[MaterialID];
         }
 
         #region Mesh
