@@ -25,7 +25,7 @@ namespace SceneGraph.Core
             var bytes = Encoding.Default.GetBytes(self.Name);
             Name = Encoding.UTF8.GetString(bytes);
 
-            ChildCount = self.Children.Count;
+            ChildCount = self.Children.Count + self.MeshCount;
 
             Local = self.LocalTransform;
             Accumulated = self.RelativeTransform;

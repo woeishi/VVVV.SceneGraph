@@ -39,6 +39,7 @@ namespace SceneGraph.Core
 
         internal GraphNode(MeshElement element, GraphNode parent = null, Scene scene = null) : this(element as Element, parent, scene)
         {
+            Children = new GraphNode[0];
             Transforms[0] = new Transform(Matrix.Identity, this);
             Local = Matrix.Identity;
         }

@@ -190,7 +190,7 @@ namespace VVVV.SceneGraph
                 if (me.Mesh.UvChannelCount > 0)
                     this.Secondary.Text += $" - {me.Mesh.UvChannelCount} UVs";
 
-                this.Secondary.Text += $" - materialId: {me.Mesh.MaterialIndex}";
+                this.Secondary.Text += $" - materialId: {me.MaterialID}";
 
                 if (me.Material.TextureType.Count > 0)
                     this.Secondary.Text += $" - textures: {me.Material.TextureType.Count}";
