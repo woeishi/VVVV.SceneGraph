@@ -8,13 +8,12 @@ using VVVV.PluginInterfaces.V2;
 using SceneGraph.Core;
 #endregion usings
 
-
 namespace VVVV.SceneGraph
 {
-    [PluginInfo(Name = "Element", Category = "SceneGraph",
-                Help = "Outputs basic information, parent and children.", Tags = "split",
+    [PluginInfo(Name = "GraphNode", Category = "SceneGraph", Version = "Split",
+                Help = "Outputs basic information, parent and children.",
                 Author = "woei")]
-    public class ElementNode : IPluginEvaluate, IPartImportsSatisfiedNotification
+    public class SplitNode : IPluginEvaluate, IPartImportsSatisfiedNotification
     {
         #region fields & pins
         #pragma warning disable 0649
@@ -76,7 +75,7 @@ namespace VVVV.SceneGraph
                 for (int i = 0; i < input.SliceCount; i++)
                 {
                     FName[i] = input[i]?.Name??string.Empty;
-                    FType[i] = input[i]?.Element.GetType().Name??string.Empty;
+                    FType[i] = input[i]?.Element.Type??string.Empty;
                     FParent[i] = input[i]?.Parent ?? input[i];
                     FParentName[i] = input[i]?.Parent?.Name ?? string.Empty;
                     if (input[i] != null)

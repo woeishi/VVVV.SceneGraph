@@ -67,7 +67,7 @@ namespace SceneGraph.Core
         {
             var x = new XElement(node.Name);
             x.Add(new XAttribute("id", node.ID));
-            x.Add(new XAttribute("nodetype", node.Element.GetType().Name));
+            x.Add(new XAttribute("nodetype", node.Element.Type));
 
             var me = node.Element as MeshElement;
             if (me != null)

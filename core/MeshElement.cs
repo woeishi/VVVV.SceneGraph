@@ -10,6 +10,7 @@ namespace SceneGraph.Core
 {
     public class MeshElement : Element
     {
+        public override string Type => "Mesh";
         public int MeshID { get; }
         public AssimpMesh Mesh { get; }
         DX11ResourceHandler<DX11IndexedGeometry> FMeshHandler;

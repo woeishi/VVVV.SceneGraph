@@ -44,6 +44,11 @@ namespace SceneGraph.Core
             Local = Matrix.Identity;
         }
 
+        public override string ToString()
+        {
+            return $"{Element.Name} [{Element.Type}]";
+        }
+
         public static GraphNode CloneGraph(GraphNode original)
         {
             var graph = original.Root();

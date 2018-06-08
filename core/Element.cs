@@ -10,6 +10,7 @@ namespace SceneGraph.Core
     {
         internal AssimpNode Node { get; }
         public int ID { get; }
+        public virtual string Type => "Container";
         public virtual string Name { get; internal set; }
         public virtual int ChildCount { get; internal set; }
 

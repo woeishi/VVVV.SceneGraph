@@ -7,6 +7,8 @@ namespace SceneGraph.Core
 {
     public class CameraElement : Element
     {
+        public override string Type => "Camera";
+        
         AssimpCamera Camera { get; }
         public Matrix View { get; }
         
