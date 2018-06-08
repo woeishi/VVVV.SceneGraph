@@ -59,6 +59,7 @@ namespace VVVV.SceneGraph
                             FOutput[i] = GraphNode.CloneGraph(FInput[i]);
                             var mergePoint = FOutput[i].Merge(FPart[i]);
                             FSelected.Add(mergePoint);
+                            FError[i] = string.Empty;
                         }
                     }
                     else
