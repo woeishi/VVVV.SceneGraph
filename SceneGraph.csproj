@@ -57,6 +57,7 @@
   <ItemGroup>
     <Reference Include="AssimpNet">
       <HintPath>..\vvvv_50beta35.8_x64\packs\dx11\core\AssimpNet.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="FeralTic">
       <HintPath>..\vvvv_50beta35.8_x64\packs\dx11\core\FeralTic.dll</HintPath>
@@ -103,28 +104,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="core\CameraElement.cs" />
-    <Compile Include="core\DX11ResourceHandler.cs" />
-    <Compile Include="core\DX11Utils.cs" />
+    <Compile Include="dx11\DX11ResourceHandler.cs" />
+    <Compile Include="dx11\DX11Utils.cs" />
     <Compile Include="core\GraphNode.cs" />
     <Compile Include="core\Element.cs" />
     <Compile Include="core\GraphTraversing.cs" />
     <Compile Include="core\MeshElement.cs" />
     <Compile Include="core\Scene.cs" />
     <Compile Include="core\Transform.cs" />
-    <Compile Include="ElementNode.cs" />
-    <Compile Include="GenericNodes.cs" />
-    <Compile Include="INestedNode.cs" />
-    <Compile Include="MergeNode.cs" />
-    <Compile Include="MeshNode.cs" />
-    <Compile Include="MaterialNode.cs" />
-    <Compile Include="ModelNode.cs" />
+    <Compile Include="nodes\SplitNode.cs" />
+    <Compile Include="nodes\GenericNodes.cs" />
+    <Compile Include="nodes\INestedNode.cs" />
+    <Compile Include="nodes\MergeNode.cs" />
+    <Compile Include="nodes\MeshNode.cs" />
+    <Compile Include="nodes\MaterialNode.cs" />
+    <Compile Include="nodes\ModelNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="LoaderNode.cs" />
-    <Compile Include="QueryNode.cs" />
-    <Compile Include="SelectorNode.cs" />
-    <Compile Include="MultiplyTransformNode.cs" />
-    <Compile Include="TransformNode.cs" />
-    <Compile Include="InspectorNode.cs">
+    <Compile Include="nodes\LoaderNode.cs" />
+    <Compile Include="nodes\QueryNode.cs" />
+    <Compile Include="nodes\SelectorNode.cs" />
+    <Compile Include="nodes\MultiplyTransformNode.cs" />
+    <Compile Include="nodes\TransformNode.cs" />
+    <Compile Include="nodes\InspectorNode.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>
