@@ -9,7 +9,6 @@ using SceneGraph.Core;
 using SlimDX;
 #endregion usings
 
-
 namespace VVVV.SceneGraph
 {
     [PluginInfo(Name = "Transform", Category = "SceneGraph",
@@ -32,7 +31,6 @@ namespace VVVV.SceneGraph
         string FNodePath = string.Empty;
 
         Spread<GraphNode> FSelected = new Spread<GraphNode>();
-        HashSet<Scene> FDirtyScenes = new HashSet<Scene>();
 
         [Import]
         IIOFactory FIOFactory;

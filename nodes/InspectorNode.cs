@@ -192,8 +192,8 @@ namespace VVVV.SceneGraph
 
                 this.Secondary.Text += $" - materialId: {me.MaterialID}";
 
-                if (me.Material.TextureType.Count > 0)
-                    this.Secondary.Text += $" - textures: {me.Material.TextureType.Count}";
+                if (me.Material.Textures.Length > 0)
+                    this.Secondary.Text += $" - textures: {me.Material.Textures.Length}";
 
                 var grid = new Grid();
                 grid.Margin = new Thickness(1, 3, 1, 3);
@@ -225,19 +225,19 @@ namespace VVVV.SceneGraph
 
                 this.Stack.Children.Add(grid);
 
-                for (int t = 0; t < me.Material.TexturePath.Count; t++)
-                    this.Items.Add(new TextureSlotControl(me.Material, t));
+                foreach (var ti in me.Material.Textures)
+                    this.Items.Add(new TextureInfoControl(ti));
             }
         }
 
-        internal class TextureSlotControl : GraphViewItem
+        internal class TextureInfoControl : GraphViewItem
         {
-            internal TextureSlotControl(AssimpNet.AssimpMaterial material, int slot)
-                :base($"{material.TextureType[slot]}")
+            internal TextureInfoControl(TextureInfo textureInfo)
+                :base($"{textureInfo.Intent}")
             {
                 this.Focusable = false;
                 
-                this.Secondary.Text = $"{material.TexturePath[slot]}";
+                this.Secondary.Text = $"{textureInfo.Path}";
             }
         }
     }

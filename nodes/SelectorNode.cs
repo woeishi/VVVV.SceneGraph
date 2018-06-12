@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+
 using System.ComponentModel.Composition;
 using VVVV.PluginInterfaces.V2;
 
 using SceneGraph.Core;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace VVVV.SceneGraph
 {

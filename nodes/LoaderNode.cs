@@ -6,6 +6,7 @@ using VVVV.PluginInterfaces.V2;
 using VVVV.Core.Logging;
 
 using SceneGraph.Core;
+using SceneGraph.Adaptors;
 #endregion usings
 
 namespace VVVV.SceneGraph
@@ -32,14 +33,16 @@ namespace VVVV.SceneGraph
         [Output("Graph", AutoFlush = false)]
         Pin<GraphNode> FRoot;
 
-        [Output("Scene", AutoFlush = false)]
-        ISpread<Scene> FScene;
+        [Output("Source", AutoFlush = false)]
+        ISpread<AssimpNet.AssimpScene> FSource;
 
         [Output("Is Valid")]
         ISpread<bool> FIsValid;
 
         [Import()]
         ILogger FLogger;
+
+        Spread<SceneAssimp> FScene = new Spread<SceneAssimp>();
 		#pragma warning restore
 		#endregion fields & pins
 		
@@ -90,13 +93,15 @@ namespace VVVV.SceneGraph
                         {
                             try
                             {
-                                FScene[i] = new Scene(filename, FAssetRoot[i], true, false);
+                                FScene[i] = new SceneAssimp(filename, FAssetRoot[i]);
+                                FSource[i] = FScene[i].Source;
                                 FRoot[i] = FScene[i].Root;
                                 FIsValid[i] = true;
                             }
                             catch (Exception e)
                             {
-                                FScene[i] = new Scene(filename);
+                                FScene[i] = new SceneAssimp(filename);
+                                FSource[i] = FScene[i].Source;
                                 FRoot[i] = null;
                                 FIsValid[i] = false;
                                 FLogger.Log(LogType.Debug, "cannot load "+filename);
@@ -105,7 +110,7 @@ namespace VVVV.SceneGraph
                         }
                         else
                         {
-                            FScene[i] = new Scene(filename);
+                            FScene[i] = new SceneAssimp(filename);
                             FRoot[i] = null;
                             FIsValid[i] = false;
                             FLogger.Log(LogType.Debug, filename + " doesn't exist");

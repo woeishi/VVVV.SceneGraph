@@ -7,7 +7,7 @@ namespace SceneGraph.Core
 {
     public class GraphNode
     {
-        public Scene Scene { get; }
+        public IScene Scene { get; }
         public Element Element { get; }
         public GraphNode Parent { get; private set; }
         public GraphNode[] Children { get; internal set; }
@@ -23,7 +23,7 @@ namespace SceneGraph.Core
         public Matrix Accumulated => AccumulatedTransform.Matrix;
 
         //only in use when initally parsing the scene
-        internal GraphNode(Element element, GraphNode parent = null, Scene scene = null)
+        internal GraphNode(Element element, Matrix accumulated, Matrix local, GraphNode parent = null, IScene scene = null)
         {
             Scene = scene;
             Element = element;
@@ -31,17 +31,15 @@ namespace SceneGraph.Core
             Children = new GraphNode[Element.ChildCount];
 
             Transforms = new List<Transform>();
-            Transforms.Add(new Transform(Element.Local, this));
-            AccumulatedTransform = new Transform(Element.Accumulated, this);
+            Transforms.Add(new Transform(local, this));
+            AccumulatedTransform = new Transform(accumulated, this);
 
-            Local = Element.Local;
+            Local = local;
         }
 
-        internal GraphNode(MeshElement element, GraphNode parent = null, Scene scene = null) : this(element as Element, parent, scene)
+        internal GraphNode(MeshElement element, Matrix accumulated, GraphNode parent = null, IScene scene = null) : this(element as Element, accumulated, Matrix.Identity, parent, scene)
         {
             Children = new GraphNode[0];
-            Transforms[0] = new Transform(Matrix.Identity, this);
-            Local = Matrix.Identity;
         }
 
         public override string ToString()

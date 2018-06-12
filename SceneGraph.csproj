@@ -103,8 +103,15 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="adaptors\AssimpAdaptor.cs" />
+    <Compile Include="adaptors\SceneAssimp.cs" />
     <Compile Include="core\CameraElement.cs" />
+    <Compile Include="core\IScene.cs" />
+    <Compile Include="core\MaterialInfo.cs" />
+    <Compile Include="core\MeshInfo.cs" />
+    <Compile Include="core\ResourceHandler.cs" />
     <Compile Include="dx11\DX11ResourceHandler.cs" />
+    <Compile Include="dx11\DX11Scene.cs" />
     <Compile Include="dx11\DX11Utils.cs" />
     <Compile Include="core\GraphNode.cs" />
     <Compile Include="core\Element.cs" />

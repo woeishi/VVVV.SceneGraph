@@ -7,6 +7,7 @@ using System.ComponentModel.Composition;
 using VVVV.PluginInterfaces.V2;
 
 using SceneGraph.Core;
+using SceneGraph.Adaptors;
 using SlimDX;
 using FeralTic.DX11;
 using FeralTic.DX11.Resources;
@@ -201,8 +202,8 @@ namespace VVVV.SceneGraph
                 
                 foreach (var t in trash)
                 {
-                    (t.Element as MeshElement).ReleaseGeometry(FNodePath);
-                    (t.Element as MeshElement).PurgeGeometry();
+                    t.ReleaseGeometry(FNodePath);
+                    t.PurgeGeometry();
                 }
 
                 FGeometry.ResizeAndDismiss(FSelected.SliceCount, () => new DX11Resource<DX11IndexedGeometry>());
@@ -260,8 +261,8 @@ namespace VVVV.SceneGraph
         {
             foreach (var n in FSelected)
             {
-                (n.Element as MeshElement).ReleaseTexture(FNodePath);
-                (n.Element as MeshElement).PurgeGeometry();
+                n.ReleaseTexture(FNodePath);
+                n.PurgeGeometry();
             }
         }
 
@@ -272,9 +273,8 @@ namespace VVVV.SceneGraph
                 int incr = 0;
                 foreach (var n in FSelected)
                 {
-                    var me = n.Element as MeshElement;
-                        FGeometry[incr][context] = me.GetGeometry(context, FNodePath);
-                        incr++;
+                    FGeometry[incr][context] = n.GetGeometry(context, FNodePath);
+                    incr++;
                 }
             }
         }
@@ -288,8 +288,8 @@ namespace VVVV.SceneGraph
             //set resource as released by this node
             foreach (var n in FSelected)
             {
-                (n.Element as MeshElement).ReleaseGeometry(FNodePath, context);
-                (n.Element as MeshElement).PurgeGeometry();
+                n.ReleaseGeometry(FNodePath, context);
+                n.PurgeGeometry();
             }
         }
     }
