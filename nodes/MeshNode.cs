@@ -261,7 +261,7 @@ namespace VVVV.SceneGraph
         {
             foreach (var n in FSelected)
             {
-                n.ReleaseTexture(FNodePath);
+                n.ReleaseGeometry(FNodePath);
                 n.PurgeGeometry();
             }
         }
