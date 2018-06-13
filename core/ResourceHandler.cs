@@ -5,7 +5,7 @@ namespace SceneGraph.Core
 {
     internal class ResourceHandler<U, T> : IDisposable 
         where T : IDisposable
-        where U : class
+        //where U : class
     {
         Func<U, T> create;
         Dictionary<U, T> resources;
@@ -40,7 +40,7 @@ namespace SceneGraph.Core
             return resources[key];
         }
 
-        internal void Release(string nodePath, U key = null)
+        internal void Release(string nodePath, U key)
         {
             if (key == null)
                 foreach (var k in resources.Keys)

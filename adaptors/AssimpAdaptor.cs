@@ -2,8 +2,6 @@
 using SceneGraph.Core;
 using SlimDX;
 using AssimpNet;
-using FeralTic.DX11;
-using FeralTic.DX11.Resources;
 
 namespace SceneGraph.Adaptors
 {
@@ -67,53 +65,6 @@ namespace SceneGraph.Adaptors
                 };
             }
             return mat;
-        }
-
-        internal static DX11IndexedGeometry GetGeometry(this GraphNode node, DX11RenderContext context, string nodePath)
-        {
-            var me = (node.Element as MeshElement);
-            return (node.Scene as SceneAssimp).MeshHandlers[me.MeshID].Get(context, nodePath);
-        }
-
-        internal static void ReleaseGeometry(this GraphNode node, string nodePath, DX11RenderContext context = null)
-        {
-            var me = (node.Element as MeshElement);
-            (node.Scene as SceneAssimp).MeshHandlers[me.MeshID].Release(nodePath, context);
-        }
-
-        internal static void PurgeGeometry(this GraphNode node)
-        {
-            var me = (node.Element as MeshElement);
-            (node.Scene as SceneAssimp).MeshHandlers[me.MeshID].Purge();
-        }
-
-        internal static DX11Texture2D GetTexture(this GraphNode node, DX11RenderContext context, int textureSlot, string nodePath)
-        {
-            var me = (node.Element as MeshElement);
-            if (textureSlot < me.Material.Textures.Length)
-                return (node.Scene as SceneAssimp).TextureHandlers[me.MaterialID][textureSlot].Get(context, nodePath);
-            else
-                return context.DefaultTextures.WhiteTexture;
-
-        }
-
-        internal static void ReleaseTexture(this GraphNode node, string nodePath, DX11RenderContext context = null, int textureSlot = -1)
-        {
-            var me = (node.Element as MeshElement);
-            if (textureSlot < 0)
-            {
-                foreach (var th in (node.Scene as SceneAssimp).TextureHandlers[me.MaterialID])
-                    th.Release(nodePath, context);
-            }
-            else if (textureSlot < me.Material.Textures.Length)
-                (node.Scene as SceneAssimp).TextureHandlers[me.MaterialID][textureSlot].Release(nodePath, context);
-        }
-
-        internal static void PurgeTextures(this GraphNode node)
-        {
-            var me = (node.Element as MeshElement);
-            foreach (var th in (node.Scene as SceneAssimp).TextureHandlers[me.MaterialID])
-                th.Purge();
         }
     }
 }

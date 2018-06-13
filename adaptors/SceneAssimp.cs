@@ -1,9 +1,8 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using SceneGraph.Core;
 using SceneGraph.DX11;
 using AssimpNet;
-using FeralTic.DX11.Resources;
+
 
 namespace SceneGraph.Adaptors
 {
@@ -19,30 +18,23 @@ namespace SceneGraph.Adaptors
             Source = new AssimpScene(path, true, false);
 
             MeshInfos = new MeshInfo[Source.Meshes.Count];
-            MeshHandlers = new DX11ResourceHandler<DX11IndexedGeometry>[Source.Meshes.Count];
-            for (int i = 0; i < MeshHandlers.Length; i++)
-            {
-                var mesh = Source.Meshes[i];
-                MeshInfos[i] = mesh.ToMeshInfo(i);
-                MeshHandlers[i] = new DX11ResourceHandler<DX11IndexedGeometry>((ctx) => { return DX11Utils.LoadMesh(ctx, mesh); });
-            }
+            for (int i = 0; i < MeshInfos.Length; i++)
+                MeshInfos[i] = Source.Meshes[i].ToMeshInfo(i);
 
             MaterialInfos = new MaterialInfo[Source.Materials.Count];
-            TextureHandlers = new DX11ResourceHandler<DX11Texture2D>[Source.Materials.Count][];
-            for (int i = 0; i < TextureHandlers.Length; i++)
-            {
-                var mat = Source.Materials[i];
+            for (int i = 0; i < MaterialInfos.Length; i++)
                 MaterialInfos[i] = Source.Materials[i].ToMaterialInfo(i);
-                TextureHandlers[i] = new DX11ResourceHandler<DX11Texture2D>[mat.TexturePath.Count];
-                for (int t = 0; t < mat.TexturePath.Count; t++)
-                {
-                    var texPath = mat.TexturePath[t];
-                    if (!Path.IsPathRooted(texPath))
-                        texPath = Path.Combine(AssetRoot, texPath);
-                    TextureHandlers[i][t] = new DX11ResourceHandler<DX11Texture2D>((ctx) => { return DX11Texture2D.FromFile(ctx, texPath); });
-                }
-            }
 
+            InitializeDX11Resources((i, ctx) => {
+                var m = Source.Meshes[i];
+                return DX11Utils.LoadMesh(ctx, 
+                                          m.VerticesCount, 
+                                          m.Vertices, 
+                                          m.Indices.ToArray(), 
+                                          m.GetInputElements().ToArray(), 
+                                          m.CalculateVertexSize(), 
+                                          m.BoundingBox);
+            });
             CreateGraph();
         }
 

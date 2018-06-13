@@ -10,4 +10,9 @@ namespace SceneGraph.DX11
     {
         internal DX11ResourceHandler(Func<DX11RenderContext, T> createFunc) : base(createFunc) { }
     }
+
+    internal class DX11ResourceManager : ResourceManager<DX11RenderContext, DX11IndexedGeometry, DX11Texture2D>
+    {
+        internal DX11ResourceManager(MeshInfo[] meshInfos, MaterialInfo[] materialInfos) : base(meshInfos, materialInfos) { }
+    }
 }
