@@ -19,16 +19,16 @@ namespace SceneGraph.DX11
 
     internal static class GraphNodeExtension
     {
-        internal static DX11IndexedGeometry GetGeometry(this GraphNode node, DX11RenderContext context, string nodePath)
+        internal static DX11IndexedGeometry GetGeometry(this GraphNode node, string nodePath, DX11RenderContext context)
         {
             dynamic scene = node.Scene;
-            return scene.GetGeometry(node, context, nodePath);
+            return scene.GetGeometry(node, nodePath, context);
         }
 
         internal static void ReleaseGeometry(this GraphNode node, string nodePath, DX11RenderContext context = null)
         {
             dynamic scene = node.Scene;
-            scene.ReleaseGeometry(node, context, nodePath);
+            scene.ReleaseGeometry(node, nodePath, context);
         }
 
         internal static void PurgeGeometry(this GraphNode node)

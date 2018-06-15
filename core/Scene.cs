@@ -73,13 +73,13 @@ namespace SceneGraph.Core
             XmlRoot = Root.ToXElement();
         }
 
-        internal V GetGeometry(GraphNode node, U context, string nodePath)
+        internal V GetGeometry(GraphNode node, string nodePath, U context)
         {
             var me = (node.Element as MeshElement);
-            return ResourceManager.GetGeometry(me.MeshID, context, nodePath);
+            return ResourceManager.GetGeometry(me.MeshID, nodePath, context);
         }
 
-        internal void ReleaseGeometry(GraphNode node, U context, string nodePath)
+        internal void ReleaseGeometry(GraphNode node, string nodePath, U context)
         {
             var me = (node.Element as MeshElement);
             ResourceManager.ReleaseGeometry(me.MeshID, nodePath, context);

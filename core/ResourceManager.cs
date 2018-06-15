@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace SceneGraph.Core
 {
@@ -41,11 +40,11 @@ namespace SceneGraph.Core
                 th.Dispose();
         }
 
-        internal U GetGeometry(int meshId, T context, string nodePath) => MeshHandlers[meshId].Get(context, nodePath);
+        internal U GetGeometry(int meshId, string nodePath, T context) => MeshHandlers[meshId].Get(nodePath, context);
         internal void ReleaseGeometry(int meshId, string nodePath, T context) => MeshHandlers[meshId].Release(nodePath, context);
         internal void PurgeGeometry(int meshId) => MeshHandlers[meshId].Purge();
 
-        internal V GetTexture(int textureId, string nodePath, T context) => TextureHandlers[textureId].Get(context, nodePath);
+        internal V GetTexture(int textureId, string nodePath, T context) => TextureHandlers[textureId].Get(nodePath, context);
         internal void ReleaseTexture(int textureId, string nodePath, T context) => TextureHandlers[textureId].Release(nodePath, context);
         internal void PurgeTextures(int textureId) => TextureHandlers[textureId].Purge();
     }

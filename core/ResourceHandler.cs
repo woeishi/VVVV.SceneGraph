@@ -24,7 +24,7 @@ namespace SceneGraph.Core
                 res.Dispose();
         }
 
-        internal T Get(U key, string nodePath)
+        internal T Get(string nodePath, U key)
         {
             if (!resources.ContainsKey(key))
             {

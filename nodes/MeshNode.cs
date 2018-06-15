@@ -274,7 +274,7 @@ namespace VVVV.SceneGraph
                 int incr = 0;
                 foreach (var n in FSelected)
                 {
-                    FGeometry[incr][context] = n.GetGeometry(context, FNodePath);
+                    FGeometry[incr][context] = n.GetGeometry(FNodePath, context);
                     incr++;
                 }
             }
