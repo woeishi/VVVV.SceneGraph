@@ -11,5 +11,6 @@ namespace SceneGraph.Core
 
         MeshInfo[] MeshInfos { get; }
         MaterialInfo[] MaterialInfos { get; }
+        TextureInfo[] TextureInfos { get; }
     }
 }

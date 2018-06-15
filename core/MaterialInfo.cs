@@ -36,6 +36,7 @@ namespace SceneGraph.Core
 
     public class TextureInfo
     {
+        public int Index { get; internal set; }
         public string Path { get; internal set; }
         public TextureIntent Intent { get; internal set; }
         //MapMode /sampler

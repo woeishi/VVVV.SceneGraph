@@ -37,16 +37,16 @@ namespace SceneGraph.DX11
             scene.PurgeGeometry(node);
         }
 
-        internal static DX11Texture2D GetTexture(this GraphNode node, DX11RenderContext context, int textureSlot, string nodePath)
+        internal static DX11Texture2D GetTexture(this GraphNode node, TextureInfo textureInfo, string nodePath, DX11RenderContext context)
         {
             dynamic scene = node.Scene;
-            return scene.GetTexture(node, context, textureSlot, nodePath)??context.DefaultTextures.WhiteTexture;
+            return scene.GetTexture(textureInfo, nodePath, context)??context.DefaultTextures.WhiteTexture;
         }
 
-        internal static void ReleaseTexture(this GraphNode node, string nodePath, DX11RenderContext context = null, int textureSlot = -1)
+        internal static void ReleaseTexture(this GraphNode node, string nodePath, TextureInfo textureInfo = null, DX11RenderContext context = null)
         {
             dynamic scene = node.Scene;
-            scene.ReleaseTexture(node, context, nodePath, textureSlot);
+            scene.ReleaseTexture(node, textureInfo, nodePath, context);
         }
 
         internal static void PurgeTextures(this GraphNode node)

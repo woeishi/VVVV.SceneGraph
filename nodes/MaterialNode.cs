@@ -7,7 +7,6 @@ using System.ComponentModel.Composition;
 using VVVV.PluginInterfaces.V2;
 
 using SceneGraph.Core;
-using SceneGraph.Adaptors;
 using SceneGraph.DX11;
 using SlimDX;
 
@@ -116,6 +115,11 @@ namespace VVVV.SceneGraph
                 FTexPins[key] = null;
                 FPathPins[key].Dispose();
                 FPathPins[key] = null;
+
+                foreach (var n in FSelected)
+                    foreach (var t in (n.Element as MeshElement).Material.Textures)
+                        if (t.Intent.ToString() == key)
+                            n.ReleaseTexture(FNodePath, t);
             }
             PinsChanged = true;
         }
@@ -231,16 +235,16 @@ namespace VVVV.SceneGraph
                         {
                             if (FTexPins[key] != null)
                             {
-                                var slot = 1000;
+                                TextureInfo ti = null;
                                 for (int t = 0; t < me.Material.Textures.Length; t++)
                                 {
                                     if (me.Material.Textures[t].Intent.ToString() == key)
                                     {
-                                        slot = t;
+                                        ti = me.Material.Textures[t];
                                         break;
                                     }
                                 }
-                                FTexPins[key].IOObject[incr][context] = n.GetTexture(context, slot, FNodePath);
+                                FTexPins[key].IOObject[incr][context] = n.GetTexture(ti, FNodePath, context);
                             }
                         }
                         incr++;
@@ -262,7 +266,7 @@ namespace VVVV.SceneGraph
 
             foreach (var n in FSelected)
             {
-                n.ReleaseTexture(FNodePath, context);
+                n.ReleaseTexture(FNodePath, context: context);
                 n.PurgeTextures();
             }
         }

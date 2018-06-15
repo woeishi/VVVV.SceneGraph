@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Xml.Linq;
+using System.Linq;
 
 namespace SceneGraph.Core
 {
@@ -18,7 +20,8 @@ namespace SceneGraph.Core
 
         public MeshInfo[] MeshInfos { get; protected set; }
         public MaterialInfo[] MaterialInfos { get; protected set; }
-        internal ResourceManager<U, V, W> ResourceManager { get; private set; }
+        public TextureInfo[] TextureInfos { get; protected set; }
+        ResourceManager<U, V, W> ResourceManager { get; set; }
 
         public Scene(string path)
         {
@@ -34,15 +37,29 @@ namespace SceneGraph.Core
 
         protected void InitializeResources(Func<int, U, V> meshCreate, Func<string, U, W> textureCreate)
         {
-            ResourceManager = new ResourceManager<U, V, W>(MeshInfos, MaterialInfos);
+            var texHash = new Dictionary<TextureInfo,TextureInfo>();
+            for (int i = 0; i < MaterialInfos.Length; i++)
+            {
+                for (int j = 0; j < MaterialInfos[i].Textures.Length; j++)
+                {
 
-            Func<int, int, U, W> tc = (i, j, ctx) => {
-                var texPath = MaterialInfos[i].Textures[j].Path;
+                    if (texHash.ContainsKey(MaterialInfos[i].Textures[j]))
+                        MaterialInfos[i].Textures[j] = texHash[MaterialInfos[i].Textures[j]];
+                    else
+                        texHash.Add(MaterialInfos[i].Textures[j], MaterialInfos[i].Textures[j]);
+                }
+            }
+            TextureInfos = texHash.Values.Select((t, index) => { t.Index = index; return t; } ).ToArray();
+
+            ResourceManager = new ResourceManager<U, V, W>(MeshInfos, TextureInfos);
+            Func<int, U, W> ttc = (i, ctx) => {
+                var texPath = TextureInfos[i].Path;
                 if (!Path.IsPathRooted(texPath))
                     texPath = Path.Combine(AssetRoot, texPath);
                 return textureCreate(texPath, ctx);
             };
-            ResourceManager.Initialize(meshCreate, tc);
+
+            ResourceManager.Initialize(meshCreate, ttc);
         }
 
         public void Dispose()
@@ -74,22 +91,29 @@ namespace SceneGraph.Core
             ResourceManager.PurgeGeometry(me.MeshID);
         }
 
-        internal W GetTexture(GraphNode node, U context, int textureSlot, string nodePath)
+        internal W GetTexture(TextureInfo textureInfo, string nodePath, U context)
         {
-            var me = (node.Element as MeshElement);
-            return ResourceManager.GetTexture(me.MaterialID, textureSlot, context, nodePath);
+            if (textureInfo != null)
+                return ResourceManager.GetTexture(textureInfo.Index, nodePath, context);
+            else
+                return default(W);
         }
 
-        internal void ReleaseTexture(GraphNode node, U context, string nodePath, int textureSlot = -1)
+        internal void ReleaseTexture(GraphNode node, TextureInfo textureInfo, string nodePath, U context)
         {
             var me = (node.Element as MeshElement);
-            ResourceManager.ReleaseTexture(me.MaterialID, textureSlot, context, nodePath);
+            if (textureInfo == null)
+                foreach (var t in me.Material.Textures)
+                    ResourceManager.ReleaseTexture(t.Index, nodePath, context);
+            else 
+                ResourceManager.ReleaseTexture(textureInfo.Index, nodePath, context);
         }
 
         internal void PurgeTextures(GraphNode node)
         {
             var me = (node.Element as MeshElement);
-            ResourceManager.PurgeTextures(me.MaterialID);
+            foreach (var t in me.Material.Textures)
+                ResourceManager.PurgeTextures(t.Index);
         }
     }
 }
