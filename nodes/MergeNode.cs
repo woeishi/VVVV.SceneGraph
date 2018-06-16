@@ -47,7 +47,8 @@ namespace VVVV.SceneGraph
                 FSelected.SliceCount = 0;
                 for (int i = 0; i < spreadMax; i++)
                 {
-                    FOutput[i] = FInput[i]??FPart[i];
+                    if (i < FInput.SliceCount)
+                        FOutput[i] = FInput[i]??FPart[i];
                     if (FInput[i] != null && FPart[i] != null)
                     {
                         if (FOutput[i].Scene != FPart[i].Scene)
@@ -56,7 +57,8 @@ namespace VVVV.SceneGraph
                             FError[i] = "part is not a subtree of input";
                         else
                         {
-                            FOutput[i] = GraphNode.CloneGraph(FInput[i]);
+                            if (i < FInput.SliceCount)
+                                FOutput[i] = GraphNode.CloneGraph(FInput[i]);
                             var mergePoint = FOutput[i].Merge(FPart[i]);
                             FSelected.Add(mergePoint);
                             FError[i] = string.Empty;

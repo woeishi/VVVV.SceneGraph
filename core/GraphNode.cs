@@ -69,17 +69,14 @@ namespace SceneGraph.Core
             Children = new GraphNode[other.Children.Length];
             LastDescendantID = other.LastDescendantID;
 
-            Transforms = other.Transforms;
+            Transforms = new List<Transform>(other.Transforms);
             Local = other.Local;
             AccumulatedTransform = other.AccumulatedTransform;
         }
 
         public void Fork()
         {
-            var tmp = Transforms;
-            Transforms = new List<Transform>();
-            Transforms.Add(new Transform(tmp[0], this));
-            Transforms.AddRange(tmp);
+            Transforms.Insert(0,new Transform(Transforms[0], this));
             //from the fork onward all nodes have to hold their own accumulated transform
             CloneAccumulated(this);
         }
@@ -105,15 +102,15 @@ namespace SceneGraph.Core
             var ri = right.Transforms.Count - 1;
             while (li>=0 && ri>=0)
             {
-                if (left.Transforms[li].Matrix != right.Transforms[ri].Matrix)
+                //if (left.Transforms[li].Matrix != right.Transforms[ri].Matrix)
+                if (left.Transforms[li].Owner != right.Transforms[ri].Owner)
                     break;
                 li--;
                 ri--;
             }
 
-            var tmp = left.Transforms;
-            left.Transforms = new List<Transform>(right.Transforms.GetRange(0, ri + 1));
-            left.Transforms.AddRange(tmp);
+            var tmp = right.Transforms.GetRange(0, ri + 1);
+            left.Transforms.InsertRange(0, tmp);
 
             for (int i = 0; i < left.Children.Length; i++)
                 MergeTransforms(left.Children[i], right.Children[i]);
