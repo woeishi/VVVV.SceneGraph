@@ -8,7 +8,7 @@ namespace SceneGraph.Core
 {
     public static class GraphTraversing
     {
-        public static IEnumerable<GraphNode> ExpandNodes(this GraphNode node, int limit, int depth, bool includeSelf = true)
+        public static IEnumerable<GraphNode> ExpandNodes(this GraphNode node, int limit, bool includeSelf = true, int depth = 0)
         {
             if (node != null && (limit < 0 || depth <= limit))
             {
@@ -16,17 +16,15 @@ namespace SceneGraph.Core
                     yield return node;
                 depth++;
                 foreach (var c in node.Children)
-                    foreach (var n in ExpandNodes(c, limit, depth))
+                    foreach (var n in c.ExpandNodes(limit, depth: depth))
                         yield return n;
             }
         }
 
-        public static IEnumerable<GraphNode> ExpandMeshNodes(this GraphNode node, int limit, int depth)
+        public static IEnumerable<GraphNode> ExpandMeshNodes(this GraphNode node, int limit, int depth = 0)
         {
             if (node != null && (limit < 0 || depth <= limit))
             {
-                //if ((node.Element as MeshElement)?.MeshCount > 0)
-                //    yield return node;
                 if (node.Element is MeshElement)
                     yield return node;
                 depth++;
