@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using SlimDX;
+﻿using SlimDX;
 
 namespace SceneGraph.Core
 {
@@ -13,8 +11,6 @@ namespace SceneGraph.Core
         public float SpecularPower { get; internal set; }
         //public List<eAssimpTextureMapMode> TextureMapMode { get; }
         //public List<eAssimpTextureOp> TextureOperation { get; }
-        //public List<string> TexturePath { get; }
-        //public List<eAssimpTextureType> TextureType { get; }
         public TextureInfo[] Textures {get; internal set; }
     }
 
@@ -38,6 +34,7 @@ namespace SceneGraph.Core
     {
         public int Index { get; internal set; }
         public string Path { get; internal set; }
+        public string FullPath { get; internal set; }
         public TextureIntent Intent { get; internal set; }
         //MapMode /sampler
         //blend operation

@@ -3,10 +3,9 @@ using SceneGraph.Core;
 using SceneGraph.DX11;
 using AssimpNet;
 
-
 namespace SceneGraph.Adaptors
 {
-    public class SceneAssimp : SceneDX11<AssimpScene>
+    public class SceneAssimp : Scene<AssimpScene>
     {
         public SceneAssimp(string path) : base(path)
         {
@@ -17,24 +16,22 @@ namespace SceneGraph.Adaptors
         {
             Source = new AssimpScene(path, true, false);
 
-            MeshInfos = new MeshInfo[Source.Meshes.Count];
-            for (int i = 0; i < MeshInfos.Length; i++)
-                MeshInfos[i] = Source.Meshes[i].ToMeshInfo(i);
+            InitializeInfos(Source.Meshes.Count, (i) => Source.Meshes[i].ToMeshInfo(i), Source.Materials.Count, (i) => Source.Materials[i].ToMaterialInfo(i));
 
-            MaterialInfos = new MaterialInfo[Source.Materials.Count];
-            for (int i = 0; i < MaterialInfos.Length; i++)
-                MaterialInfos[i] = Source.Materials[i].ToMaterialInfo(i);
+            var dx11 = new DX11ResourceManager(
+                MeshInfos.Length, 
+                (i, ctx) => DX11Utils.LoadMesh(ctx,
+                                                Source.Meshes[i].VerticesCount,
+                                                Source.Meshes[i].Vertices,
+                                                Source.Meshes[i].Indices.ToArray(),
+                                                Source.Meshes[i].GetInputElements().ToArray(),
+                                                Source.Meshes[i].CalculateVertexSize(),
+                                                Source.Meshes[i].BoundingBox), 
+                TextureInfos.Length, 
+                (i, ctx) => DX11Utils.CreateTexture(ctx, TextureInfos[i].FullPath));
 
-            InitializeDX11Resources((i, ctx) => {
-                var m = Source.Meshes[i];
-                return DX11Utils.LoadMesh(ctx, 
-                                          m.VerticesCount, 
-                                          m.Vertices, 
-                                          m.Indices.ToArray(), 
-                                          m.GetInputElements().ToArray(), 
-                                          m.CalculateVertexSize(), 
-                                          m.BoundingBox);
-            });
+            AddResourceManager(dx11);
+
             CreateGraph();
         }
 

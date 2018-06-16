@@ -2,21 +2,19 @@
 
 namespace SceneGraph.Core
 {
-    internal class ResourceManager<T, U, V> : IDisposable
+    internal class ResourceManager<T, U, V> : IResourceManager
         where U : IDisposable
         where V : IDisposable
     {
-        internal ResourceHandler<T, U>[] MeshHandlers { get; }
-        internal ResourceHandler<T, V>[] TextureHandlers { get; }
+        public Type KeyType { get; }
+        internal ResourceHandler<T, U>[] MeshHandlers { get; private set; }
+        internal ResourceHandler<T, V>[] TextureHandlers { get; private set; }
 
-        internal ResourceManager(MeshInfo[] meshInfos, TextureInfo[] textureInfos)
+        internal ResourceManager(int meshCount, Func<int,T,U> meshCreate, int textureCount, Func<int, T, V> textureCreate)
         {
-            MeshHandlers = new ResourceHandler<T, U>[meshInfos.Length];
-            TextureHandlers = new ResourceHandler<T, V>[textureInfos.Length];
-        }
+            KeyType = typeof(T);
 
-        internal void Initialize(Func<int,T,U> meshCreate, Func<int, T, V> texCreate)
-        {
+            MeshHandlers = new ResourceHandler<T, U>[meshCount];
             for (int i = 0; i < MeshHandlers.Length; i++)
             {
                 int id = i;
@@ -24,11 +22,12 @@ namespace SceneGraph.Core
                 MeshHandlers[i] = new ResourceHandler<T, U>(mc);
             }
 
+            TextureHandlers = new ResourceHandler<T, V>[textureCount];
             for (int i = 0; i < TextureHandlers.Length; i++)
             {
                 int id = i;
-                Func<T, V> ttc = (T) => texCreate(id, T);
-                TextureHandlers[i] = new ResourceHandler<T, V>(ttc);
+                Func<T, V> tc = (T) => textureCreate(id, T);
+                TextureHandlers[i] = new ResourceHandler<T, V>(tc);
             }
         }
 
@@ -40,12 +39,12 @@ namespace SceneGraph.Core
                 th.Dispose();
         }
 
-        internal U GetGeometry(int meshId, string nodePath, T context) => MeshHandlers[meshId].Get(nodePath, context);
-        internal void ReleaseGeometry(int meshId, string nodePath, T context) => MeshHandlers[meshId].Release(nodePath, context);
-        internal void PurgeGeometry(int meshId) => MeshHandlers[meshId].Purge();
+        public dynamic GetGeometry(int meshId, string nodePath, dynamic context) => MeshHandlers[meshId].Get(nodePath, context);
+        public void ReleaseGeometry(int meshId, string nodePath, dynamic context) => MeshHandlers[meshId].Release(nodePath, context);
+        public void PurgeGeometry(int meshId) => MeshHandlers[meshId].Purge();
 
-        internal V GetTexture(int textureId, string nodePath, T context) => TextureHandlers[textureId].Get(nodePath, context);
-        internal void ReleaseTexture(int textureId, string nodePath, T context) => TextureHandlers[textureId].Release(nodePath, context);
-        internal void PurgeTextures(int textureId) => TextureHandlers[textureId].Purge();
+        public dynamic GetTexture(int textureId, string nodePath, dynamic context) => TextureHandlers[textureId].Get(nodePath, context);
+        public void ReleaseTexture(int textureId, string nodePath, dynamic context) => TextureHandlers[textureId].Release(nodePath, context);
+        public void PurgeTextures(int textureId) => TextureHandlers[textureId].Purge();
     }
 }

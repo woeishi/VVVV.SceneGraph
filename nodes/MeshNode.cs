@@ -7,7 +7,6 @@ using System.ComponentModel.Composition;
 using VVVV.PluginInterfaces.V2;
 
 using SceneGraph.Core;
-using SceneGraph.DX11;
 
 using SlimDX;
 using FeralTic.DX11;

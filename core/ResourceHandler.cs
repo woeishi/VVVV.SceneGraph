@@ -3,9 +3,7 @@ using System.Collections.Generic;
 
 namespace SceneGraph.Core
 {
-    internal class ResourceHandler<U, T> : IDisposable 
-        where T : IDisposable
-        //where U : class
+    internal class ResourceHandler<U, T> : IDisposable where T : IDisposable
     {
         Func<U, T> create;
         Dictionary<U, T> resources;
@@ -34,9 +32,8 @@ namespace SceneGraph.Core
                 users.Add(key, hashSet);
             }
             else
-            {
                 users[key].Add(nodePath);
-            }
+
             return resources[key];
         }
 

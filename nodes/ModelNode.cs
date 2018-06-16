@@ -98,6 +98,7 @@ namespace VVVV.SceneGraph
         public void Dispose()
         {
             FMesh.Dispose();
+            FTransform.Dispose();
             FMaterial.Dispose();
         }
 

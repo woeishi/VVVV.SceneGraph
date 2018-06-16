@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-using SlimDX;
+﻿using SlimDX;
 using SlimDX.Direct3D11;
 using FeralTic.DX11;
 using FeralTic.DX11.Resources;
@@ -10,6 +7,11 @@ namespace SceneGraph.DX11
 {
     internal static class DX11Utils
     {
+        internal static DX11Texture2D CreateTexture(DX11RenderContext context, string path)
+        {
+            return DX11Texture2D.FromFile(context, path);
+        }
+
         internal static DX11IndexedGeometry LoadMesh(DX11RenderContext context, int vertexCount, DataStream vStream, int[] indices, InputElement[] inputLayout, int vertexSize, BoundingBox bounds)
         {
             if (indices.Length > 0 && vertexCount > 0)
@@ -17,7 +19,7 @@ namespace SceneGraph.DX11
                 DataStream vS = vStream;
                 vS.Position = 0;
 
-                var vertices = new SlimDX.Direct3D11.Buffer(context.Device, vS, new BufferDescription()
+                var vertices = new Buffer(context.Device, vS, new BufferDescription()
                 {
                     BindFlags = BindFlags.VertexBuffer,
                     CpuAccessFlags = CpuAccessFlags.None,
