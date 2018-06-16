@@ -243,7 +243,7 @@ namespace VVVV.SceneGraph
                                         break;
                                     }
                                 }
-                                FTexPins[key].IOObject[incr][context] = n.GetTexture(ti, FNodePath, context);
+                                FTexPins[key].IOObject[incr][context] = n.GetTexture(ti, FNodePath+incr.ToString(), context)??context.DefaultTextures.WhiteTexture;
                             }
                         }
                         incr++;

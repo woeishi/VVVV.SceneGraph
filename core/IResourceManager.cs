@@ -11,6 +11,7 @@ namespace SceneGraph.Core
         void PurgeGeometry(int meshId);
 
         dynamic GetTexture(int textureId, string nodePath, dynamic context);
+        dynamic GetDefaultTexture(dynamic context);
         void ReleaseTexture(int textureId, string nodePath, dynamic context);
         void PurgeTextures(int textureId);
     }

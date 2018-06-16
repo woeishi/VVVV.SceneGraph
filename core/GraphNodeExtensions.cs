@@ -19,7 +19,7 @@
 
         internal static dynamic GetTexture(this GraphNode node, TextureInfo textureInfo, string nodePath, dynamic context)
         {
-            return node.Scene.GetTexture(textureInfo, nodePath, context) ?? context.DefaultTextures.WhiteTexture;
+            return node.Scene.GetTexture(textureInfo, nodePath, context);
         }
 
         internal static void ReleaseTexture(this GraphNode node, string nodePath, TextureInfo textureInfo = null, dynamic context = null)

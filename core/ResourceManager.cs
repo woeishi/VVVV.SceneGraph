@@ -9,8 +9,9 @@ namespace SceneGraph.Core
         public Type KeyType { get; }
         internal ResourceHandler<T, U>[] MeshHandlers { get; private set; }
         internal ResourceHandler<T, V>[] TextureHandlers { get; private set; }
+        protected ResourceHandler<T, V> DefaultTexture { get; private set; }
 
-        internal ResourceManager(int meshCount, Func<int,T,U> meshCreate, int textureCount, Func<int, T, V> textureCreate)
+        internal ResourceManager(int meshCount, Func<int,T,U> meshCreate, int textureCount, Func<int, T, V> textureCreate, Func<T,V> defaultTextureCreate)
         {
             KeyType = typeof(T);
 
@@ -29,6 +30,8 @@ namespace SceneGraph.Core
                 Func<T, V> tc = (T) => textureCreate(id, T);
                 TextureHandlers[i] = new ResourceHandler<T, V>(tc);
             }
+
+            DefaultTexture = new ResourceHandler<T, V>(defaultTextureCreate);
         }
 
         public void Dispose()
@@ -37,6 +40,7 @@ namespace SceneGraph.Core
                 mh.Dispose();
             foreach (var th in TextureHandlers)
                 th.Dispose();
+            DefaultTexture.Dispose();
         }
 
         public dynamic GetGeometry(int meshId, string nodePath, dynamic context) => MeshHandlers[meshId].Get(nodePath, context);
@@ -44,6 +48,7 @@ namespace SceneGraph.Core
         public void PurgeGeometry(int meshId) => MeshHandlers[meshId].Purge();
 
         public dynamic GetTexture(int textureId, string nodePath, dynamic context) => TextureHandlers[textureId].Get(nodePath, context);
+        public dynamic GetDefaultTexture(dynamic context) => DefaultTexture.Get("",context);
         public void ReleaseTexture(int textureId, string nodePath, dynamic context) => TextureHandlers[textureId].Release(nodePath, context);
         public void PurgeTextures(int textureId) => TextureHandlers[textureId].Purge();
     }

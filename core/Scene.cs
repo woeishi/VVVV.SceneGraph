@@ -84,7 +84,7 @@ namespace SceneGraph.Core
 
         public dynamic GetGeometry(GraphNode node, string nodePath, dynamic context)
         {
-            var rm = ResourceManager.Where(m => m.KeyType == context.GetType()).First();
+            var rm = ResourceManager.Where(m => m.KeyType.IsAssignableFrom(context.GetType())).First();
             var me = (node.Element as MeshElement);
             return rm.GetGeometry(me.MeshID, nodePath, context);
         }
@@ -93,7 +93,7 @@ namespace SceneGraph.Core
         {
             IEnumerable<IResourceManager> mgrs = ResourceManager;
             if (context != null)
-                mgrs = ResourceManager.Where(m => m.KeyType == context.GetType());
+                mgrs = ResourceManager.Where(m => m.KeyType.IsAssignableFrom(context.GetType()));
             var me = (node.Element as MeshElement);
             foreach (var rm in mgrs)
                 rm.ReleaseGeometry(me.MeshID, nodePath, context);
@@ -108,18 +108,18 @@ namespace SceneGraph.Core
 
         public dynamic GetTexture(TextureInfo textureInfo, string nodePath, dynamic context)
         {
-            var rm = ResourceManager.Where(m => m.KeyType == context.GetType()).First();
+            var rm = ResourceManager.Where(m => m.KeyType.IsAssignableFrom(context.GetType())).First();
             if (textureInfo != null)
                 return rm.GetTexture(textureInfo.Index, nodePath, context);
             else
-                return null;
+                return rm.GetDefaultTexture(context);
         }
 
         public void ReleaseTexture(GraphNode node, TextureInfo textureInfo, string nodePath, dynamic context)
         {
             IEnumerable<IResourceManager> mgrs = ResourceManager;
             if (context != null)
-                mgrs = ResourceManager.Where(m => m.KeyType == context.GetType());
+                mgrs = ResourceManager.Where(m => m.KeyType.IsAssignableFrom(context.GetType()));
 
             var me = (node.Element as MeshElement);
             if (textureInfo == null)
