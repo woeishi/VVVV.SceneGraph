@@ -17,14 +17,14 @@
             node.Scene.PurgeGeometry(node);
         }
 
-        internal static dynamic GetTexture(this GraphNode node, TextureInfo textureInfo, string nodePath, dynamic context)
+        internal static dynamic GetTexture(this GraphNode node, TextureInfo textureInfo, string nodePath, int slice, dynamic context)
         {
-            return node.Scene.GetTexture(textureInfo, nodePath, context);
+            return node.Scene.GetTexture(textureInfo, nodePath+slice.ToString(), context);
         }
 
-        internal static void ReleaseTexture(this GraphNode node, string nodePath, TextureInfo textureInfo = null, dynamic context = null)
+        internal static void ReleaseTexture(this GraphNode node, string nodePath, int slice, TextureInfo textureInfo = null, dynamic context = null)
         {
-            node.Scene.ReleaseTexture(node, textureInfo, nodePath, context);
+            node.Scene.ReleaseTexture(node, textureInfo, nodePath+slice.ToString(), context);
         }
 
         internal static void PurgeTextures(this GraphNode node)

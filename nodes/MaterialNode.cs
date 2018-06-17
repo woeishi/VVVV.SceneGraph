@@ -115,10 +115,14 @@ namespace VVVV.SceneGraph
                 FPathPins[key].Dispose();
                 FPathPins[key] = null;
 
+                int i = 0;
                 foreach (var n in FSelected)
+                {
                     foreach (var t in (n.Element as MeshElement).Material.Textures)
                         if (t.Intent.ToString() == key)
-                            n.ReleaseTexture(FNodePath, t);
+                            n.ReleaseTexture(FNodePath, i, t);
+                    i++;
+                }
             }
             PinsChanged = true;
         }
@@ -135,8 +139,7 @@ namespace VVVV.SceneGraph
 
                 var input = IsNested ? FGraphNodeInternal : FGraphNode;
 
-                var trash = new Spread<GraphNode>(FSelected.SliceCount);
-                trash.AssignFrom(FSelected);
+                var trash = FSelected.Select((node, index) => new { index, node }).ToList();
                 FSelected.SliceCount = 0;
                 FMatID.SliceCount = 0;
                 FAmbient.SliceCount = 0;
@@ -150,7 +153,7 @@ namespace VVVV.SceneGraph
                     if (input[i] != null && (input[i].Element is MeshElement))
                     {
                         FSelected.Add(input[i]);
-                        trash.RemoveAll(t => t.ID == input[i].ID);
+                        trash.RemoveAll(t => t.index == i && t.node.ID == input[i].ID);
 
                         var element = (MeshElement)FSelected[i].Element;
                         FMatID.Add(element.MaterialID);
@@ -166,8 +169,8 @@ namespace VVVV.SceneGraph
                 }
                 foreach (var t in trash)
                 {
-                    t.ReleaseTexture(FNodePath);
-                    t.PurgeTextures();
+                    t.node.ReleaseTexture(FNodePath,t.index);
+                    t.node.PurgeTextures();
                 }
             }
 
@@ -212,10 +215,12 @@ namespace VVVV.SceneGraph
 
         public void Dispose()
         {
+            int i = 0;
             foreach (var n in FSelected)
             {
-                n.ReleaseTexture(FNodePath);
+                n.ReleaseTexture(FNodePath, i);
                 n.PurgeTextures();
+                i++;
             }
         }
 
@@ -243,7 +248,7 @@ namespace VVVV.SceneGraph
                                         break;
                                     }
                                 }
-                                FTexPins[key].IOObject[incr][context] = n.GetTexture(ti, FNodePath+incr.ToString(), context)??context.DefaultTextures.WhiteTexture;
+                                FTexPins[key].IOObject[incr][context] = n.GetTexture(ti, FNodePath, incr, context)??context.DefaultTextures.WhiteTexture;
                             }
                         }
                         incr++;
@@ -262,11 +267,12 @@ namespace VVVV.SceneGraph
                 if (pins?.IOObject != null)
                     foreach (var s in pins.IOObject)
                         s.Remove(context);
-
+            int i = 0;
             foreach (var n in FSelected)
             {
-                n.ReleaseTexture(FNodePath, context: context);
+                n.ReleaseTexture(FNodePath, i, context: context);
                 n.PurgeTextures();
+                i++;
             }
         }
     }
