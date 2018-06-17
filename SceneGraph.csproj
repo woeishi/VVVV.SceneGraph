@@ -113,8 +113,8 @@
     <Compile Include="core\MeshInfo.cs" />
     <Compile Include="core\ResourceHandler.cs" />
     <Compile Include="core\ResourceManager.cs" />
-    <Compile Include="dx11\DX11ResourceManager.cs" />
-    <Compile Include="dx11\DX11Utils.cs" />
+    <Compile Include="backends\DX11ResourceManager.cs" />
+    <Compile Include="backends\DX11Utils.cs" />
     <Compile Include="core\GraphNode.cs" />
     <Compile Include="core\Element.cs" />
     <Compile Include="core\GraphTraversing.cs" />
