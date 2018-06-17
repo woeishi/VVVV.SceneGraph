@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
 
 using System.ComponentModel.Composition;
 using VVVV.PluginInterfaces.V1;
 using VVVV.PluginInterfaces.V2;
+using VVVV.PluginInterfaces.V2.EX9;
 using VVVV.Hosting.IO;
 
 using SceneGraph.Core;
-using FeralTic.DX11;
-using VVVV.DX11;
+using SlimDX.Direct3D9;
 
 namespace VVVV.SceneGraph
 {
-    [PluginInfo(Name = "Model", Category = "SceneGraph", Version = "DX11",
+    [PluginInfo(Name = "Model", Category = "SceneGraph", Version = "EX9",
                 Help = "Returns transformation, model and material properties.",
                 Tags = "geometry, mesh, material",
                 Author = "woei")]
-    public class ModelNode : IPluginEvaluate, IPartImportsSatisfiedNotification, IDisposable, IDX11ResourceHost
+    public class ModelEX9Node : DXMeshOutPluginBase, IPluginEvaluate, IPartImportsSatisfiedNotification, IDisposable
     {
         #region fields & pins
         #pragma warning disable 0649
@@ -40,13 +39,16 @@ namespace VVVV.SceneGraph
         #pragma warning restore
         #endregion fields & pins
 
+        [ImportingConstructor()]
+        public ModelEX9Node(IPluginHost host) : base(host) { }
+
         public void OnImportsSatisfied()
         {
             FName.SliceCount = 0;
 
             FSelected.SliceCount = 0;
 
-            var nodeInfo = FIOFactory.NodeInfos.First(n => n.Name == "Mesh" && n.Category == "SceneGraph");
+            var nodeInfo = FIOFactory.NodeInfos.First(n => n.Name == "Mesh" && n.Category == "SceneGraph" && n.Version == "EX9");
             FMesh = FIOFactory.CreatePlugin(nodeInfo, c => c.IOAttribute.Name == "GraphNodeInternal", c => FSelected);
             FIOFactory.Configuring += (o, e) => ((IPlugin)FMesh).Configurate((IPluginConfig)e.PluginConfig);
 
@@ -54,7 +56,7 @@ namespace VVVV.SceneGraph
             FTransform = FIOFactory.CreatePlugin(nodeInfo, c => c.IOAttribute.Name == "GraphNodeInternal", c => FSelected);
             FIOFactory.Configuring += (o, e) => ((IPlugin)FTransform).Configurate((IPluginConfig)e.PluginConfig);
 
-            nodeInfo = FIOFactory.NodeInfos.First(n => n.Name == "Material" && n.Category == "SceneGraph");
+            nodeInfo = FIOFactory.NodeInfos.First(n => n.Name == "Material" && n.Category == "SceneGraph" && n.Version == "EX9");
             FMaterial = FIOFactory.CreatePlugin(nodeInfo, c => c.IOAttribute.Name == "GraphNodeInternal", c => FSelected);
             FIOFactory.Configuring += (o, e) => ((IPlugin)FMaterial).Configurate((IPluginConfig)e.PluginConfig);
         }
@@ -88,8 +90,6 @@ namespace VVVV.SceneGraph
             FMaterial.Evaluate(spreadMax);
         }
 
-        
-
         public void Dispose()
         {
             FMesh.Dispose();
@@ -97,16 +97,11 @@ namespace VVVV.SceneGraph
             FMaterial.Dispose();
         }
 
-        public void Update(DX11RenderContext context)
+        protected override Mesh CreateMesh(Device device)
         {
-            (FMesh.PluginBase as IDX11ResourceHost).Update(context);
-            (FMaterial.PluginBase as IDX11ResourceHost).Update(context);
+            return (FMesh.PluginBase as MeshEX9Node).CreateMeshProxy(device);
         }
 
-        public void Destroy(DX11RenderContext context, bool force)
-        {
-            (FMesh.PluginBase as IDX11ResourceHost).Destroy(context, force);
-            (FMaterial.PluginBase as IDX11ResourceHost).Destroy(context, force);
-        }
+        protected override void UpdateMesh(Mesh mesh) { }
     }
 }

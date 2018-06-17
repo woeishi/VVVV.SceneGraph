@@ -9,17 +9,17 @@ using VVVV.PluginInterfaces.V2;
 using SceneGraph.Core;
 
 using SlimDX;
-using FeralTic.DX11;
-using FeralTic.DX11.Resources;
-using VVVV.DX11;
+using SlimDX.Direct3D9;
+using VVVV.PluginInterfaces.V1;
+using VVVV.PluginInterfaces.V2.EX9;
 #endregion usings
 
 namespace VVVV.SceneGraph
 {
-    [PluginInfo(Name = "Mesh", Category = "SceneGraph", Version = "DX11",
+    [PluginInfo(Name = "Mesh", Category = "SceneGraph", Version = "EX9",
                 Help = "Returns the meshes and additional geometry related data.", Tags = "geometry",
                 Author = "woei")]
-    public class MeshNode : IPluginEvaluate, IPartImportsSatisfiedNotification, IDisposable, IDX11ResourceHost, INestedNode
+    public class MeshEX9Node : DXMeshOutPluginBase, IPluginEvaluate, IPartImportsSatisfiedNotification, IDisposable, INestedNode
     {
         #region fields & pins
         #pragma warning disable 0649
@@ -31,8 +31,6 @@ namespace VVVV.SceneGraph
         [Output("Mesh ID")]
         ISpread<int> FMeshID;
 
-        [Output("Geometry")]
-        ISpread<DX11Resource<DX11IndexedGeometry>> FGeometry;
         bool FInvalidate;
 
         [Output("Bin Size", Order = 500)]
@@ -58,14 +56,19 @@ namespace VVVV.SceneGraph
         IIOContainer<ISpread<int>> FColorChannelCount;
         IIOContainer<ISpread<int>> FUvChannelCount;
         IIOContainer<ISpread<int>> FVerticesCount;
+
         #pragma warning restore
         #endregion fields & pins
+
+        [ImportingConstructor()]
+        public MeshEX9Node(IPluginHost host) : base(host) {}
 
         public void OnImportsSatisfied()
         {
             FSelected.SliceCount = 0;
             FMeshID.SliceCount = 0;
-            FGeometry.SliceCount = 0;
+            FMeshOut.SliceCount = 0;
+            FMeshOut.Order = 2;
 
             IsNested = !FGraphNodeInternal.GetType().Namespace.Contains("VVVV.Hosting");
 
@@ -205,35 +208,35 @@ namespace VVVV.SceneGraph
                     t.ReleaseGeometry(FNodePath);
                     t.PurgeGeometry();
                 }
-
-                FGeometry.ResizeAndDismiss(FSelected.SliceCount, () => new DX11Resource<DX11IndexedGeometry>());
+                FMeshOut.SliceCount = FSelected.SliceCount;
             }
 
             if (PinsChanged || FInvalidate)
             {
                 if (FMin != null)
                 {
-                    FMin.IOObject.SliceCount = FGeometry.SliceCount;
-                    FMax.IOObject.SliceCount = FGeometry.SliceCount;
+                    FMin.IOObject.SliceCount = FMeshOut.SliceCount;
+                    FMax.IOObject.SliceCount = FMeshOut.SliceCount;
                 }
 
                 if (FBones != null)
                 {
-                    FBones.IOObject.SliceCount = FGeometry.SliceCount;
-                    FBoneNames.IOObject.SliceCount = FGeometry.SliceCount;
+                    FBones.IOObject.SliceCount = FMeshOut.SliceCount;
+                    FBoneNames.IOObject.SliceCount = FMeshOut.SliceCount;
                 }
 
                 if (FColorChannelCount != null)
                 {
-                    FColorChannelCount.IOObject.SliceCount = FGeometry.SliceCount;
-                    FUvChannelCount.IOObject.SliceCount = FGeometry.SliceCount;
+                    FColorChannelCount.IOObject.SliceCount = FMeshOut.SliceCount;
+                    FUvChannelCount.IOObject.SliceCount = FMeshOut.SliceCount;
                 }
 
                 if (FVerticesCount != null)
-                    FVerticesCount.IOObject.SliceCount = FGeometry.SliceCount;
+                    FVerticesCount.IOObject.SliceCount = FMeshOut.SliceCount;
 
                 for (int i = 0; i < FSelected.SliceCount; i++)
                 {
+                    
                     var mesh = (FSelected[i].Element as MeshElement).Mesh;
                     if (FMin != null)
                     {
@@ -266,31 +269,33 @@ namespace VVVV.SceneGraph
             }
         }
 
-        public void Update(DX11RenderContext context)
+        void DestroyMesh(int slice, Mesh mesh, DestroyReason args)
         {
-            if (FInvalidate || (!FGeometry.All(r => r.Contains(context))))
-            {
-                int incr = 0;
-                foreach (var n in FSelected)
-                {
-                    FGeometry[incr][context] = n.GetGeometry(FNodePath, context);
-                    incr++;
-                }
-            }
+            
+            FSelected[slice].ReleaseGeometry(FNodePath, mesh.Device);
+            FSelected[slice].PurgeGeometry();
         }
 
-        public void Destroy(DX11RenderContext context, bool force)
+        protected override Mesh CreateMesh(Device device)
         {
-            //remove context from all slices
-            foreach (var slice in FGeometry)
-                slice.Remove(context);
+            Mesh[] meshes = new Mesh[FMeshOut.SliceCount];
+            for (int i = 0; i < FMeshOut.SliceCount; i++)
+                meshes[i] = FSelected[i].GetGeometry(FNodePath, device);
 
-            //set resource as released by this node
-            foreach (var n in FSelected)
-            {
-                n.ReleaseGeometry(FNodePath, context);
-                n.PurgeGeometry();
-            }
+            if (device is DeviceEx)
+                return Mesh.Concatenate(device, meshes, MeshFlags.Use32Bit);
+            else
+                return Mesh.Concatenate(device, meshes, MeshFlags.Use32Bit | MeshFlags.Managed);
+        }
+
+        public Mesh CreateMeshProxy(Device device)
+        {
+            return CreateMesh(device);
+        }
+
+        protected override void UpdateMesh(Mesh mesh)
+        {
+            
         }
     }
 }

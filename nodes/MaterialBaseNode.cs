@@ -9,18 +9,11 @@ using VVVV.PluginInterfaces.V2;
 using SceneGraph.Core;
 
 using SlimDX;
-using FeralTic.DX11;
-using FeralTic.DX11.Resources;
-using VVVV.DX11;
 #endregion usings
 
 namespace VVVV.SceneGraph
 {
-	[PluginInfo(Name = "Material", Category = "SceneGraph", Version = "DX11",
-	            Help = "Returns colors and all available textures of the input GraphNode. Defaults to a white texture if not available.",
-                Tags = "color, texture",
-	            Author = "woei")]
-	public class MaterialNode : IPluginEvaluate, IPartImportsSatisfiedNotification, IDisposable, IDX11ResourceHost, INestedNode
+	public abstract class MaterialNode<T> : IPluginEvaluate, IPartImportsSatisfiedNotification, IDisposable, INestedNode
     {
         #region fields & pins
         #pragma warning disable 0649
@@ -43,23 +36,23 @@ namespace VVVV.SceneGraph
         [Output("Available Textures", Order = 98, BinOrder = 99)]
         ISpread<ISpread<string>> FAvailableTex;
 
-        bool FInvalidate;
+        protected bool FInvalidate;
 
         [Output("Bin Size", Order = 500)]
         ISpread<int> FBinSize;
 
         [Import]
         IPluginHost2 FHost;
-        string FNodePath = string.Empty;
+        protected string FNodePath = string.Empty;
 
-        Spread<GraphNode> FSelected = new Spread<GraphNode>();
+        protected Spread<GraphNode> FSelected = new Spread<GraphNode>();
 
         [Import]
         IIOFactory FIOFactory;
         bool IsNested;
         public bool GraphChanged { get; set; }
         public int PinStartIndex = 100;
-        Dictionary<string, IIOContainer<ISpread<DX11Resource<DX11Texture2D>>>> FTexPins;
+        protected Dictionary<string, IIOContainer<ISpread<T>>> FTexPins;
         Dictionary<string, IIOContainer<ISpread<string>>> FPathPins;
         bool PinsChanged = false;
         #pragma warning restore
@@ -79,7 +72,7 @@ namespace VVVV.SceneGraph
 
         void CreatePinToggles(IIOFactory factory)
         {
-            FTexPins = new Dictionary<string, IIOContainer<ISpread<DX11Resource<DX11Texture2D>>>>();
+            FTexPins = new Dictionary<string, IIOContainer<ISpread<T>>>();
             FPathPins = new Dictionary<string, IIOContainer<ISpread<string>>>();
             int incr = PinStartIndex;
             foreach (var e in Enum.GetNames(typeof(TextureIntent)))
@@ -103,29 +96,33 @@ namespace VVVV.SceneGraph
         {
             if (toggle && FTexPins[key] == null)
             {
-                FTexPins[key] = FIOFactory.CreateIOContainer<ISpread<DX11Resource<DX11Texture2D>>>(new OutputAttribute($"{key} Texture") { Order = order });
+                FTexPins[key] = FIOFactory.CreateIOContainer<ISpread<T>>(new OutputAttribute($"{key} Texture") { Order = order });
                 FTexPins[key].IOObject.SliceCount = 0;
                 FPathPins[key] = FIOFactory.CreateIOContainer<ISpread<string>>(new OutputAttribute($"{key} Texture Path") { Order = order + 1 });
                 FPathPins[key].IOObject.SliceCount = 0;
             }
             else if (FTexPins[key] != null)
             {
+                var p = FTexPins[key];
+                
                 FTexPins[key].Dispose();
                 FTexPins[key] = null;
+
+
                 FPathPins[key].Dispose();
                 FPathPins[key] = null;
 
-                int i = 0;
-                foreach (var n in FSelected)
-                {
-                    foreach (var t in (n.Element as MeshElement).Material.Textures)
+                for (int i = 0; i < FSelected.SliceCount; i++)
+                    foreach (var t in (FSelected[i].Element as MeshElement).Material.Textures)
                         if (t.Intent.ToString() == key)
-                            n.ReleaseTexture(FNodePath, i, t);
-                    i++;
-                }
+                            FSelected[i].ReleaseTexture(FNodePath, i, t);
             }
             PinsChanged = true;
         }
+
+        protected abstract T CreateTextureSlice(string intent, int i);
+
+        protected abstract void DisposeTextureSlice(string intent, int i, T slice);
 
         public void Evaluate(int spreadMax)
 		{
@@ -155,13 +152,13 @@ namespace VVVV.SceneGraph
                         FSelected.Add(input[i]);
                         trash.RemoveAll(t => t.index == i && t.node.ID == input[i].ID);
 
-                        var element = (MeshElement)FSelected[i].Element;
-                        FMatID.Add(element.MaterialID);
-                        FAmbient.Add(element.Material.AmbientColor);
-                        FDiffuse.Add(element.Material.DiffuseColor);
-                        FSpecular.Add(element.Material.SpecularColor);
-                        FSpecPow.Add(element.Material.SpecularPower);
-                        FAvailableTex.Add(element.Material.Textures.Select(e => e.Intent.ToString()).ToSpread());
+                        var material = ((MeshElement)FSelected[i].Element).Material;
+                        FMatID.Add(material.Index);
+                        FAmbient.Add(material.AmbientColor);
+                        FDiffuse.Add(material.DiffuseColor);
+                        FSpecular.Add(material.SpecularColor);
+                        FSpecPow.Add(material.SpecularPower);
+                        FAvailableTex.Add(material.Textures.Select(e => e.Intent.ToString()).ToSpread());
                         FBinSize[i] = 1;
                     }
                     else
@@ -169,7 +166,7 @@ namespace VVVV.SceneGraph
                 }
                 foreach (var t in trash)
                 {
-                    t.node.ReleaseTexture(FNodePath,t.index);
+                    t.node.ReleaseTexture(FNodePath, t.index);
                     t.node.PurgeTextures();
                 }
             }
@@ -179,34 +176,46 @@ namespace VVVV.SceneGraph
                 PinsChanged = false;
                 FInvalidate = true;
 
-                foreach (var io in FTexPins.Values)
-                    io?.IOObject.ResizeAndDismiss(FAmbient.SliceCount, () => new DX11Resource<DX11Texture2D>());
-                foreach (var io in FPathPins.Values)
-                    io?.IOObject.ResizeAndDismiss(FAmbient.SliceCount, () => string.Empty);
 
-                
-                for (int i = 0; i < FSelected.SliceCount; i++)
+                foreach (var io in FTexPins)
                 {
-                    if (FSelected[i].Element is MeshElement)
+                    if (io.Value != null)
                     {
-                        var mat = (FSelected[i].Element as MeshElement).Material;
-                        foreach (var key in FPathPins.Keys)
+                        var pinSliceCount = io.Value.IOObject.SliceCount;
+                        for (int a = pinSliceCount; a < FSelected.SliceCount; a++)
                         {
-                            if (FPathPins[key] != null)
+                            io.Value.IOObject.SliceCount++;
+                            io.Value.IOObject[a] = CreateTextureSlice(io.Key, a);
+                        }
+                        for (int r = pinSliceCount - 1; r >= FSelected.SliceCount; r--)
+                        {
+                            DisposeTextureSlice(io.Key, r, io.Value.IOObject[r]);
+                            io.Value.IOObject.SliceCount--;
+                        }
+                    }
+                }
+                foreach (var io in FPathPins.Values)
+                    io?.IOObject.ResizeAndDismiss(FSelected.SliceCount, () => string.Empty);
+
+                foreach (var key in FPathPins.Keys)
+                {
+                    if (FPathPins[key] != null)
+                    {
+                        for (int i = 0; i < FSelected.SliceCount; i++)
+                        {
+                            var mat = (FSelected[i].Element as MeshElement).Material;
+                            bool hit = false;
+                            for (int t = 0; t < mat.Textures.Length; t++)
                             {
-                                bool hit = false;
-                                for (int t = 0; t < mat.Textures.Length; t++)
+                                if (mat.Textures[t].Intent.ToString() == key)
                                 {
-                                    if (mat.Textures[t].Intent.ToString() == key)
-                                    {
-                                        FPathPins[key].IOObject[i] = System.IO.Path.Combine(FSelected[i].Scene.AssetRoot,mat.Textures[t].Path);
-                                        hit = true;
-                                        break;
-                                    }
+                                    FPathPins[key].IOObject[i] = mat.Textures[t].FullPath;
+                                    hit = true;
+                                    break;
                                 }
-                                if (!hit)
-                                    FPathPins[key].IOObject[i] = string.Empty;
                             }
+                            if (!hit)
+                                FPathPins[key].IOObject[i] = string.Empty;
                         }
                     }
                 }
@@ -215,64 +224,10 @@ namespace VVVV.SceneGraph
 
         public void Dispose()
         {
-            int i = 0;
-            foreach (var n in FSelected)
+            for (int i = 0; i < FSelected.SliceCount; i++)
             {
-                n.ReleaseTexture(FNodePath, i);
-                n.PurgeTextures();
-                i++;
-            }
-        }
-
-        public void Update(DX11RenderContext context)
-        {
-            FInvalidate |= (!FTexPins.Values.Where(p => p != null).SelectMany(p => p.IOObject).All(io => io.Contains(context)));
-            if (FInvalidate) // || (!FDiffuseTexture.All(r => r.Contains(context))))
-            {
-                int incr = 0;
-                foreach (var n in FSelected)
-                {
-                    try
-                    {
-                        var me = n.Element as MeshElement;
-                        foreach (var key in FTexPins.Keys)
-                        {
-                            if (FTexPins[key] != null)
-                            {
-                                TextureInfo ti = null;
-                                for (int t = 0; t < me.Material.Textures.Length; t++)
-                                {
-                                    if (me.Material.Textures[t].Intent.ToString() == key)
-                                    {
-                                        ti = me.Material.Textures[t];
-                                        break;
-                                    }
-                                }
-                                FTexPins[key].IOObject[incr][context] = n.GetTexture(ti, FNodePath, incr, context)??context.DefaultTextures.WhiteTexture;
-                            }
-                        }
-                        incr++;
-                    }
-                    catch (Exception e)
-                    {
-                        System.Diagnostics.Debug.WriteLine(e);
-                    }
-                }
-            }
-        }
-
-        public void Destroy(DX11RenderContext context, bool force)
-        {
-            foreach (var pins in FTexPins.Values)
-                if (pins?.IOObject != null)
-                    foreach (var s in pins.IOObject)
-                        s.Remove(context);
-            int i = 0;
-            foreach (var n in FSelected)
-            {
-                n.ReleaseTexture(FNodePath, i, context: context);
-                n.PurgeTextures();
-                i++;
+                FSelected[i].ReleaseTexture(FNodePath, i);
+                FSelected[i].PurgeTextures();
             }
         }
     }
