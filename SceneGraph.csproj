@@ -121,6 +121,8 @@
     <Compile Include="core\MeshElement.cs" />
     <Compile Include="core\Scene.cs" />
     <Compile Include="core\Transform.cs" />
+    <Compile Include="backends\EX9ResourceManager.cs" />
+    <Compile Include="backends\EX9Utils.cs" />
     <Compile Include="nodes\SplitNode.cs" />
     <Compile Include="nodes\GenericNodes.cs" />
     <Compile Include="nodes\INestedNode.cs" />

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using SceneGraph.Core;
 using SceneGraph.DX11;
+using SceneGraph.EX9;
 using AssimpNet;
 
 namespace SceneGraph.Adaptors
@@ -29,8 +30,18 @@ namespace SceneGraph.Adaptors
                                                 Source.Meshes[i].BoundingBox), 
                 TextureInfos.Length, 
                 (i, ctx) => DX11Utils.CreateTexture(ctx, TextureInfos[i].FullPath));
-
             AddResourceManager(dx11);
+
+            var ex9 = new EX9ResourceManager(
+                MeshInfos.Length,
+                (i, device) => EX9Utils.LoadMesh(device,
+                                                Source.Meshes[i].VerticesCount,
+                                                Source.Meshes[i].Vertices,
+                                                Source.Meshes[i].Indices.ToArray(),
+                                                Source.Meshes[i].GetInputElements()),
+                TextureInfos.Length,
+                (i, device) => EX9Utils.CreateTexture(device, TextureInfos[i].FullPath));
+            AddResourceManager(ex9);
 
             CreateGraph();
         }
