@@ -72,6 +72,15 @@ namespace SceneGraph.Core
             {
                 x.Add(new XAttribute("meshId", me.MeshID));
                 x.Add(new XAttribute("materialId", me.MaterialID));
+
+                var textures = me.Material.Textures;
+                foreach (var t in textures)
+                {
+                    var txml = new XElement(t.Intent.ToString());
+                    txml.Add(new XAttribute("textureId",t.Index));
+                    txml.Add(new XAttribute("path", t.Path));
+                    x.Add(txml);
+                }
             }
 
             foreach (var c in node.Children)
