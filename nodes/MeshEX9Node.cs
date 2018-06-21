@@ -30,8 +30,8 @@ namespace VVVV.SceneGraph
 
         [Output("Mesh ID")]
         ISpread<int> FMeshID;
-
-        bool FInvalidate;
+        
+        public bool FInvalidate;
 
         [Output("Bin Size", Order = 500)]
         ISpread<int> FBinSize;
@@ -57,6 +57,8 @@ namespace VVVV.SceneGraph
         IIOContainer<ISpread<int>> FUvChannelCount;
         IIOContainer<ISpread<int>> FVerticesCount;
 
+        Dictionary<Device, List<ResourceToken>> FTokens = new Dictionary<Device, List<ResourceToken>>();
+        public Dictionary<Device, Mesh> FCompositeMesh = new Dictionary<Device, Mesh>();
         #pragma warning restore
         #endregion fields & pins
 
@@ -184,9 +186,6 @@ namespace VVVV.SceneGraph
                 
                 var input = IsNested ? FGraphNodeInternal : FGraphNode;
 
-                var trash = new Spread<GraphNode>(FSelected.SliceCount);
-                trash.AssignFrom(FSelected);
-
                 FSelected.SliceCount = 0;
                 FMeshID.SliceCount = 0;
                 FBinSize.SliceCount = input.SliceCount;
@@ -196,19 +195,16 @@ namespace VVVV.SceneGraph
                     {
                         FSelected.Add(input[i]);
                         FMeshID.Add((input[i].Element as MeshElement).MeshID);
-                        trash.RemoveAll(t => t.ID == input[i].ID);
                         FBinSize[i] = 1;
                     }
                     else
                         FBinSize[i] = 0;
                 }
-                
-                foreach (var t in trash)
-                {
-                    t.ReleaseGeometry(FNodePath);
-                    t.PurgeGeometry();
-                }
+                if (FSelected.SliceCount == 0)
+                    this.Dispose();
+
                 FMeshOut.SliceCount = FSelected.SliceCount;
+                SetResourcePinsChanged();
             }
 
             if (PinsChanged || FInvalidate)
@@ -262,30 +258,43 @@ namespace VVVV.SceneGraph
 
         public void Dispose()
         {
-            foreach (var n in FSelected)
-            {
-                n.ReleaseGeometry(FNodePath);
-                n.PurgeGeometry();
-            }
-        }
-
-        void DestroyMesh(int slice, Mesh mesh, DestroyReason args)
-        {
-            
-            FSelected[slice].ReleaseGeometry(FNodePath, mesh.Device);
-            FSelected[slice].PurgeGeometry();
+            foreach (var l in FTokens.Values)
+                foreach (var t in l)
+                    t.Dispose();
+            foreach (var m in FCompositeMesh.Values)
+                m?.Dispose();
         }
 
         protected override Mesh CreateMesh(Device device)
         {
+            System.Diagnostics.Debug.WriteLine("EX9 create Mesh");
+            if (FCompositeMesh.ContainsKey(device))
+                FCompositeMesh[device]?.Dispose();
+            if (FTokens.ContainsKey(device))
+            {
+                foreach (var t in FTokens[device])
+                    t.Dispose();
+                FTokens[device].Clear();
+            }
+            else
+                FTokens.Add(device, new List<ResourceToken>());
+                
             Mesh[] meshes = new Mesh[FMeshOut.SliceCount];
             for (int i = 0; i < FMeshOut.SliceCount; i++)
-                meshes[i] = FSelected[i].GetGeometry(FNodePath, device);
+            {
+                dynamic m;
+                FTokens[device].Add(FSelected[i].GetGeometry(device, out m));
+                meshes[i] = m;
+            }
 
+            Mesh outMesh;
             if (device is DeviceEx)
-                return Mesh.Concatenate(device, meshes, MeshFlags.Use32Bit);
+                outMesh = Mesh.Concatenate(device, meshes, MeshFlags.Use32Bit);
             else
-                return Mesh.Concatenate(device, meshes, MeshFlags.Use32Bit | MeshFlags.Managed);
+                outMesh = Mesh.Concatenate(device, meshes, MeshFlags.Use32Bit | MeshFlags.Managed);
+
+            FCompositeMesh[device] = outMesh;
+            return outMesh;
         }
 
         public Mesh CreateMeshProxy(Device device)
@@ -293,9 +302,20 @@ namespace VVVV.SceneGraph
             return CreateMesh(device);
         }
 
-        protected override void UpdateMesh(Mesh mesh)
+        protected override void UpdateMesh(Mesh mesh) { }
+
+        protected override void DestroyDeviceData(MeshDeviceData deviceData, bool OnlyUnManaged)
         {
-            
+            DestroyResourceProxy(deviceData.Data.Device);
+            base.DestroyDeviceData(deviceData, OnlyUnManaged);
+        }
+
+        public void DestroyResourceProxy(Device device)
+        {
+            System.Diagnostics.Debug.WriteLine("EX9 DestroyDeviceDataProxy");
+
+            FCompositeMesh[device].Dispose();
+            FCompositeMesh[device] = null;
         }
     }
 }

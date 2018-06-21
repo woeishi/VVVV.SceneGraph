@@ -42,7 +42,10 @@ namespace VVVV.SceneGraph
         [Import()]
         ILogger FLogger;
 
-        Spread<SceneAssimp> FScene = new Spread<SceneAssimp>();
+        [Import()]
+        IMainLoop FMainloop;
+
+        Spread<IScene> FScene = new Spread<IScene>();
 		#pragma warning restore
 		#endregion fields & pins
 		
@@ -55,12 +58,19 @@ namespace VVVV.SceneGraph
             FScene.Flush();
 
             FRoot.Connected += FRoot_Connected;
+            FMainloop.OnResetCache += FMainloop_OnResetCache;
         }
 
-        private void FRoot_Connected(object sender, PinConnectionEventArgs args)
+        void FRoot_Connected(object sender, PinConnectionEventArgs args)
         {
             foreach (var n in FRoot)
                 n?.UpdateTransformGraph();
+        }
+
+        void FMainloop_OnResetCache(object sender, EventArgs e)
+        {
+            foreach (var s in FScene)
+                s.PurgeResources();
         }
 
         public void Dispose()
@@ -94,14 +104,14 @@ namespace VVVV.SceneGraph
                             try
                             {
                                 FScene[i] = new SceneAssimp(filename, FAssetRoot[i]);
-                                FSource[i] = FScene[i].Source;
+                                FSource[i] = ((SceneAssimp)FScene[i]).Source;
                                 FRoot[i] = FScene[i].Root;
                                 FIsValid[i] = true;
                             }
                             catch (Exception e)
                             {
                                 FScene[i] = new SceneAssimp(filename);
-                                FSource[i] = FScene[i].Source;
+                                FSource[i] = ((SceneAssimp)FScene[i]).Source;
                                 FRoot[i] = null;
                                 FIsValid[i] = false;
                                 FLogger.Log(LogType.Debug, "cannot load "+filename);

@@ -111,6 +111,7 @@
     <Compile Include="core\IScene.cs" />
     <Compile Include="core\MaterialInfo.cs" />
     <Compile Include="core\MeshInfo.cs" />
+    <Compile Include="core\RefCounter.cs" />
     <Compile Include="core\ResourceHandler.cs" />
     <Compile Include="core\ResourceManager.cs" />
     <Compile Include="backends\DX11ResourceManager.cs" />

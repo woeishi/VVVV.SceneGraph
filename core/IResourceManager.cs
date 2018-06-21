@@ -6,13 +6,10 @@ namespace SceneGraph.Core
     {
         Type KeyType { get; }
 
-        dynamic GetGeometry(int meshId, string nodePath, dynamic context);
-        void ReleaseGeometry(int meshId, string nodePath, dynamic context);
-        void PurgeGeometry(int meshId);
+        ResourceToken GetGeometry(int meshId, dynamic context, out dynamic geometry);
+        ResourceToken GetTexture(int textureId, dynamic context, out dynamic texture);
+        ResourceToken GetDefaultTexture(dynamic context, out dynamic texture);
 
-        dynamic GetTexture(int textureId, string nodePath, dynamic context);
-        dynamic GetDefaultTexture(dynamic context);
-        void ReleaseTexture(int textureId, string nodePath, dynamic context);
-        void PurgeTextures(int textureId);
+        void Purge();
     }
 }

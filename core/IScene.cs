@@ -1,8 +1,9 @@
-﻿using System.Xml.Linq;
+﻿using System;
+using System.Xml.Linq;
 
 namespace SceneGraph.Core
 {
-    public interface IScene
+    public interface IScene : IDisposable
     {
         string AssetRoot { get; }
         string Filename { get; }
@@ -13,12 +14,9 @@ namespace SceneGraph.Core
         MaterialInfo[] MaterialInfos { get; }
         TextureInfo[] TextureInfos { get; }
 
-        dynamic GetGeometry(GraphNode node, string nodePath, dynamic context);
-        void ReleaseGeometry(GraphNode node, string nodePath, dynamic context);
-        void PurgeGeometry(GraphNode node);
+        ResourceToken GetGeometry(GraphNode node, dynamic context, out dynamic geometry);
+        ResourceToken GetTexture(TextureInfo textureInfo, dynamic context, out dynamic geometry);
 
-        dynamic GetTexture(TextureInfo textureInfo, string nodePath, dynamic context);
-        void ReleaseTexture(GraphNode node, TextureInfo textureInfo, string nodePath, dynamic context);
-        void PurgeTextures(GraphNode node);
+        void PurgeResources();
     }
 }

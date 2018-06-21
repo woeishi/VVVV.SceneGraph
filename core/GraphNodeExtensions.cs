@@ -2,34 +2,14 @@
 {
     internal static class GraphNodeExtension
     {
-        internal static dynamic GetGeometry(this GraphNode node, string nodePath, dynamic context)
+        internal static ResourceToken GetGeometry(this GraphNode node, dynamic context, out dynamic geometry)
         {
-            return node.Scene.GetGeometry(node, nodePath, context);
+            return node.Scene.GetGeometry(node, context, out geometry);
         }
 
-        internal static void ReleaseGeometry(this GraphNode node, string nodePath, dynamic context = null)
+        internal static ResourceToken GetTexture(this GraphNode node, TextureInfo textureInfo, dynamic context, out dynamic texture)
         {
-            node.Scene.ReleaseGeometry(node, nodePath, context);
-        }
-
-        internal static void PurgeGeometry(this GraphNode node)
-        {
-            node.Scene.PurgeGeometry(node);
-        }
-
-        internal static dynamic GetTexture(this GraphNode node, TextureInfo textureInfo, string nodePath, int slice, dynamic context)
-        {
-            return node.Scene.GetTexture(textureInfo, nodePath+slice.ToString(), context);
-        }
-
-        internal static void ReleaseTexture(this GraphNode node, string nodePath, int slice, TextureInfo textureInfo = null, dynamic context = null)
-        {
-            node.Scene.ReleaseTexture(node, textureInfo, nodePath+slice.ToString(), context);
-        }
-
-        internal static void PurgeTextures(this GraphNode node)
-        {
-            node.Scene.PurgeTextures(node);
+            return node.Scene.GetTexture(textureInfo, context, out texture);
         }
     }
 }

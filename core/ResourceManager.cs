@@ -43,13 +43,35 @@ namespace SceneGraph.Core
             DefaultTexture.Dispose();
         }
 
-        public dynamic GetGeometry(int meshId, string nodePath, dynamic context) => MeshHandlers[meshId].Get(nodePath, context);
-        public void ReleaseGeometry(int meshId, string nodePath, dynamic context) => MeshHandlers[meshId].Release(nodePath, context);
-        public void PurgeGeometry(int meshId) => MeshHandlers[meshId].Purge();
+        public void Purge()
+        {
+            foreach (var mh in MeshHandlers)
+                mh.Purge();
+            foreach (var th in TextureHandlers)
+                th.Purge();
+        }
 
-        public dynamic GetTexture(int textureId, string nodePath, dynamic context) => TextureHandlers[textureId].Get(nodePath, context);
-        public dynamic GetDefaultTexture(dynamic context) => DefaultTexture.Get("",context);
-        public void ReleaseTexture(int textureId, string nodePath, dynamic context) => TextureHandlers[textureId].Release(nodePath, context);
-        public void PurgeTextures(int textureId) => TextureHandlers[textureId].Purge();
+        public ResourceToken GetGeometry(int meshId, dynamic context, out dynamic geometry)
+        {
+            U geom;
+            var token = MeshHandlers[meshId].Take(context, out geom);
+            geometry = geom;
+            return token;
+        }
+
+        public ResourceToken GetTexture(int textureId, dynamic context, out dynamic texture)
+        {
+            V tex;
+            var token = TextureHandlers[textureId].Take(context, out tex);
+            texture = tex;
+            return token;
+        }
+        public ResourceToken GetDefaultTexture(dynamic context, out dynamic texture)
+        {
+            V tex;
+            var token = DefaultTexture.Take(context, out tex);
+            texture = tex;
+            return token;
+        }
     }
 }

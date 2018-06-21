@@ -58,7 +58,9 @@ namespace VVVV.SceneGraph
         IIOContainer<ISpread<int>> FColorChannelCount;
         IIOContainer<ISpread<int>> FUvChannelCount;
         IIOContainer<ISpread<int>> FVerticesCount;
-        #pragma warning restore
+
+        Dictionary<DX11RenderContext, List<ResourceToken>> FTokens;
+#pragma warning restore
         #endregion fields & pins
 
         public void OnImportsSatisfied()
@@ -73,6 +75,8 @@ namespace VVVV.SceneGraph
                 FHost.GetPin("Bin Size").Visibility = PinVisibility.False;
             
             CreatePinToggles(FIOFactory);
+
+            FTokens = new Dictionary<DX11RenderContext, List<ResourceToken>>();
         }
 
         #region pinToggles
@@ -181,9 +185,6 @@ namespace VVVV.SceneGraph
                 
                 var input = IsNested ? FGraphNodeInternal : FGraphNode;
 
-                var trash = new Spread<GraphNode>(FSelected.SliceCount);
-                trash.AssignFrom(FSelected);
-
                 FSelected.SliceCount = 0;
                 FMeshID.SliceCount = 0;
                 FBinSize.SliceCount = input.SliceCount;
@@ -193,22 +194,16 @@ namespace VVVV.SceneGraph
                     {
                         FSelected.Add(input[i]);
                         FMeshID.Add((input[i].Element as MeshElement).MeshID);
-                        trash.RemoveAll(t => t.ID == input[i].ID);
                         FBinSize[i] = 1;
                     }
                     else
                         FBinSize[i] = 0;
                 }
                 
-                foreach (var t in trash)
-                {
-                    t.ReleaseGeometry(FNodePath);
-                    t.PurgeGeometry();
-                }
-
                 FGeometry.ResizeAndDismiss(FSelected.SliceCount, () => new DX11Resource<DX11IndexedGeometry>());
             }
 
+            #region dynamic pins
             if (PinsChanged || FInvalidate)
             {
                 if (FMin != null)
@@ -255,26 +250,34 @@ namespace VVVV.SceneGraph
                 }
                 PinsChanged = false;
             }
+            #endregion dynamic pins
         }
 
         public void Dispose()
         {
-            foreach (var n in FSelected)
-            {
-                n.ReleaseGeometry(FNodePath);
-                n.PurgeGeometry();
-            }
+            foreach (var l in FTokens.Values)
+                foreach (var t in l)
+                    t.Dispose();
         }
 
         public void Update(DX11RenderContext context)
         {
-            if (FInvalidate || (!FGeometry.All(r => r.Contains(context))))
+            if (FInvalidate || (!FTokens.ContainsKey(context)))
             {
-                int incr = 0;
-                foreach (var n in FSelected)
+                if (FTokens.ContainsKey(context))
                 {
-                    FGeometry[incr][context] = n.GetGeometry(FNodePath, context);
-                    incr++;
+                    foreach (var t in FTokens[context])
+                        t.Dispose();
+                    FTokens[context].Clear();
+                }
+                else
+                    FTokens.Add(context, new List<ResourceToken>());
+
+                for (int i = 0; i < FSelected.SliceCount; i++)
+                {
+                    dynamic g;
+                    FTokens[context].Add(FSelected[i].GetGeometry(context, out g));
+                    FGeometry[i][context] = g;
                 }
             }
         }
@@ -285,12 +288,9 @@ namespace VVVV.SceneGraph
             foreach (var slice in FGeometry)
                 slice.Remove(context);
 
-            //set resource as released by this node
-            foreach (var n in FSelected)
-            {
-                n.ReleaseGeometry(FNodePath, context);
-                n.PurgeGeometry();
-            }
+            foreach (var t in FTokens[context])
+                t.Dispose();
+            FTokens.Remove(context);
         }
     }
 }

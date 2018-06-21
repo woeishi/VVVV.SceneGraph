@@ -4,7 +4,6 @@ using System.Linq;
 using System.ComponentModel.Composition;
 using VVVV.PluginInterfaces.V1;
 using VVVV.PluginInterfaces.V2;
-using VVVV.PluginInterfaces.V2.EX9;
 using VVVV.Hosting.IO;
 
 using SceneGraph.Core;
@@ -16,7 +15,7 @@ namespace VVVV.SceneGraph
                 Help = "Returns transformation, model and material properties.",
                 Tags = "geometry, mesh, material",
                 Author = "woei")]
-    public class ModelEX9Node : DXMeshOutPluginBase, IPluginEvaluate, IPartImportsSatisfiedNotification, IDisposable
+    public class ModelEX9Node : IPluginDXMesh, IPluginEvaluate, IPartImportsSatisfiedNotification, IDisposable
     {
         #region fields & pins
         #pragma warning disable 0649
@@ -38,9 +37,6 @@ namespace VVVV.SceneGraph
         PluginContainer FMaterial;
         #pragma warning restore
         #endregion fields & pins
-
-        [ImportingConstructor()]
-        public ModelEX9Node(IPluginHost host) : base(host) { }
 
         public void OnImportsSatisfied()
         {
@@ -97,11 +93,20 @@ namespace VVVV.SceneGraph
             FMaterial.Dispose();
         }
 
-        protected override Mesh CreateMesh(Device device)
+        public Mesh GetMesh(IDXMeshOut ForPin, Device OnDevice)
         {
-            return (FMesh.PluginBase as MeshEX9Node).CreateMeshProxy(device);
+            var meshNode = (FMesh.PluginBase as MeshEX9Node);
+            if (meshNode.FInvalidate || (!meshNode.FCompositeMesh.ContainsKey(OnDevice)) || (meshNode.FCompositeMesh[OnDevice] == null))
+                return meshNode.CreateMeshProxy(OnDevice);
+            else
+                return meshNode.FCompositeMesh[OnDevice];
         }
 
-        protected override void UpdateMesh(Mesh mesh) { }
+        public void UpdateResource(IPluginOut ForPin, Device OnDevice) { }
+
+        public void DestroyResource(IPluginOut ForPin, Device OnDevice, bool OnlyUnManaged)
+        {
+            (FMesh.PluginBase as MeshEX9Node).DestroyResourceProxy(OnDevice);
+        }
     }
 }

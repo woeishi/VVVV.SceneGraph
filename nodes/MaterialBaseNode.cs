@@ -13,7 +13,7 @@ using SlimDX;
 
 namespace VVVV.SceneGraph
 {
-	public abstract class MaterialNode<T> : IPluginEvaluate, IPartImportsSatisfiedNotification, IDisposable, INestedNode
+	public abstract class MaterialNode<T, U> : IPluginEvaluate, IPartImportsSatisfiedNotification, IDisposable, INestedNode
     {
         #region fields & pins
         #pragma warning disable 0649
@@ -46,6 +46,7 @@ namespace VVVV.SceneGraph
         protected string FNodePath = string.Empty;
 
         protected Spread<GraphNode> FSelected = new Spread<GraphNode>();
+        protected Dictionary<U, List<ResourceToken>> FTokens = new Dictionary<U, List<ResourceToken>>();
 
         [Import]
         IIOFactory FIOFactory;
@@ -103,26 +104,15 @@ namespace VVVV.SceneGraph
             }
             else if (FTexPins[key] != null)
             {
-                var p = FTexPins[key];
-                
                 FTexPins[key].Dispose();
                 FTexPins[key] = null;
-
-
                 FPathPins[key].Dispose();
                 FPathPins[key] = null;
-
-                for (int i = 0; i < FSelected.SliceCount; i++)
-                    foreach (var t in (FSelected[i].Element as MeshElement).Material.Textures)
-                        if (t.Intent.ToString() == key)
-                            FSelected[i].ReleaseTexture(FNodePath, i, t);
             }
             PinsChanged = true;
         }
 
-        protected abstract T CreateTextureSlice(string intent, int i);
-
-        protected abstract void DisposeTextureSlice(string intent, int i, T slice);
+        protected abstract T CreateTextureSlice(GraphNode node, string intent);
 
         public void Evaluate(int spreadMax)
 		{
@@ -136,7 +126,6 @@ namespace VVVV.SceneGraph
 
                 var input = IsNested ? FGraphNodeInternal : FGraphNode;
 
-                var trash = FSelected.Select((node, index) => new { index, node }).ToList();
                 FSelected.SliceCount = 0;
                 FMatID.SliceCount = 0;
                 FAmbient.SliceCount = 0;
@@ -150,7 +139,6 @@ namespace VVVV.SceneGraph
                     if (input[i] != null && (input[i].Element is MeshElement))
                     {
                         FSelected.Add(input[i]);
-                        trash.RemoveAll(t => t.index == i && t.node.ID == input[i].ID);
 
                         var material = ((MeshElement)FSelected[i].Element).Material;
                         FMatID.Add(material.Index);
@@ -164,11 +152,6 @@ namespace VVVV.SceneGraph
                     else
                         FBinSize[i] = 0;
                 }
-                foreach (var t in trash)
-                {
-                    t.node.ReleaseTexture(FNodePath, t.index);
-                    t.node.PurgeTextures();
-                }
             }
 
             if (PinsChanged || FInvalidate)
@@ -176,23 +159,16 @@ namespace VVVV.SceneGraph
                 PinsChanged = false;
                 FInvalidate = true;
 
+                foreach (var l in FTokens.Values)
+                    foreach (var t in l)
+                        t.Dispose();
+                FTokens.Clear();
 
                 foreach (var io in FTexPins)
                 {
                     if (io.Value != null)
-                    {
-                        var pinSliceCount = io.Value.IOObject.SliceCount;
-                        for (int a = pinSliceCount; a < FSelected.SliceCount; a++)
-                        {
-                            io.Value.IOObject.SliceCount++;
-                            io.Value.IOObject[a] = CreateTextureSlice(io.Key, a);
-                        }
-                        for (int r = pinSliceCount - 1; r >= FSelected.SliceCount; r--)
-                        {
-                            DisposeTextureSlice(io.Key, r, io.Value.IOObject[r]);
-                            io.Value.IOObject.SliceCount--;
-                        }
-                    }
+                        io.Value.IOObject.SliceCount = 0;
+                    io.Value?.IOObject.ResizeAndDismiss(FSelected.SliceCount, (i) => CreateTextureSlice(FSelected[i], io.Key));
                 }
                 foreach (var io in FPathPins.Values)
                     io?.IOObject.ResizeAndDismiss(FSelected.SliceCount, () => string.Empty);
@@ -224,11 +200,9 @@ namespace VVVV.SceneGraph
 
         public void Dispose()
         {
-            for (int i = 0; i < FSelected.SliceCount; i++)
-            {
-                FSelected[i].ReleaseTexture(FNodePath, i);
-                FSelected[i].PurgeTextures();
-            }
+            foreach (var l in FTokens.Values)
+                foreach (var t in l)
+                    t.Dispose();
         }
     }
 }

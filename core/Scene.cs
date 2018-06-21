@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 namespace SceneGraph.Core
 {
-    public class Scene<T> : IScene, IDisposable
+    public class Scene<T> : IScene
     {
         internal T Source { get; set; }
 
@@ -82,61 +82,26 @@ namespace SceneGraph.Core
             (Source as IDisposable)?.Dispose();
         }
 
-        public dynamic GetGeometry(GraphNode node, string nodePath, dynamic context)
+        public ResourceToken GetGeometry(GraphNode node, dynamic context, out dynamic geometry)
         {
             var rm = ResourceManager.Where(m => m.KeyType.IsAssignableFrom(context.GetType())).First();
             var me = (node.Element as MeshElement);
-            return rm.GetGeometry(me.MeshID, nodePath, context);
+            return rm.GetGeometry(me.MeshID, context, out geometry);
         }
 
-        public void ReleaseGeometry(GraphNode node, string nodePath, dynamic context)
-        {
-            IEnumerable<IResourceManager> mgrs = ResourceManager;
-            if (context != null)
-                mgrs = ResourceManager.Where(m => m.KeyType.IsAssignableFrom(context.GetType()));
-            var me = (node.Element as MeshElement);
-            foreach (var rm in mgrs)
-                rm.ReleaseGeometry(me.MeshID, nodePath, context);
-        }
-
-        public void PurgeGeometry(GraphNode node)
-        {
-            var me = (node.Element as MeshElement);
-            foreach (var rm in ResourceManager)
-                rm.PurgeGeometry(me.MeshID);
-        }
-
-        public dynamic GetTexture(TextureInfo textureInfo, string nodePath, dynamic context)
+        public ResourceToken GetTexture(TextureInfo textureInfo, dynamic context, out dynamic texture)
         {
             var rm = ResourceManager.Where(m => m.KeyType.IsAssignableFrom(context.GetType())).First();
             if (textureInfo != null)
-                return rm.GetTexture(textureInfo.Index, nodePath, context);
+                return rm.GetTexture(textureInfo.Index, context, out texture);
             else
-                return rm.GetDefaultTexture(context);
+                return rm.GetDefaultTexture(context, out texture);
         }
 
-        public void ReleaseTexture(GraphNode node, TextureInfo textureInfo, string nodePath, dynamic context)
+        public void PurgeResources()
         {
-            IEnumerable<IResourceManager> mgrs = ResourceManager;
-            if (context != null)
-                mgrs = ResourceManager.Where(m => m.KeyType.IsAssignableFrom(context.GetType()));
-
-            var me = (node.Element as MeshElement);
-            if (textureInfo == null)
-                foreach (var t in me.Material.Textures)
-                    foreach (var rm in mgrs)
-                        rm.ReleaseTexture(t.Index, nodePath, context);
-            else
-                foreach (var rm in mgrs)
-                    rm.ReleaseTexture(textureInfo.Index, nodePath, context);
-        }
-
-        public void PurgeTextures(GraphNode node)
-        {
-            var me = (node.Element as MeshElement);
-            foreach (var t in me.Material.Textures)
-                foreach (var rm in ResourceManager)
-                    rm.PurgeTextures(t.Index);
+            foreach (var rm in ResourceManager)
+                rm.Purge();
         }
     }
 }
