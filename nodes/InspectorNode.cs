@@ -44,6 +44,7 @@ namespace VVVV.SceneGraph
 
             var scrollview = new ScrollViewer();
             scrollview.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+            scrollview.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
             scrollview.Content = FStackPanel;
 
             WPFHost = new ElementHost();
@@ -159,6 +160,21 @@ namespace VVVV.SceneGraph
                 Stack.Children.Add(Secondary);
 
                 this.Header = Stack;
+
+                this.Loaded += GraphViewItem_Loaded;
+                this.BorderBrush = Brushes.DarkGray;
+                this.BorderThickness = new Thickness(0, 0, 0, 1);
+                this.Margin = new Thickness(0, 2, 0, 2);
+            }
+
+            private void GraphViewItem_Loaded(object sender, RoutedEventArgs e)
+            {
+                if (this.VisualChildrenCount > 0)
+                {
+                    var grid = this.GetVisualChild(0) as Grid;
+                    if (grid != null && grid.ColumnDefinitions.Count > 2)
+                        grid.ColumnDefinitions.RemoveAt(1);
+                }
             }
         }
 
@@ -171,10 +187,7 @@ namespace VVVV.SceneGraph
             {
                 GraphNode = node;
                 SliceIndex = sliceIndex;
-                this.BorderBrush = Brushes.DarkGray;
-                this.BorderThickness = new Thickness(0, 0, 0, 1);
-                this.Margin = new Thickness(0, 2, 0, 2);
-
+                
                 this.Secondary.Text = $"[id {node.ID}]";
             }
         }
@@ -237,7 +250,7 @@ namespace VVVV.SceneGraph
             {
                 this.Focusable = false;
                 
-                this.Secondary.Text = $"{textureInfo.Path}";
+                this.Secondary.Text = $"textureId: {textureInfo.Index} - {textureInfo.Path}";
             }
         }
     }
