@@ -90,11 +90,12 @@ namespace SceneGraph.Core
 
         internal static IEnumerable<GraphNode> XPathQuery(this GraphNode node, string query)
         {
+            var xmlNode = node.Scene.XmlRoot.XPathSelectElement($"descendant-or-self::*[@id='{node.ID}']");
             var idQuery = query;
             if (!idQuery.EndsWith("/"))
                 idQuery += "/";
             idQuery += "@id";
-            var res = node.Scene.XmlRoot.XPathEvaluate(idQuery);
+            var res = xmlNode.XPathEvaluate(idQuery);
             if (res is IEnumerable)
             {
                 foreach (var a in (IEnumerable)res)
@@ -106,7 +107,6 @@ namespace SceneGraph.Core
                         if (n != null)
                             yield return n;
                     }
-                        
                 }
             }
         }

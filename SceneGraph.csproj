@@ -128,6 +128,7 @@
     <Compile Include="nodes\MaterialEX9Node.cs" />
     <Compile Include="nodes\MeshEX9Node.cs" />
     <Compile Include="nodes\ModelEX9Node.cs" />
+    <Compile Include="nodes\MultiplyTransformXPathNode.cs" />
     <Compile Include="nodes\SplitNode.cs" />
     <Compile Include="nodes\GenericNodes.cs" />
     <Compile Include="nodes\INestedNode.cs" />
