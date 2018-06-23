@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms.Integration;
 using System.Windows.Media;
+using System.Xml.Linq;
 
 namespace VVVV.SceneGraph
 {
@@ -24,6 +25,9 @@ namespace VVVV.SceneGraph
 
         [Output("Graph Out", AutoFlush = false)]
         ISpread<GraphNode> FOutput;
+
+        [Output("Element", AutoFlush = false)]
+        ISpread<XElement> FXml;
 
         [Output("Selected", AutoFlush = false)]
         ISpread<string> FSelectedName;
@@ -65,11 +69,13 @@ namespace VVVV.SceneGraph
             if (FInput.IsChanged)
             {
                 FOutput.SliceCount = FInput.SliceCount;
+                FXml.SliceCount = FInput.SliceCount;
                 FSelectedName.SliceCount = FInput.SliceCount;
                 FStackPanel.Children.Clear();
                 for (int i = 0; i < FInput.SliceCount; i++)
                 {
                     FOutput[i] = FInput[i];
+                    FXml[i] = FOutput[i]?.XElement();
                     FSelectedName[i] = FOutput[i]?.Name ?? string.Empty;
                     if (FInput[i] != null)
                     {
@@ -93,6 +99,7 @@ namespace VVVV.SceneGraph
             if (NeedsFlush)
             {
                 FOutput.Flush();
+                FXml.Flush();
                 FSelectedName.Flush();
                 NeedsFlush = false;
             }
@@ -120,12 +127,13 @@ namespace VVVV.SceneGraph
             return gnc;
         }
 
-        private void GraphNodeSelected(object sender, RoutedEventArgs e)
+        void GraphNodeSelected(object sender, RoutedEventArgs e)
         {
             var gnc = (e.Source as GraphNodeControl);
             if (gnc != null)
             {
                 FOutput[gnc.SliceIndex] = gnc.GraphNode;
+                FXml[gnc.SliceIndex] = gnc.GraphNode.XElement();
                 FSelectedName[gnc.SliceIndex] = gnc.GraphNode.Name;
                 NeedsFlush = true;
             }
