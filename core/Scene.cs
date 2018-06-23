@@ -25,6 +25,7 @@ namespace SceneGraph.Core
         {
             Filename = path;
             AssetRoot = Path.GetDirectoryName(Filename);
+            ResourceManager = new List<IResourceManager>();
         }
 
         public Scene(string path, string assetPath)
