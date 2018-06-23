@@ -17,7 +17,14 @@ namespace SceneGraph.Core
         {
             if (!IsValid)
             {
-                Resource = Ctor();
+                try
+                {
+                    Resource = Ctor();
+                }
+                catch (Exception)
+                {
+                    Resource = default(T);
+                }
                 IsValid = true;
             }
             Counter++;
@@ -34,7 +41,7 @@ namespace SceneGraph.Core
         {
             if (IsValid && Counter <= 0)
             {
-                Resource.Dispose();
+                (Resource as IDisposable)?.Dispose();
                 IsValid = false;
                 System.Diagnostics.Debug.Assert(Counter == 0);
             }

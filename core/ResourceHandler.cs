@@ -16,6 +16,7 @@ namespace SceneGraph.Core
         public void Dispose() => ReleaseAction();
     }
 
+
     internal class ResourceHandler<U, T> : IDisposable where T : IDisposable
     {
         Func<U, T> create;
@@ -40,15 +41,6 @@ namespace SceneGraph.Core
             resource = resources[key].Take();
             var refCnt = resources[key];
             return new ResourceToken(key, () => refCnt.Release());
-        }
-
-        internal void Release(U key)
-        {
-            if (key == null)
-                foreach (var res in resources.Values)
-                    res.Release();
-            else if (resources.ContainsKey(key))
-                resources[key].Release();
         }
 
         internal void Purge()

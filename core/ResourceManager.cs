@@ -64,6 +64,12 @@ namespace SceneGraph.Core
             V tex;
             var token = TextureHandlers[textureId].Take(context, out tex);
             texture = tex;
+            if (texture == null)
+            {
+                token.Dispose();
+                token = DefaultTexture.Take(context, out tex);
+                texture = tex;
+            }
             return token;
         }
         public ResourceToken GetDefaultTexture(dynamic context, out dynamic texture)
