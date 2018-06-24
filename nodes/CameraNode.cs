@@ -23,22 +23,22 @@ namespace VVVV.SceneGraph
         [Input("GraphNode")]
         IDiffSpread<GraphNode> FGraphNode;
 
-        [Output("Name")]
+        [Output("Name", Order = 0)]
         ISpread<string> FName;
 
-        [Output("View")]
+        [Output("View", Order = 1)]
         ISpread<Matrix> FView;
        
-        [Output("Near Plane")]
+        [Output("Near Plane", Order = 2)]
         ISpread<float> FNear;
 
-        [Output("Far Plane")]
+        [Output("Far Plane", Order = 3)]
         ISpread<float> FFar;
 
-        [Output("Aspect")]
+        [Output("Aspect", Order = 4)]
         ISpread<float> FAspect;
 
-        [Output("Bin Size")]
+        [Output("Bin Size", Order = 5)]
         ISpread<int> FBinSize;
 
         Spread<GraphNode> FSelected = new Spread<GraphNode>();
