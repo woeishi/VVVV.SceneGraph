@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
 
 using System.ComponentModel.Composition;
 using VVVV.PluginInterfaces.V1;
@@ -14,7 +13,7 @@ using VVVV.DX11;
 namespace VVVV.SceneGraph
 {
     [PluginInfo(Name = "Model", Category = "SceneGraph", Version = "DX11",
-                Help = "Returns transformation, model and material properties.",
+                Help = "Returns meshes contained in the input together with the corresponding transformations, material properties and textures.",
                 Tags = "geometry, mesh, material",
                 Author = "woei")]
     public class ModelDX11Node : IPluginEvaluate, IPartImportsSatisfiedNotification, IDisposable, IDX11ResourceHost

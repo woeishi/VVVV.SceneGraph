@@ -10,7 +10,7 @@ using SceneGraph.Core;
 namespace VVVV.SceneGraph
 {
     [PluginInfo(Name = "Selector", Category = "SceneGraph",
-                Help = "Returns GraphNodes of which the names match the selector string.", Tags = "get, filter, sift",
+                Help = "Returns GraphNodes which names match or contain the selector string.", Tags = "get, filter, sift",
                 Author = "woei")]
     public class SelectorNode : IPluginEvaluate, IPartImportsSatisfiedNotification
     {

@@ -12,7 +12,7 @@ using SlimDX.Direct3D9;
 namespace VVVV.SceneGraph
 {
     [PluginInfo(Name = "Model", Category = "SceneGraph", Version = "EX9",
-                Help = "Returns transformation, model and material properties.",
+                Help = "Returns meshes contained in the input together with the corresponding transformations, material properties and textures.",
                 Tags = "geometry, mesh, material",
                 Author = "woei")]
     public class ModelEX9Node : IPluginDXMesh, IPluginEvaluate, IPartImportsSatisfiedNotification, IDisposable
