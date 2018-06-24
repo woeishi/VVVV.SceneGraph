@@ -12,8 +12,8 @@ using SceneGraph.Adaptors;
 namespace VVVV.SceneGraph
 {
 	[PluginInfo(Name = "Scene", Category = "SceneGraph",
-	            Help = "Loads an Assimp compatible 3d file and outputs a scenegraph", Tags = "SceneFile, Loader, Reader, assimp",
-	            Author = "woei", Credits = "v1.0 sponsored by decode.io")]
+	            Help = "Loads 3d scene and outputs a scenegraph, handling transform hierarchies and resources", Tags = "SceneFile, Loader, Reader, assimp",
+	            Author = "woei", Credits = "v1.0 to a huge amount sponsored by decode.io")]
 	public class LoaderSceneGraphNode : IPluginEvaluate, IDisposable, IPartImportsSatisfiedNotification
 	{
 		#region fields & pins
@@ -26,9 +26,6 @@ namespace VVVV.SceneGraph
 
         [Input("Reload", IsBang = true)]
         IDiffSpread<bool> FReload;
-
-        //[Input("Preload Data")]
-        //IDiffSpread<bool> FPreload;
 
         [Output("Graph", AutoFlush = false)]
         Pin<GraphNode> FRoot;
@@ -75,6 +72,8 @@ namespace VVVV.SceneGraph
 
         public void Dispose()
 		{
+            FMainloop.OnResetCache -= FMainloop_OnResetCache;
+            FRoot.Connected -= FRoot_Connected;
             foreach (var s in FScene)
                 s?.Dispose();
 		}        
