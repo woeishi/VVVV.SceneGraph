@@ -124,6 +124,7 @@
     <Compile Include="core\Transform.cs" />
     <Compile Include="backends\EX9ResourceManager.cs" />
     <Compile Include="backends\EX9Utils.cs" />
+    <Compile Include="nodes\CameraNode.cs" />
     <Compile Include="nodes\MaterialBaseNode.cs" />
     <Compile Include="nodes\MaterialEX9Node.cs" />
     <Compile Include="nodes\MeshEX9Node.cs" />
