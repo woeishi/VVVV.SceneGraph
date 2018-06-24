@@ -20,3 +20,5 @@ obj/
 *.suo
 *.user
 *.sln.docstates
+
+release/**/*.dll
