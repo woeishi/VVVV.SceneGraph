@@ -10,7 +10,7 @@ using SceneGraph.Core;
 
 namespace VVVV.SceneGraph
 {
-    [PluginInfo(Name = "MergeTransform", Category = "SceneGraph",
+    [PluginInfo(Name = "Merge", Category = "SceneGraph",
                 Help = "Applies a transformation subgraph back onto it's scenegraph.", Tags = "join",
                 Author = "woei")]
     public class MergeNode : IPluginEvaluate, IPartImportsSatisfiedNotification
