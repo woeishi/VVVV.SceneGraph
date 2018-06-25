@@ -95,7 +95,10 @@ namespace VVVV.SceneGraph
                 for (int i = 0; i < spreadMax; i++)
                 {
                     var filename = FFilename[i];
-                    if (FScene[i] == null || FScene[i].Filename != filename || FReload[i])
+                    var assetRoot = FAssetRoot[i];
+                    if (string.IsNullOrWhiteSpace(assetRoot))
+                        assetRoot = System.IO.Path.GetDirectoryName(filename);
+                    if (FScene[i] == null || FScene[i].Filename != filename || FScene[i].AssetRoot != assetRoot || FReload[i])
                     {
                         FScene[i]?.Dispose();
                         if (System.IO.File.Exists(filename))
