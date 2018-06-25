@@ -1,0 +1,315 @@
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.8.dtd" >
+   <PATCH nodename="D:\develop\VVVV.SceneGraph\release\SceneGraph\plugins\GraphNode (SceneGraph Split) help.v4p">
+   <BOUNDS type="Window" left="4600" top="4048" width="9000" height="6000">
+   </BOUNDS>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="3">
+   <BOUNDS type="Node" left="208" top="208" width="4760" height="424">
+   </BOUNDS>
+   <BOUNDS type="Box" left="208" top="208" width="4760" height="424">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|GraphNode (SceneGraph Split)|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   <PIN pinname="Size" slicecount="1" visible="1" values="14">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="2">
+   <BOUNDS type="Node" left="216" top="560" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="216" top="560" width="4024" height="328">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|Outputs basic information, parent and children.|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   <NODE nodename="GraphNode (SceneGraph Split)" componentmode="Hidden" id="0">
+   <BOUNDS type="Node" left="1176" top="3032" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="1176" top="3032" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="GraphNode" visible="1">
+   </PIN>
+   <PIN pinname="Name" visible="1">
+   </PIN>
+   <PIN pinname="Type" visible="1">
+   </PIN>
+   <PIN pinname="Children Names" visible="1">
+   </PIN>
+   <PIN pinname="Children" visible="1">
+   </PIN>
+   </NODE>
+   <PACK Name="addonpack" Version="35.0.0">
+   </PACK>
+   <NODE nodename="Scene (SceneGraph)" componentmode="Hidden" id="7">
+   <BOUNDS type="Node" left="1176" top="2384" width="520" height="256">
+   </BOUNDS>
+   <BOUNDS type="Box" left="1176" top="2384" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Filename" visible="1">
+   </PIN>
+   <PIN pinname="Graph" visible="1">
+   </PIN>
+   <PIN pinname="Reload" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Asset Root" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Is Valid" visible="1">
+   </PIN>
+   <PIN pinname="GraphNode" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="SystemFolder (File)" nodename="SystemFolder (File)" componentmode="Hidden" id="6">
+   <BOUNDS type="Node" left="1176" top="1440" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="Add (String)" nodename="Add (String)" componentmode="Hidden" id="5">
+   <BOUNDS type="Node" left="1176" top="2056" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input 2" visible="1">
+   </PIN>
+   <PIN pinname="Input 1" visible="1">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="4">
+   <BOUNDS type="Box" left="1352" top="1752" width="3064" height="224">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1352" top="1752" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="lib\assets\geometries\6-subset-cube.dae">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="text">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="4" srcpinname="Output String" dstnodeid="5" dstpinname="Input 2">
+   </LINK>
+   <LINK srcnodeid="6" srcpinname="Output" dstnodeid="5" dstpinname="Input 1">
+   </LINK>
+   <LINK srcnodeid="5" srcpinname="Output" dstnodeid="7" dstpinname="Filename">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="8">
+   <BOUNDS type="Box" left="432" top="3672" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="432" top="3672" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Name">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="0" srcpinname="Name" dstnodeid="8" dstpinname="Input String">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="9">
+   <BOUNDS type="Box" left="1328" top="3672" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1328" top="3672" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Type">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="0" srcpinname="Type" dstnodeid="9" dstpinname="Input String">
+   </LINK>
+   <NODE nodename="GraphNode (SceneGraph Split)" componentmode="Hidden" id="10">
+   <BOUNDS type="Node" left="2224" top="4200" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="2224" top="4200" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="GraphNode" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Name" visible="1">
+   </PIN>
+   <PIN pinname="Type" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="11">
+   <BOUNDS type="Box" left="2368" top="4544" width="736" height="744">
+   </BOUNDS>
+   <BOUNDS type="Node" left="2368" top="4544" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="SliceCount Mode" slicecount="1" values="ColsRowsPages">
+   </PIN>
+   <PIN pinname="Input String" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="10" srcpinname="Type" dstnodeid="11" dstpinname="Input String">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="12">
+   <BOUNDS type="Box" left="1576" top="4544" width="736" height="744">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1576" top="4544" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="SliceCount Mode" slicecount="1" values="ColsRowsPages">
+   </PIN>
+   <PIN pinname="Input String" visible="1" slicecount="3" values=",,">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="10" srcpinname="Name" dstnodeid="12" dstpinname="Input String">
+   </LINK>
+   <NODE systemname="Selector (SceneGraph)" filename="VVVV.SceneGraph.dll" nodename="Selector (SceneGraph)" componentmode="Hidden" id="13">
+   <BOUNDS type="Node" left="4960" top="2584" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="4960" top="2584" width="1600" height="1600">
+   </BOUNDS>
+   <PIN pinname="Matches | Contains" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Selector" slicecount="1" visible="1" values="Mesh">
+   </PIN>
+   <PIN pinname="Graph In" visible="1">
+   </PIN>
+   <PIN pinname="Graph Out" visible="1">
+   </PIN>
+   <PIN pinname="GraphNode" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="7" srcpinname="Graph" dstnodeid="13" dstpinname="Graph In">
+   </LINK>
+   <NODE nodename="GraphNode (SceneGraph Split)" componentmode="Hidden" id="16">
+   <BOUNDS type="Node" left="4968" top="3624" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="4968" top="3624" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="GraphNode" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Name" visible="1">
+   </PIN>
+   <PIN pinname="Type" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="15">
+   <BOUNDS type="Box" left="5112" top="3968" width="760" height="968">
+   </BOUNDS>
+   <BOUNDS type="Node" left="5112" top="3968" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="6">
+   </PIN>
+   <PIN pinname="SliceCount Mode" slicecount="1" values="ColsRowsPages">
+   </PIN>
+   <PIN pinname="Input String" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="16" srcpinname="Type" dstnodeid="15" dstpinname="Input String">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="14">
+   <BOUNDS type="Box" left="4320" top="3968" width="760" height="968">
+   </BOUNDS>
+   <BOUNDS type="Node" left="4320" top="3968" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="6">
+   </PIN>
+   <PIN pinname="SliceCount Mode" slicecount="1" values="ColsRowsPages">
+   </PIN>
+   <PIN pinname="Input String" visible="1" slicecount="3" values=",,">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="16" srcpinname="Name" dstnodeid="14" dstpinname="Input String">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="17">
+   <BOUNDS type="Box" left="5632" top="2304" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="5632" top="2304" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="Mesh">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="17" srcpinname="Output String" dstnodeid="13" dstpinname="Selector">
+   </LINK>
+   <LINK srcnodeid="13" srcpinname="Graph Out" dstnodeid="16" dstpinname="GraphNode">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="18">
+   <BOUNDS type="Node" left="6688" top="4336" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="6688" top="4336" width="1816" height="448">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|for exploring the scene better use this one:|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   <NODE systemname="Inspektor (SceneGraph)" filename="VVVV.SceneGraph.dll" nodename="Inspektor (SceneGraph)" componentmode="Hidden" id="19">
+   <BOUNDS type="Node" left="6696" top="4832" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="6696" top="4832" width="1600" height="1600">
+   </BOUNDS>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="20">
+   <BOUNDS type="Node" left="4560" top="816" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="4560" top="816" width="3664" height="824">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|handy for basic infos on the current input graphnode&cr;&lf;&cr;&lf;or to get to quickly getting one level up or down the hierarchy without names or xpath queries|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Node)" componentmode="InABox" id="21">
+   <BOUNDS type="Box" left="2232" top="3672" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="2232" top="3672" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Children">
+   </PIN>
+   <PIN pinname="Output Node" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="0" srcpinname="Children" dstnodeid="21" dstpinname="Input Node">
+   </LINK>
+   <LINK srcnodeid="21" srcpinname="Output Node" dstnodeid="10" dstpinname="GraphNode">
+   </LINK>
+   <LINK srcnodeid="7" srcpinname="GraphNode" dstnodeid="0" dstpinname="GraphNode">
+   </LINK>
+   <LINK srcnodeid="7" srcpinname="GraphNode" dstnodeid="13" dstpinname="GraphNode">
+   </LINK>
+   </PATCH>

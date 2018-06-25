@@ -1,0 +1,201 @@
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.8.dtd" >
+   <PATCH nodename="D:\develop\VVVV.SceneGraph\release\SceneGraph\plugins\Material (SceneGraph DX11) help.v4p">
+   <BOUNDS type="Window" left="2896" top="3912" width="9000" height="6000">
+   </BOUNDS>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="3">
+   <BOUNDS type="Node" left="208" top="208" width="4760" height="424">
+   </BOUNDS>
+   <BOUNDS type="Box" left="208" top="208" width="4760" height="424">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|Material (SceneGraph DX11)|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   <PIN pinname="Size" slicecount="1" visible="1" values="14">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="2">
+   <BOUNDS type="Node" left="208" top="560" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="208" top="560" width="4760" height="560">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|Returns colors and all available textures of the input GraphNode. Defaults to a white texture if not available.|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   <NODE nodename="Material (SceneGraph DX11)" componentmode="Hidden" id="0">
+   <BOUNDS type="Node" left="328" top="3912" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="328" top="3912" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="GraphNode" visible="1">
+   </PIN>
+   <PIN pinname="Diffuse Texture Path" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="4">
+   <BOUNDS type="Node" left="264" top="1184" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="264" top="1184" width="5216" height="424">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|Texture loading is actually handled by the scene in order to upload resources to the GPU only once and use the reference for multiple usage|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   <NODE nodename="Scene (SceneGraph)" componentmode="Hidden" id="12">
+   <BOUNDS type="Node" left="320" top="2952" width="520" height="256">
+   </BOUNDS>
+   <BOUNDS type="Box" left="320" top="2952" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Filename" visible="1">
+   </PIN>
+   <PIN pinname="Graph" visible="1">
+   </PIN>
+   <PIN pinname="Reload" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Asset Root" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Is Valid" visible="1">
+   </PIN>
+   <PIN pinname="GraphNode" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="SystemFolder (File)" nodename="SystemFolder (File)" componentmode="Hidden" id="11">
+   <BOUNDS type="Node" left="320" top="2008" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="Add (String)" nodename="Add (String)" componentmode="Hidden" id="10">
+   <BOUNDS type="Node" left="320" top="2624" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input 2" visible="1">
+   </PIN>
+   <PIN pinname="Input 1" visible="1">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="9">
+   <BOUNDS type="Box" left="496" top="2320" width="3064" height="224">
+   </BOUNDS>
+   <BOUNDS type="Node" left="496" top="2320" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="lib\assets\geometries\6-subset-cube.dae">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="text">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="9" srcpinname="Output String" dstnodeid="10" dstpinname="Input 2">
+   </LINK>
+   <LINK srcnodeid="11" srcpinname="Output" dstnodeid="10" dstpinname="Input 1">
+   </LINK>
+   <LINK srcnodeid="10" srcpinname="Output" dstnodeid="12" dstpinname="Filename">
+   </LINK>
+   <NODE systemname="Selector (SceneGraph)" filename="VVVV.SceneGraph.dll" nodename="Selector (SceneGraph)" componentmode="Hidden" id="8">
+   <BOUNDS type="Node" left="320" top="3504" width="1256" height="256">
+   </BOUNDS>
+   <BOUNDS type="Box" left="320" top="3504" width="1600" height="1600">
+   </BOUNDS>
+   <PIN pinname="Matches | Contains" visible="1">
+   </PIN>
+   <PIN pinname="Selector" visible="1">
+   </PIN>
+   <PIN pinname="Graph In" visible="1">
+   </PIN>
+   <PIN pinname="Graph Out" visible="1">
+   </PIN>
+   <PIN pinname="GraphNode" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="7">
+   <BOUNDS type="Box" left="912" top="3160" width="280" height="296">
+   </BOUNDS>
+   <BOUNDS type="Node" left="912" top="3160" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Toggle">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Contains">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="7" srcpinname="Y Output Value" dstnodeid="8" dstpinname="Matches | Contains">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="6">
+   <BOUNDS type="Box" left="1528" top="3192" width="488" height="224">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1528" top="3192" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="Mesh">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="6" srcpinname="Output String" dstnodeid="8" dstpinname="Selector">
+   </LINK>
+   <LINK srcnodeid="12" srcpinname="Graph" dstnodeid="8" dstpinname="Graph In">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="5" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="2072" top="3176" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="2072" top="3176" width="1728" height="432">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- all nodes which have &apos;Mesh&apos; in their name|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="13">
+   <BOUNDS type="Box" left="1552" top="4264" width="4328" height="224">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1552" top="4264" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="0" srcpinname="Diffuse Texture Path" dstnodeid="13" dstpinname="Input String">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="14">
+   <BOUNDS type="Node" left="4312" top="2064" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="4312" top="2064" width="3896" height="1880">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|it returns material properties as they are in Assimp, so for the mean time its Phong Properties:&cr;&lf;&cr;&lf;textures can be toggled individually and are filed by their usage intention (Diffuse, Ambient, Height, Normal...) watch out, if your exporter actually puts multiple textures on a mesh the same vertices on different usages&cr;&lf;&cr;&lf;if no texture is assigned to the material, the node outputs a default white texture to not just mess up the spreadcount or pass around nils|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   <PACK Name="addonpack" Version="35.0.0">
+   </PACK>
+   <LINK srcnodeid="12" srcpinname="GraphNode" dstnodeid="8" dstpinname="GraphNode">
+   </LINK>
+   <LINK srcnodeid="8" srcpinname="GraphNode" dstnodeid="0" dstpinname="GraphNode">
+   </LINK>
+   </PATCH>

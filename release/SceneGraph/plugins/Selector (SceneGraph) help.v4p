@@ -1,0 +1,727 @@
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.8.dtd" >
+   <PATCH nodename="D:\develop\VVVV.SceneGraph\release\SceneGraph\plugins\Selector (SceneGraph) help.v4p" scrollx="0" scrolly="0">
+   <BOUNDS type="Window" left="448" top="1472" width="9000" height="9200">
+   </BOUNDS>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="3">
+   <BOUNDS type="Node" left="208" top="208" width="4760" height="424">
+   </BOUNDS>
+   <BOUNDS type="Box" left="208" top="208" width="4760" height="424">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|Selector (SceneGraph)|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   <PIN pinname="Size" slicecount="1" visible="1" values="14">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="2">
+   <BOUNDS type="Node" left="208" top="560" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="208" top="560" width="4776" height="320">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|Returns GraphNodes which names match or contain the selector string.|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="5" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="6384" top="4688" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="6384" top="4688" width="2440" height="1160">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- selecting just a subgraphs here&cr;&lf;&cr;&lf;&lt;- pointing on &apos;Mesh_0&apos; &amp; &apos;Mesh_5&apos;&cr;&lf;&cr;&lf;* doesn&apos;t require a specific selection string, since the nodes are already selected|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <PACK Name="addonpack" Version="35.0.0">
+   </PACK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="6" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="192" top="880" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="192" top="880" width="7608" height="968">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|although a GraphNode always contains the information of the whole scene, the instance references a certain node within the scenegraph/scene hierachy. the &apos;Scene&apos; node always returns the GraphNode pointing to the root.&cr;&lf;&cr;&lf;The Selector lets you choose another node in the graph, thus limiting the operation of downstream nodes to just a part/subgraph of the whole scene.|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE nodename="Multiply (Transform SceneGraph)" componentmode="Hidden" id="27">
+   <BOUNDS type="Node" left="1904" top="3656" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="1904" top="3656" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Graph In" visible="1">
+   </PIN>
+   <PIN pinname="Transform" visible="1">
+   </PIN>
+   <PIN pinname="Graph Out" visible="1">
+   </PIN>
+   <PIN pinname="Selector" slicecount="1" visible="1" values="||">
+   </PIN>
+   <PIN pinname="GraphNode" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="Scene (SceneGraph)" componentmode="Hidden" id="26">
+   <BOUNDS type="Node" left="2072" top="3040" width="520" height="256">
+   </BOUNDS>
+   <BOUNDS type="Box" left="2072" top="3040" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Filename" visible="1">
+   </PIN>
+   <PIN pinname="Graph" visible="1">
+   </PIN>
+   <PIN pinname="Reload" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Asset Root" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Is Valid" visible="1">
+   </PIN>
+   <PIN pinname="GraphNode" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="SystemFolder (File)" nodename="SystemFolder (File)" componentmode="Hidden" id="25">
+   <BOUNDS type="Node" left="2072" top="2096" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="Add (String)" nodename="Add (String)" componentmode="Hidden" id="24">
+   <BOUNDS type="Node" left="2072" top="2712" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input 2" visible="1">
+   </PIN>
+   <PIN pinname="Input 1" visible="1">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="23">
+   <BOUNDS type="Box" left="2248" top="2408" width="3064" height="224">
+   </BOUNDS>
+   <BOUNDS type="Node" left="2248" top="2408" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="lib\assets\geometries\6-subset-cube.dae">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="text">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="23" srcpinname="Output String" dstnodeid="24" dstpinname="Input 2">
+   </LINK>
+   <LINK srcnodeid="25" srcpinname="Output" dstnodeid="24" dstpinname="Input 1">
+   </LINK>
+   <LINK srcnodeid="24" srcpinname="Output" dstnodeid="26" dstpinname="Filename">
+   </LINK>
+   <NODE systemname="Model (SceneGraph DX11)" filename="VVVV.SceneGraph.dll" nodename="Model (SceneGraph DX11)" componentmode="Hidden" id="22">
+   <BOUNDS type="Node" left="1016" top="6224" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="1016" top="6224" width="1600" height="1600">
+   </BOUNDS>
+   <PIN pinname="GraphNode" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Geometry" visible="1">
+   </PIN>
+   <PIN pinname="Transform" visible="1">
+   </PIN>
+   <PIN pinname="Enable Bounds" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Ambient" visible="1">
+   </PIN>
+   <PIN pinname="Diffuse" visible="1">
+   </PIN>
+   <PIN pinname="Specular" visible="1">
+   </PIN>
+   <PIN pinname="Enable Diffuse Texture" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Diffuse Texture" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="Renderer (DX11)" filename="%VVVV%\packs\dx11\nodes\plugins\base\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11)" componentmode="InAWindow" id="21">
+   <BOUNDS type="Node" left="880" top="7288" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="880" top="7288" width="3200" height="2400">
+   </BOUNDS>
+   <BOUNDS type="Window" left="9312" top="1464" width="4288" height="4608">
+   </BOUNDS>
+   <PIN pinname="Layers" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="View" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Projection" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Depth Buffer Mode" slicecount="1" values="Standard">
+   </PIN>
+   <PIN pinname="Depth Buffer Format" slicecount="1" values="D32_Float">
+   </PIN>
+   </NODE>
+   <NODE id="20" systemname="Camera (Transform Softimage)" filename="%VVVV%\lib\packs\VL.EditingFramework.0.55.43-g436959e253\vvvv\nodes\modules\Camera (Transform Softimage).v4p" nodename="Camera (Transform Softimage)" componentmode="Hidden" hiddenwhenlocked="0" managers="">
+   <BOUNDS type="Node" left="2088" top="6976" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="View" visible="1" pintype="Output">
+   </PIN>
+   <PIN pinname="Projection" visible="1" pintype="Output">
+   </PIN>
+   <BOUNDS type="Box" left="120" top="2272" width="4800" height="3600">
+   </BOUNDS>
+   <BOUNDS type="Window" left="4095" top="2070" width="7710" height="7680">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" pintype="Configuration" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Tag" pintype="Configuration" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Initial InterestXYZ" pintype="Input" visible="1" slicecount="3" values="0,0,0">
+   </PIN>
+   <PIN pinname="Initial Longitude" pintype="Input" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Initial Latitude" pintype="Input" visible="1" slicecount="1" values="0.02">
+   </PIN>
+   <PIN pinname="Initial Distance" pintype="Input" visible="1" slicecount="1" values="2">
+   </PIN>
+   <PIN pinname="Initial FOV" pintype="Input" visible="1" slicecount="1" values="0.3">
+   </PIN>
+   <PIN pinname="Near Plane" pintype="Input" visible="1" slicecount="1" values="0.05">
+   </PIN>
+   <PIN pinname="Far Plane" pintype="Input" visible="1" slicecount="1" values="100">
+   </PIN>
+   <PIN pinname="Camera Controls" pintype="Input" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Window Handle" pintype="Output" visible="-1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Reset" pintype="Input" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Enabled" pintype="Input" visible="1" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Evaluate" pintype="Input" visible="-1" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Patch" pintype="Output" visible="-1">
+   </PIN>
+   <PIN pinname="Camera State" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="View Projection" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="Inverse View" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="PositionXYZ" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="InterestXYZ" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="FOV" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="Distance" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="Renderer Hovered" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="Idle" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="ID" pintype="Output" visible="-1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="20" srcpinname="Projection" dstnodeid="21" dstpinname="Projection">
+   </LINK>
+   <LINK srcnodeid="20" srcpinname="View" dstnodeid="21" dstpinname="View">
+   </LINK>
+   <LINK srcnodeid="26" srcpinname="Graph" dstnodeid="27" dstpinname="Graph In">
+   </LINK>
+   <NODE systemname="Rotate (Transform)" nodename="Rotate (Transform)" componentmode="Hidden" id="19">
+   <BOUNDS type="Node" left="8" top="3208" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Transform Out" visible="1">
+   </PIN>
+   <PIN pinname="Y" visible="1" slicecount="1" values="0.11">
+   </PIN>
+   <PIN pinname="X" slicecount="1" values="-0.08">
+   </PIN>
+   <PIN pinname="Z" slicecount="1" visible="1" values="-0.37">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="19" srcpinname="Transform Out" dstnodeid="27" dstpinname="Transform" linkstyle="Bezier">
+   <LINKPOINT x="293" y="3552">
+   </LINKPOINT>
+   <LINKPOINT x="1715" y="3552">
+   </LINKPOINT>
+   </LINK>
+   <NODE systemname="LFO (Animation)" nodename="LFO (Animation)" componentmode="Hidden" id="18">
+   <BOUNDS type="Node" left="904" top="2888" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="Period" slicecount="1" values="7">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="18" srcpinname="Output" dstnodeid="19" dstpinname="Z">
+   </LINK>
+   <NODE nodename="Multiply (Transform SceneGraph)" componentmode="Hidden" id="17">
+   <BOUNDS type="Node" left="1736" top="5512" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="1736" top="5512" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Graph In" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Transform" visible="1">
+   </PIN>
+   <PIN pinname="Graph Out" visible="1">
+   </PIN>
+   <PIN pinname="Selector" slicecount="1" visible="1" values="Mesh_0">
+   </PIN>
+   <PIN pinname="GraphNode" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="16">
+   <BOUNDS type="Box" left="2248" top="4832" width="672" height="408">
+   </BOUNDS>
+   <BOUNDS type="Node" left="2248" top="4832" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="2" visible="1" values="Mesh_0,Mesh_5">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="2">
+   </PIN>
+   <PIN pinname="SliceCount Mode" slicecount="1" values="ColsRowsPages">
+   </PIN>
+   <PIN pinname="Output String" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="27" srcpinname="Graph Out" dstnodeid="17" dstpinname="Graph In">
+   </LINK>
+   <NODE systemname="Translate (Transform)" nodename="Translate (Transform)" componentmode="Hidden" id="15">
+   <BOUNDS type="Node" left="8" top="4912" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Transform Out" visible="1">
+   </PIN>
+   <PIN pinname="Y" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="X" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Z" slicecount="1" visible="1" values="0.98">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="15" srcpinname="Transform Out" dstnodeid="17" dstpinname="Transform">
+   </LINK>
+   <NODE systemname="Rasterizer (DX11.RenderState)" filename="%VVVV%\packs\dx11\nodes\plugins\base\VVVV.DX11.Nodes.dll" nodename="Rasterizer (DX11.RenderState)" componentmode="Hidden" id="14">
+   <BOUNDS type="Node" left="80" top="6224" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="80" top="6224" width="1600" height="1600">
+   </BOUNDS>
+   <PIN pinname="Render State" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Mode" slicecount="1" values="NoCullSimple">
+   </PIN>
+   </NODE>
+   <NODE systemname="LinearSpread (Spreads)" nodename="LinearSpread (Spreads)" componentmode="Hidden" id="13">
+   <BOUNDS type="Node" left="680" top="4560" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Spread Count" slicecount="1" values="2">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="Width" slicecount="1" visible="1" values="5">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="13" srcpinname="Output" dstnodeid="15" dstpinname="Z">
+   </LINK>
+   <LINK srcnodeid="16" srcpinname="Output String" dstnodeid="17" dstpinname="Selector">
+   </LINK>
+   <NODE systemname="PhongDirectional (DX11.Effect)" filename="%VVVV%\packs\dx11\nodes\dx11\PhongDirectional.fx" nodename="PhongDirectional (DX11.Effect)" componentmode="Hidden" id="12">
+   <BOUNDS type="Node" left="1032" top="6680" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Geometry" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Transform In" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Layer" visible="1">
+   </PIN>
+   <PIN pinname="Ambient Color" visible="1" slicecount="6" values="|0.10228,0.10228,0.10228,1.00000|,|0.10228,0.10228,0.10228,1.00000|,|0.10228,0.10228,0.10228,1.00000|,|0.10228,0.10228,0.10228,1.00000|,|0.10228,0.10228,0.10228,1.00000|,|0.10228,0.10228,0.10228,1.00000|">
+   </PIN>
+   <PIN pinname="Diffuse Color" visible="1" slicecount="1" values="|0.85000,0.85000,0.85000,1.00000|">
+   </PIN>
+   <PIN pinname="Specular Color" visible="1" slicecount="1" values="|0.35000,0.35000,0.35000,1.00000|">
+   </PIN>
+   <PIN pinname="Technique" slicecount="1" values="GouraudDirectional">
+   </PIN>
+   <PIN pinname="Texture" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Render State" visible="1">
+   </PIN>
+   <PIN pinname="Light DirectionXYZ" slicecount="3" values="-1,0,-1.75">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="12" srcpinname="Layer" dstnodeid="21" dstpinname="Layers">
+   </LINK>
+   <LINK srcnodeid="22" srcpinname="Geometry" dstnodeid="12" dstpinname="Geometry">
+   </LINK>
+   <LINK srcnodeid="22" srcpinname="Transform" dstnodeid="12" dstpinname="Transform In">
+   </LINK>
+   <LINK srcnodeid="22" srcpinname="Diffuse" dstnodeid="12" dstpinname="Diffuse Color">
+   </LINK>
+   <LINK srcnodeid="22" srcpinname="Specular" dstnodeid="12" dstpinname="Specular Color">
+   </LINK>
+   <LINK srcnodeid="14" srcpinname="Render State" dstnodeid="12" dstpinname="Render State">
+   </LINK>
+   <NODE systemname="WaveShaper (Value)" nodename="WaveShaper (Value)" componentmode="Hidden" id="10">
+   <BOUNDS type="Node" left="912" top="4000" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input" visible="1">
+   </PIN>
+   <PIN pinname="Shape" slicecount="1" values="Sine">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="18" srcpinname="Output" dstnodeid="10" dstpinname="Input">
+   </LINK>
+   <NODE systemname="Multiply (Value)" nodename="Multiply (Value)" componentmode="Hidden" id="9">
+   <BOUNDS type="Node" left="912" top="4288" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input 2" slicecount="1" values="-3">
+   </PIN>
+   <PIN pinname="Input 1" visible="1">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="10" srcpinname="Output" dstnodeid="9" dstpinname="Input 1">
+   </LINK>
+   <LINK srcnodeid="9" srcpinname="Output" dstnodeid="13" dstpinname="Width">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="28" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="2640" top="3352" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="2640" top="3352" width="1472" height="256">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- pointing to root|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="29" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="2680" top="3640" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="2680" top="3640" width="1472" height="256">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- transforming root|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="30" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="3016" top="4800" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="3016" top="4800" width="1376" height="456">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- transforming some descendants|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="31" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="1752" top="5832" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="1752" top="5832" width="1712" height="232">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- still pointing to root|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="32" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="2688" top="6208" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="2688" top="6208" width="1752" height="384">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- output all meshes which are part of the root|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="33">
+   <BOUNDS type="Box" left="6304" top="4168" width="672" height="408">
+   </BOUNDS>
+   <BOUNDS type="Node" left="6304" top="4168" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="2" visible="1" values="Mesh_0,Mesh_5">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="2">
+   </PIN>
+   <PIN pinname="SliceCount Mode" slicecount="1" values="ColsRowsPages">
+   </PIN>
+   <PIN pinname="Output String" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="34">
+   <BOUNDS type="Box" left="5872" top="4120" width="312" height="296">
+   </BOUNDS>
+   <BOUNDS type="Node" left="5872" top="4120" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Toggle">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Matches || Contains|">
+   </PIN>
+   </NODE>
+   <NODE nodename="Multiply (Transform SceneGraph)" componentmode="Hidden" id="37">
+   <BOUNDS type="Node" left="5392" top="5512" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="5392" top="5512" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Graph In" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Transform" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Graph Out" visible="1">
+   </PIN>
+   <PIN pinname="Selector" slicecount="1" visible="1" values="||">
+   </PIN>
+   <PIN pinname="GraphNode" visible="1" slicecount="1" values="||">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="15" srcpinname="Transform Out" dstnodeid="37" dstpinname="Transform">
+   </LINK>
+   <NODE systemname="Model (SceneGraph DX11)" filename="VVVV.SceneGraph.dll" nodename="Model (SceneGraph DX11)" componentmode="Hidden" id="43">
+   <BOUNDS type="Node" left="5408" top="6192" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="5408" top="6192" width="1600" height="1600">
+   </BOUNDS>
+   <PIN pinname="GraphNode" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Geometry" visible="1">
+   </PIN>
+   <PIN pinname="Transform" visible="1">
+   </PIN>
+   <PIN pinname="Enable Bounds" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Ambient" visible="1">
+   </PIN>
+   <PIN pinname="Diffuse" visible="1">
+   </PIN>
+   <PIN pinname="Specular" visible="1">
+   </PIN>
+   <PIN pinname="Enable Diffuse Texture" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Diffuse Texture" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="Renderer (DX11)" filename="%VVVV%\packs\dx11\nodes\plugins\base\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11)" componentmode="InAWindow" id="42">
+   <BOUNDS type="Node" left="5272" top="7256" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="5272" top="7256" width="3200" height="2400">
+   </BOUNDS>
+   <BOUNDS type="Window" left="9304" top="6072" width="4288" height="4608">
+   </BOUNDS>
+   <PIN pinname="Layers" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="View" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Projection" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Depth Buffer Mode" slicecount="1" values="Standard">
+   </PIN>
+   <PIN pinname="Depth Buffer Format" slicecount="1" values="D32_Float">
+   </PIN>
+   </NODE>
+   <NODE id="41" systemname="Camera (Transform Softimage)" filename="%VVVV%\lib\packs\VL.EditingFramework.0.55.43-g436959e253\vvvv\nodes\modules\Camera (Transform Softimage).v4p" nodename="Camera (Transform Softimage)" componentmode="Hidden" hiddenwhenlocked="0" managers="">
+   <BOUNDS type="Node" left="6480" top="6944" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="View" visible="1" pintype="Output">
+   </PIN>
+   <PIN pinname="Projection" visible="1" pintype="Output">
+   </PIN>
+   <BOUNDS type="Box" left="4512" top="2240" width="4800" height="3600">
+   </BOUNDS>
+   <BOUNDS type="Window" left="4095" top="2070" width="7710" height="7680">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" pintype="Configuration" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Tag" pintype="Configuration" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Initial InterestXYZ" pintype="Input" visible="1" slicecount="3" values="0,0,0">
+   </PIN>
+   <PIN pinname="Initial Longitude" pintype="Input" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Initial Latitude" pintype="Input" visible="1" slicecount="1" values="0.02">
+   </PIN>
+   <PIN pinname="Initial Distance" pintype="Input" visible="1" slicecount="1" values="2">
+   </PIN>
+   <PIN pinname="Initial FOV" pintype="Input" visible="1" slicecount="1" values="0.3">
+   </PIN>
+   <PIN pinname="Near Plane" pintype="Input" visible="1" slicecount="1" values="0.05">
+   </PIN>
+   <PIN pinname="Far Plane" pintype="Input" visible="1" slicecount="1" values="100">
+   </PIN>
+   <PIN pinname="Camera Controls" pintype="Input" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Window Handle" pintype="Output" visible="-1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Reset" pintype="Input" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Enabled" pintype="Input" visible="1" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Evaluate" pintype="Input" visible="-1" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Patch" pintype="Output" visible="-1">
+   </PIN>
+   <PIN pinname="Camera State" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="View Projection" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="Inverse View" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="PositionXYZ" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="InterestXYZ" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="FOV" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="Distance" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="Renderer Hovered" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="Idle" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="ID" pintype="Output" visible="-1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="41" srcpinname="Projection" dstnodeid="42" dstpinname="Projection">
+   </LINK>
+   <LINK srcnodeid="41" srcpinname="View" dstnodeid="42" dstpinname="View">
+   </LINK>
+   <NODE systemname="PhongDirectional (DX11.Effect)" filename="%VVVV%\packs\dx11\nodes\dx11\PhongDirectional.fx" nodename="PhongDirectional (DX11.Effect)" componentmode="Hidden" id="39">
+   <BOUNDS type="Node" left="5424" top="6648" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Geometry" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Transform In" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Layer" visible="1">
+   </PIN>
+   <PIN pinname="Ambient Color" visible="1" slicecount="6" values="|0.10228,0.10228,0.10228,1.00000|,|0.10228,0.10228,0.10228,1.00000|,|0.10228,0.10228,0.10228,1.00000|,|0.10228,0.10228,0.10228,1.00000|,|0.10228,0.10228,0.10228,1.00000|,|0.10228,0.10228,0.10228,1.00000|">
+   </PIN>
+   <PIN pinname="Diffuse Color" visible="1" slicecount="1" values="|0.85000,0.85000,0.85000,1.00000|">
+   </PIN>
+   <PIN pinname="Specular Color" visible="1" slicecount="1" values="|0.35000,0.35000,0.35000,1.00000|">
+   </PIN>
+   <PIN pinname="Technique" slicecount="1" values="GouraudDirectional">
+   </PIN>
+   <PIN pinname="Texture" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Render State" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Light DirectionXYZ" slicecount="3" values="-1,0,-1.75">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="39" srcpinname="Layer" dstnodeid="42" dstpinname="Layers">
+   </LINK>
+   <LINK srcnodeid="43" srcpinname="Geometry" dstnodeid="39" dstpinname="Geometry">
+   </LINK>
+   <LINK srcnodeid="43" srcpinname="Transform" dstnodeid="39" dstpinname="Transform In">
+   </LINK>
+   <LINK srcnodeid="43" srcpinname="Diffuse" dstnodeid="39" dstpinname="Diffuse Color">
+   </LINK>
+   <LINK srcnodeid="43" srcpinname="Specular" dstnodeid="39" dstpinname="Specular Color">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="38" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="7080" top="6176" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="7080" top="6176" width="1752" height="384">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- only finds Mesh_0 and Mesh_5 to output|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="14" srcpinname="Render State" dstnodeid="39" dstpinname="Render State">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="44" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="448" top="7840" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="448" top="7840" width="7568" height="728">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|Selector comes with additional pins &apos;Resursion Depth&apos; and &apos;Include Self&apos; for the cases, where naming is ambiguous. Often the exporter just does some auto naming and mesh splitting.&cr;&lf;Recursion Depth greater than 0 also outputs children (and descendants) and &apos;Include Self&apos; off excludes the GraphNode matched by the selection. (e.g. for give me all direct children of node name &apos;foo&apos;|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="26" srcpinname="GraphNode" dstnodeid="27" dstpinname="GraphNode">
+   </LINK>
+   <LINK srcnodeid="27" srcpinname="GraphNode" dstnodeid="17" dstpinname="GraphNode">
+   </LINK>
+   <LINK srcnodeid="17" srcpinname="GraphNode" dstnodeid="22" dstpinname="GraphNode">
+   </LINK>
+   <LINK srcnodeid="37" srcpinname="GraphNode" dstnodeid="43" dstpinname="GraphNode">
+   </LINK>
+   <NODE nodename="Selector (SceneGraph)" componentmode="Hidden" id="45">
+   <BOUNDS type="Node" left="5560" top="4712" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="5560" top="4712" width="0" height="0">
+   </BOUNDS>
+   </NODE>
+   <LINK srcnodeid="27" srcpinname="Graph Out" dstnodeid="45" dstpinname="Graph In">
+   </LINK>
+   <LINK srcnodeid="33" srcpinname="Output String" dstnodeid="45" dstpinname="Selector">
+   </LINK>
+   <LINK srcnodeid="34" srcpinname="Y Output Value" dstnodeid="45" dstpinname="Matches | Contains">
+   </LINK>
+   <LINK srcnodeid="45" srcpinname="Graph Out" dstnodeid="37" dstpinname="Graph In">
+   </LINK>
+   <LINK srcnodeid="27" srcpinname="GraphNode" dstnodeid="45" dstpinname="GraphNode">
+   </LINK>
+   <LINK srcnodeid="45" srcpinname="GraphNode" dstnodeid="37" dstpinname="GraphNode">
+   </LINK>
+   </PATCH>

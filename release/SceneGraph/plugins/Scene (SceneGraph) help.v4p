@@ -1,0 +1,287 @@
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.8.dtd" >
+   <PATCH nodename="D:\develop\VVVV.SceneGraph\release\SceneGraph\plugins\Scene (SceneGraph) help.v4p">
+   <BOUNDS type="Window" left="2512" top="2616" width="9000" height="6000">
+   </BOUNDS>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="3">
+   <BOUNDS type="Node" left="208" top="208" width="4760" height="424">
+   </BOUNDS>
+   <BOUNDS type="Box" left="208" top="208" width="4760" height="424">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|Scene (SceneGraph)|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   <PIN pinname="Size" slicecount="1" visible="1" values="14">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="2">
+   <BOUNDS type="Node" left="208" top="640" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="208" top="640" width="5888" height="240">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|Loads 3d scene and outputs a scenegraph, handling transform hierarchies and resources|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   <NODE nodename="Scene (SceneGraph)" componentmode="Hidden" id="0">
+   <BOUNDS type="Node" left="888" top="2952" width="2904" height="256">
+   </BOUNDS>
+   <BOUNDS type="Box" left="888" top="2952" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Filename" visible="1">
+   </PIN>
+   <PIN pinname="Graph" visible="1">
+   </PIN>
+   <PIN pinname="Reload" visible="1">
+   </PIN>
+   <PIN pinname="Asset Root" visible="1">
+   </PIN>
+   <PIN pinname="Is Valid" visible="1">
+   </PIN>
+   <PIN pinname="GraphNode" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="SystemFolder (File)" nodename="SystemFolder (File)" componentmode="Hidden" id="4">
+   <BOUNDS type="Node" left="888" top="1152" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="Add (String)" nodename="Add (String)" componentmode="Hidden" id="5">
+   <BOUNDS type="Node" left="896" top="1768" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input 2" visible="1">
+   </PIN>
+   <PIN pinname="Input 1" visible="1">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="6">
+   <BOUNDS type="Box" left="1072" top="1464" width="3064" height="224">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1072" top="1464" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="lib\assets\geometries\astroBoy_walk.dae">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="text">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="6" srcpinname="Output String" dstnodeid="5" dstpinname="Input 2">
+   </LINK>
+   <LINK srcnodeid="4" srcpinname="Output" dstnodeid="5" dstpinname="Input 1">
+   </LINK>
+   <LINK srcnodeid="5" srcpinname="Output" dstnodeid="0" dstpinname="Filename">
+   </LINK>
+   <NODE systemname="Model (SceneGraph DX11)" filename="VVVV.SceneGraph.dll" nodename="Model (SceneGraph DX11)" componentmode="Hidden" id="7">
+   <BOUNDS type="Node" left="896" top="4008" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="896" top="4008" width="1600" height="1600">
+   </BOUNDS>
+   <PIN pinname="GraphNode" visible="1">
+   </PIN>
+   <PIN pinname="Geometry" visible="1">
+   </PIN>
+   <PIN pinname="Transform" visible="1">
+   </PIN>
+   <PIN pinname="Enable Bounds" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Ambient" visible="1">
+   </PIN>
+   <PIN pinname="Diffuse" visible="1">
+   </PIN>
+   <PIN pinname="Specular" visible="1">
+   </PIN>
+   <PIN pinname="Enable Diffuse Texture" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Diffuse Texture" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="PhongDirectional (DX11.Effect)" filename="%VVVV%\packs\dx11\nodes\dx11\PhongDirectional.fx" nodename="PhongDirectional (DX11.Effect)" componentmode="Hidden" id="10">
+   <BOUNDS type="Node" left="912" top="4464" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Geometry" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Transform In" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Layer" visible="1">
+   </PIN>
+   <PIN pinname="Ambient Color" visible="1" slicecount="1" values="|0.15000,0.15000,0.15000,1.00000|">
+   </PIN>
+   <PIN pinname="Diffuse Color" visible="1" slicecount="1" values="|0.85000,0.85000,0.85000,1.00000|">
+   </PIN>
+   <PIN pinname="Specular Color" visible="1" slicecount="1" values="|0.35000,0.35000,0.35000,1.00000|">
+   </PIN>
+   <PIN pinname="Technique" slicecount="1" values="GouraudDirectionalNotexture">
+   </PIN>
+   <PIN pinname="Texture" visible="1" slicecount="1" values="||">
+   </PIN>
+   </NODE>
+   <NODE systemname="Renderer (DX11)" filename="%VVVV%\packs\dx11\nodes\plugins\base\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11)" componentmode="InAWindow" id="9">
+   <BOUNDS type="Node" left="760" top="5072" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="760" top="5072" width="3200" height="2400">
+   </BOUNDS>
+   <BOUNDS type="Window" left="11352" top="2624" width="4288" height="4608">
+   </BOUNDS>
+   <PIN pinname="Layers" visible="1">
+   </PIN>
+   <PIN pinname="View" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Projection" visible="1" slicecount="1" values="||">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="10" srcpinname="Layer" dstnodeid="9" dstpinname="Layers">
+   </LINK>
+   <LINK srcnodeid="7" srcpinname="Geometry" dstnodeid="10" dstpinname="Geometry">
+   </LINK>
+   <LINK srcnodeid="7" srcpinname="Transform" dstnodeid="10" dstpinname="Transform In">
+   </LINK>
+   <NODE id="8" systemname="Camera (Transform Softimage)" filename="%VVVV%\lib\packs\VL.EditingFramework.0.55.43-g436959e253\vvvv\nodes\modules\Camera (Transform Softimage).v4p" nodename="Camera (Transform Softimage)" componentmode="Hidden" hiddenwhenlocked="0" managers="">
+   <BOUNDS type="Node" left="1968" top="4760" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="View" visible="1" pintype="Output">
+   </PIN>
+   <PIN pinname="Projection" visible="1" pintype="Output">
+   </PIN>
+   <BOUNDS type="Box" left="0" top="16" width="4800" height="3600">
+   </BOUNDS>
+   <BOUNDS type="Window" left="4095" top="2070" width="7710" height="7680">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" pintype="Configuration" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Tag" pintype="Configuration" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Initial InterestXYZ" pintype="Input" visible="1" slicecount="3" values="0,0,0">
+   </PIN>
+   <PIN pinname="Initial Longitude" pintype="Input" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Initial Latitude" pintype="Input" visible="1" slicecount="1" values="0.02">
+   </PIN>
+   <PIN pinname="Initial Distance" pintype="Input" visible="1" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Initial FOV" pintype="Input" visible="1" slicecount="1" values="0.08">
+   </PIN>
+   <PIN pinname="Near Plane" pintype="Input" visible="1" slicecount="1" values="0.05">
+   </PIN>
+   <PIN pinname="Far Plane" pintype="Input" visible="1" slicecount="1" values="100">
+   </PIN>
+   <PIN pinname="Camera Controls" pintype="Input" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Window Handle" pintype="Output" visible="-1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Reset" pintype="Input" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Enabled" pintype="Input" visible="1" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Evaluate" pintype="Input" visible="-1" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Patch" pintype="Output" visible="-1">
+   </PIN>
+   <PIN pinname="Camera State" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="View Projection" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="Inverse View" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="PositionXYZ" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="InterestXYZ" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="FOV" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="Distance" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="Renderer Hovered" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="Idle" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="ID" pintype="Output" visible="-1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="8" srcpinname="Projection" dstnodeid="9" dstpinname="Projection">
+   </LINK>
+   <LINK srcnodeid="8" srcpinname="View" dstnodeid="9" dstpinname="View">
+   </LINK>
+   <LINK srcnodeid="7" srcpinname="Ambient" dstnodeid="10" dstpinname="Ambient Color">
+   </LINK>
+   <LINK srcnodeid="7" srcpinname="Diffuse" dstnodeid="10" dstpinname="Diffuse Color">
+   </LINK>
+   <LINK srcnodeid="7" srcpinname="Specular" dstnodeid="10" dstpinname="Specular Color">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="11">
+   <BOUNDS type="Box" left="3744" top="2496" width="456" height="224">
+   </BOUNDS>
+   <BOUNDS type="Node" left="3744" top="2496" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Bang">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Reload">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="11" srcpinname="Y Output Value" dstnodeid="0" dstpinname="Reload">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="12">
+   <BOUNDS type="Box" left="2304" top="2472" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="2304" top="2472" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="||">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Asset Root|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="12" srcpinname="Output String" dstnodeid="0" dstpinname="Asset Root">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="13">
+   <BOUNDS type="Node" left="4728" top="2040" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="4728" top="2040" width="3496" height="1888">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|loads an assimp compatible 3d file format, parses objects, transform, meshes and textures and constructs a navigatable scenegraph&cr;&lf;&cr;&lf;loading library is currently handled by the c# assimp wrapper of mr vux. hence the second output pin is a AssimpScene&cr;&lf;&cr;&lf;specify an Asset Root in case the model comes with textures and those are not in the original relative location to the 3d object file|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="15">
+   <BOUNDS type="Box" left="3736" top="3248" width="480" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="3736" top="3248" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Toggle">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Is Valid|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="0" srcpinname="Is Valid" dstnodeid="15" dstpinname="Y Input Value">
+   </LINK>
+   <PACK Name="addonpack" Version="35.0.0">
+   </PACK>
+   <LINK srcnodeid="0" srcpinname="GraphNode" dstnodeid="7" dstpinname="GraphNode">
+   </LINK>
+   </PATCH>

@@ -1,0 +1,239 @@
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.8.dtd" >
+   <PATCH nodename="D:\develop\VVVV.SceneGraph\release\SceneGraph\plugins\Query (SceneGraph) help.v4p" scrollx="0" scrolly="-360">
+   <BOUNDS type="Window" left="7376" top="4784" width="9000" height="6000">
+   </BOUNDS>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="3">
+   <BOUNDS type="Node" left="208" top="208" width="4760" height="424">
+   </BOUNDS>
+   <BOUNDS type="Box" left="208" top="208" width="4760" height="424">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|Query (SceneGraph)|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   <PIN pinname="Size" slicecount="1" visible="1" values="14">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="2">
+   <BOUNDS type="Node" left="208" top="560" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="208" top="560" width="3104" height="288">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|Returns GraphNodes through an XPath query.|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   <NODE nodename="Query (SceneGraph)" componentmode="Hidden" id="0">
+   <BOUNDS type="Node" left="400" top="4632" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="400" top="4632" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Graph In" visible="1">
+   </PIN>
+   <PIN pinname="XPath" visible="1">
+   </PIN>
+   <PIN pinname="GraphNode" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="4" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="208" top="976" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="208" top="976" width="4024" height="568">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|for more complex selections in the SceneGraph&cr;&lf;&cr;&lf;if you have no idea what that is for, please checkout this first:|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="6">
+   <BOUNDS type="Node" left="4696" top="1280" width="920" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="4696" top="1280" width="2160" height="224">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|Selector (SceneGraph) help.v4p|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="Directory">
+   </PIN>
+   </NODE>
+   <NODE nodename="Scene (SceneGraph)" componentmode="Hidden" id="10">
+   <BOUNDS type="Node" left="384" top="2544" width="520" height="256">
+   </BOUNDS>
+   <BOUNDS type="Box" left="384" top="2544" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Filename" visible="1" slicecount="1" values="..\..\..\vvvv_50beta35.8_x64\lib\assets\geometries\6-subset-cube.dae">
+   </PIN>
+   <PIN pinname="Graph" visible="1">
+   </PIN>
+   <PIN pinname="Reload" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Asset Root" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Is Valid" visible="1">
+   </PIN>
+   <PIN pinname="GraphNode" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="Inspektor (SceneGraph)" filename="VVVV.SceneGraph.dll" nodename="Inspektor (SceneGraph)" componentmode="InAWindow" id="12">
+   <BOUNDS type="Node" left="5832" top="2744" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="5832" top="2744" width="1600" height="1600">
+   </BOUNDS>
+   <PIN pinname="Graph In" visible="1">
+   </PIN>
+   <PIN pinname="Element" visible="1">
+   </PIN>
+   <PIN pinname="GraphNode" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="10" srcpinname="Graph" dstnodeid="12" dstpinname="Graph In">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="13" systemname="IOBox (String)">
+   <BOUNDS type="Box" left="936" top="4280" width="4104" height="272">
+   </BOUNDS>
+   <BOUNDS type="Node" left="936" top="4280" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="|.//*[contains(name(),&apos;Axis&apos;]//*[Diffuse]|">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values=".">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="Output String" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="13" srcpinname="Output String" dstnodeid="0" dstpinname="XPath">
+   </LINK>
+   <NODE systemname="Selector (SceneGraph)" filename="VVVV.SceneGraph.dll" nodename="Selector (SceneGraph)" componentmode="Hidden" id="14">
+   <BOUNDS type="Node" left="392" top="3536" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="392" top="3536" width="1600" height="1600">
+   </BOUNDS>
+   <PIN pinname="Graph In" visible="1">
+   </PIN>
+   <PIN pinname="Selector" visible="1">
+   </PIN>
+   <PIN pinname="Graph Out" visible="1">
+   </PIN>
+   <PIN pinname="GraphNode" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="10" srcpinname="Graph" dstnodeid="14" dstpinname="Graph In">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="15">
+   <BOUNDS type="Box" left="1000" top="3304" width="392" height="224">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1000" top="3304" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="Car">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="15" srcpinname="Output String" dstnodeid="14" dstpinname="Selector">
+   </LINK>
+   <LINK srcnodeid="14" srcpinname="Graph Out" dstnodeid="0" dstpinname="Graph In">
+   </LINK>
+   <NODE systemname="AsString (Object)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="AsString (Object)" componentmode="Hidden" id="16">
+   <BOUNDS type="Node" left="6272" top="3264" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="6272" top="3264" width="1600" height="1600">
+   </BOUNDS>
+   <PIN pinname="Object" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="12" srcpinname="Element" dstnodeid="16" dstpinname="Object">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="17" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="576" top="2936" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="576" top="2936" width="808" height="232">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- root|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="18" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="1640" top="3576" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="1640" top="3576" width="3136" height="288">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- subgraph starting with node named &apos;Car&apos;|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="19" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="1144" top="4672" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="1144" top="4672" width="4720" height="456">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- all nodes in the current subgraph which are descendants of a nodes with the name containing &apos;Axis&apos; which also have a diffuse texture|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="20" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="224" top="1856" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="224" top="1856" width="6032" height="456">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|when it comes to shading parts of the model differently this comes handy since you can select nodes/meshes by other properties than just its name (e.g. materialId, textureId,...)|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="21" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="7104" top="2816" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="7104" top="2816" width="2184" height="728">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- xml representation of the scene (or currently selected node)|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <PACK Name="addonpack" Version="35.0.0">
+   </PACK>
+   <LINK srcnodeid="10" srcpinname="GraphNode" dstnodeid="14" dstpinname="GraphNode">
+   </LINK>
+   <LINK srcnodeid="14" srcpinname="GraphNode" dstnodeid="0" dstpinname="GraphNode">
+   </LINK>
+   <LINK srcnodeid="10" srcpinname="GraphNode" dstnodeid="12" dstpinname="GraphNode">
+   </LINK>
+   </PATCH>

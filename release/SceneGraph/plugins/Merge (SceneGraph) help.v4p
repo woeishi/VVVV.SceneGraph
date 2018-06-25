@@ -1,0 +1,271 @@
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.8.dtd" >
+   <PATCH nodename="D:\develop\VVVV.SceneGraph\release\SceneGraph\plugins\Merge (SceneGraph) help.v4p">
+   <BOUNDS type="Window" left="3976" top="3008" width="9000" height="6000">
+   </BOUNDS>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="3">
+   <BOUNDS type="Node" left="208" top="208" width="4760" height="424">
+   </BOUNDS>
+   <BOUNDS type="Box" left="208" top="208" width="4760" height="424">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|Merge (SceneGraph)|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   <PIN pinname="Size" slicecount="1" visible="1" values="14">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="2">
+   <BOUNDS type="Node" left="208" top="560" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="208" top="560" width="4760" height="296">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|Applies a transformation subgraph back onto it&apos;s scenegraph.|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   <NODE nodename="Merge (SceneGraph)" componentmode="Hidden" id="0">
+   <BOUNDS type="Node" left="304" top="4376" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="304" top="4376" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Graph Part" visible="1">
+   </PIN>
+   <PIN pinname="Graph In" visible="1">
+   </PIN>
+   <PIN pinname="GraphNode Part" visible="1">
+   </PIN>
+   <PIN pinname="GraphNode" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="10" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="1528" top="2296" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="1528" top="2296" width="816" height="248">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- root|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="8">
+   <BOUNDS type="Node" left="5056" top="2328" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="5056" top="2328" width="3000" height="2088">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|when dealing with larger scenes it&apos;s sometimes desireable for patchsanity to do some transformations think animations (in a subpatch) soley on a subgraph.&cr;&lf;&cr;&lf;for the final rendering the separation into animation parts can be impractical, since at that point its mostly about splitting along different materials.&cr;&lf;&cr;&lf;merge will try to combine the transforms of a subgraph back into the parent.|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   <NODE systemname="Multiply (Transform SceneGraph)" filename="VVVV.SceneGraph.dll" nodename="Multiply (Transform SceneGraph)" componentmode="Hidden" id="11">
+   <BOUNDS type="Node" left="5432" top="1224" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="5432" top="1224" width="1600" height="1600">
+   </BOUNDS>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="12">
+   <BOUNDS type="Node" left="240" top="1024" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="240" top="1024" width="4760" height="544">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|Oh, you made it here!&cr;&lf;Merge is a pretty special scenario node. Make sure you understand Transformations and Selectors in order to make use of this.|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   <NODE systemname="Selector (SceneGraph)" filename="VVVV.SceneGraph.dll" nodename="Selector (SceneGraph)" componentmode="Hidden" id="13">
+   <BOUNDS type="Node" left="6344" top="1224" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="6344" top="1224" width="1600" height="1600">
+   </BOUNDS>
+   <PIN pinname="Graph In" visible="1" slicecount="1" values="||">
+   </PIN>
+   </NODE>
+   <NODE systemname="Multiply (Transform SceneGraph)" filename="VVVV.SceneGraph.dll" nodename="Multiply (Transform SceneGraph)" componentmode="Hidden" id="14">
+   <BOUNDS type="Node" left="472" top="2288" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="472" top="2288" width="1600" height="1600">
+   </BOUNDS>
+   <PIN pinname="Selector" visible="1">
+   </PIN>
+   <PIN pinname="Graph Out" visible="1">
+   </PIN>
+   <PIN pinname="GraphNode" visible="1" slicecount="1" values="||">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="15">
+   <BOUNDS type="Box" left="1000" top="1920" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1000" top="1920" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="root">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="15" srcpinname="Output String" dstnodeid="14" dstpinname="Selector">
+   </LINK>
+   <NODE systemname="Selector (SceneGraph)" filename="VVVV.SceneGraph.dll" nodename="Selector (SceneGraph)" componentmode="Hidden" id="16">
+   <BOUNDS type="Node" left="2456" top="2728" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="2456" top="2728" width="1600" height="1600">
+   </BOUNDS>
+   <PIN pinname="Graph In" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Selector" visible="1">
+   </PIN>
+   <PIN pinname="Graph Out" visible="1">
+   </PIN>
+   <PIN pinname="GraphNode" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="14" srcpinname="Graph Out" dstnodeid="16" dstpinname="Graph In">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="17">
+   <BOUNDS type="Box" left="3128" top="2376" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="3128" top="2376" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="foo">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="17" srcpinname="Output String" dstnodeid="16" dstpinname="Selector">
+   </LINK>
+   <NODE systemname="Multiply (Transform SceneGraph)" filename="VVVV.SceneGraph.dll" nodename="Multiply (Transform SceneGraph)" componentmode="Hidden" id="18">
+   <BOUNDS type="Node" left="2280" top="3752" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="2280" top="3752" width="1600" height="1600">
+   </BOUNDS>
+   <PIN pinname="Graph In" visible="1">
+   </PIN>
+   <PIN pinname="Selector" visible="1">
+   </PIN>
+   <PIN pinname="Graph Out" visible="1">
+   </PIN>
+   <PIN pinname="GraphNode" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="16" srcpinname="Graph Out" dstnodeid="18" dstpinname="Graph In">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="19">
+   <BOUNDS type="Box" left="2792" top="3496" width="1120" height="224">
+   </BOUNDS>
+   <BOUNDS type="Node" left="2792" top="3496" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="foo.children">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="19" srcpinname="Output String" dstnodeid="18" dstpinname="Selector">
+   </LINK>
+   <LINK srcnodeid="18" srcpinname="Graph Out" dstnodeid="0" dstpinname="Graph Part">
+   </LINK>
+   <NODE systemname="Multiply (Transform SceneGraph)" filename="VVVV.SceneGraph.dll" nodename="Multiply (Transform SceneGraph)" componentmode="Hidden" id="22">
+   <BOUNDS type="Node" left="296" top="3256" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="296" top="3256" width="1600" height="1600">
+   </BOUNDS>
+   <PIN pinname="Selector" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Graph Out" visible="1">
+   </PIN>
+   <PIN pinname="Graph In" visible="1">
+   </PIN>
+   <PIN pinname="GraphNode" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="14" srcpinname="Graph Out" dstnodeid="22" dstpinname="Graph In">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="23">
+   <BOUNDS type="Box" left="824" top="2952" width="384" height="224">
+   </BOUNDS>
+   <BOUNDS type="Node" left="824" top="2952" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="bar">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="23" srcpinname="Output String" dstnodeid="22" dstpinname="Selector">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="24" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="2720" top="3144" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="2720" top="3144" width="1696" height="248">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- foo subgraph of root|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="25" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="1016" top="3304" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="1016" top="3304" width="1184" height="528">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- more transformation on the graph|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="26" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="2360" top="4192" width="2264" height="216">
+   </BOUNDS>
+   <BOUNDS type="Box" left="2360" top="4192" width="2008" height="288">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- transformed subgraph|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="22" srcpinname="Graph Out" dstnodeid="0" dstpinname="Graph In">
+   </LINK>
+   <PACK Name="addonpack" Version="35.0.0">
+   </PACK>
+   <LINK srcnodeid="14" srcpinname="GraphNode" dstnodeid="22" dstpinname="GraphNode">
+   </LINK>
+   <LINK srcnodeid="14" srcpinname="GraphNode" dstnodeid="16" dstpinname="GraphNode">
+   </LINK>
+   <LINK srcnodeid="16" srcpinname="GraphNode" dstnodeid="18" dstpinname="GraphNode">
+   </LINK>
+   <LINK srcnodeid="18" srcpinname="GraphNode" dstnodeid="0" dstpinname="GraphNode Part">
+   </LINK>
+   <LINK srcnodeid="22" srcpinname="GraphNode" dstnodeid="0" dstpinname="GraphNode">
+   </LINK>
+   </PATCH>
