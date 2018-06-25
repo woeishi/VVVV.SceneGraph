@@ -27,7 +27,7 @@ namespace VVVV.SceneGraph
         [Input("Reload", IsBang = true)]
         IDiffSpread<bool> FReload;
 
-        [Output("Graph", AutoFlush = false)]
+        [Output("GraphNode", AutoFlush = false)]
         Pin<GraphNode> FRoot;
 
         [Output("Source", AutoFlush = false)]

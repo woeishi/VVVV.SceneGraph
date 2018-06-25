@@ -20,9 +20,6 @@ namespace VVVV.SceneGraph
         [Input("GraphNode")]
         IDiffSpread<GraphNode> FGraphNode;
 
-        [Input("GraphNodeInternal", Visibility = PinVisibility.False)]
-        ISpread<GraphNode> FGraphNodeInternal;
-
         [Output("Name")]
         ISpread<string> FName;
 
@@ -41,18 +38,13 @@ namespace VVVV.SceneGraph
 
         [Output("Scene Filename")]
         ISpread<string> FScenePath;
-
-        bool IsNested;
         #pragma warning restore
         #endregion fields & pins
 
         public void OnImportsSatisfied()
         {
-            FGraphNodeInternal.SliceCount = 0;
             FParent.SliceCount = 0;
             FChildren.SliceCount = 0;
-
-            IsNested = !FGraphNodeInternal.GetType().Namespace.Contains("VVVV.Hosting");
 
             FParent.Flush();
             FParentName.Flush();
@@ -62,9 +54,9 @@ namespace VVVV.SceneGraph
 
         public void Evaluate(int spreadMax)
         {
-            if (FGraphNode.IsChanged || IsNested)
+            if (FGraphNode.IsChanged)
             {
-                var input = IsNested ? FGraphNodeInternal : FGraphNode;
+                var input = FGraphNode;
                 FName.SliceCount = input.SliceCount;
                 FType.SliceCount = input.SliceCount;
                 FParent.SliceCount = input.SliceCount;

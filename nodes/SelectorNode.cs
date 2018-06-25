@@ -16,13 +16,13 @@ namespace VVVV.SceneGraph
     {
         #region fields & pins
         #pragma warning disable 0649
-        [Input("Graph In")]
+        [Input("GraphNode")]
         IDiffSpread<GraphNode> FInput;
 
-        [Input("Recursion Depth", DefaultValue = 0)]
+        [Input("Recursion Depth", DefaultValue = 0, Visibility = PinVisibility.OnlyInspector)]
         IDiffSpread<int> FRecLimit;
 
-        [Input("Include Self", DefaultBoolean = true)]
+        [Input("Include Self", DefaultBoolean = true, Visibility = PinVisibility.OnlyInspector)]
         IDiffSpread<bool> FIncludeSelf;
 
         [Input("Matches | Contains")]
@@ -31,10 +31,10 @@ namespace VVVV.SceneGraph
         [Input("Selector")]
         IDiffSpread<string> FSelector;
         
-        [Output("Graph Out", AutoFlush = false, BinVisibility = PinVisibility.OnlyInspector)]
+        [Output("GraphNode", AutoFlush = false, BinVisibility = PinVisibility.OnlyInspector)]
         ISpread<ISpread<GraphNode>> FOutput;
 
-        [Output("Selected", AutoFlush = false, BinVisibility = PinVisibility.OnlyInspector)]
+        [Output("Name", AutoFlush = false, BinVisibility = PinVisibility.OnlyInspector)]
         ISpread<ISpread<string>> FSelectedName;
 
         [Output("Success")]

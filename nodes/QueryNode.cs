@@ -16,16 +16,16 @@ namespace VVVV.SceneGraph
     {
         #region fields & pins
         #pragma warning disable 0649
-        [Input("Graph In")]
+        [Input("GraphNode")]
         IDiffSpread<GraphNode> FInput;
 
         [Input("XPath", DefaultString = ".")]
         IDiffSpread<string> FSelector;
 
-        [Output("Graph Out", AutoFlush = false, BinVisibility = PinVisibility.OnlyInspector)]
+        [Output("GraphNode", AutoFlush = false, BinVisibility = PinVisibility.OnlyInspector)]
         ISpread<ISpread<GraphNode>> FOutput;
 
-        [Output("Selected", AutoFlush = false, BinVisibility = PinVisibility.OnlyInspector)]
+        [Output("Name", AutoFlush = false, BinVisibility = PinVisibility.OnlyInspector)]
         ISpread<ISpread<string>> FSelectedName;
 
         [Output("Error Message")]

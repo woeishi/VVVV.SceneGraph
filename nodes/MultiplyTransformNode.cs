@@ -18,7 +18,7 @@ namespace VVVV.SceneGraph
         [Input("Transform")]
         IDiffSpread<Matrix> FTransform;
 
-        [Input("Graph In")]
+        [Input("GraphNode")]
         IDiffSpread<GraphNode> FInput;
 
         [Input("Matches | Contains")]
@@ -27,10 +27,10 @@ namespace VVVV.SceneGraph
         [Input("Selector")]
         IDiffSpread<string> FSelector;
 
-        [Output("Graph Out", AutoFlush = false)]
+        [Output("GraphNode", AutoFlush = false)]
         ISpread<GraphNode> FOutput;
 
-        [Output("Selected", AutoFlush = false, BinVisibility = PinVisibility.OnlyInspector)]
+        [Output("Affected", AutoFlush = false, BinVisibility = PinVisibility.OnlyInspector)]
         ISpread<ISpread<string>> FSelectedName;
 
         Spread<GraphNode> FSelected = new Spread<GraphNode>(0);

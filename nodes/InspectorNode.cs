@@ -20,10 +20,10 @@ namespace VVVV.SceneGraph
     {
         #region fields & pins
         #pragma warning disable 0649
-        [Input("Graph In")]
+        [Input("GraphNode")]
         IDiffSpread<GraphNode> FInput;
 
-        [Output("Graph Out", AutoFlush = false)]
+        [Output("GraphNode", AutoFlush = false)]
         ISpread<GraphNode> FOutput;
 
         [Output("Element", AutoFlush = false)]
