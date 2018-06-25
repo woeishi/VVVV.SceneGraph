@@ -12,6 +12,8 @@ namespace SceneGraph.DX11
             Func<int, DX11RenderContext, DX11IndexedGeometry> meshCreate, 
             int textureCount, 
             Func<int, DX11RenderContext, DX11Texture2D> texCreate) : base(meshCount, meshCreate, textureCount, texCreate, (c) => c.DefaultTextures.WhiteTexture)
-        { }
+        {
+            DisposeDefaultTextures = false;
+        }
     }
 }

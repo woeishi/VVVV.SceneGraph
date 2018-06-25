@@ -10,6 +10,7 @@ namespace SceneGraph.Core
         internal ResourceHandler<T, U>[] MeshHandlers { get; private set; }
         internal ResourceHandler<T, V>[] TextureHandlers { get; private set; }
         protected ResourceHandler<T, V> DefaultTexture { get; private set; }
+        protected bool DisposeDefaultTextures = true;
 
         internal ResourceManager(int meshCount, Func<int,T,U> meshCreate, int textureCount, Func<int, T, V> textureCreate, Func<T,V> defaultTextureCreate)
         {
@@ -40,7 +41,8 @@ namespace SceneGraph.Core
                 mh.Dispose();
             foreach (var th in TextureHandlers)
                 th.Dispose();
-            DefaultTexture.Dispose();
+            if (DisposeDefaultTextures)
+                DefaultTexture.Dispose();
         }
 
         public void Purge()
