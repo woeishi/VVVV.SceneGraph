@@ -11,7 +11,7 @@ namespace SceneGraph.Core
 
         internal RefCounter(Func<T> createResource) { Ctor = createResource; }
 
-        public void Dispose() => Resource.Dispose();
+        public void Dispose() => Resource?.Dispose();
 
         internal T Take()
         {
