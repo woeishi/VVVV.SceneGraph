@@ -1,4 +1,4 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.8.dtd" >
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta36.dtd" >
    <PATCH nodename="D:\develop\VVVV.SceneGraph\release\SceneGraph\01_Mini SceneGraph Demo.v4p" systemname="01_Mini SceneGraph Demo" filename="D:\develop\VVVV.SceneGraph\release\SceneGraph\01_Mini SceneGraph Demo.v4p" scrollx="0" scrolly="0">
    <BOUNDS type="Window" left="0" top="184" width="7504" height="8688">
    </BOUNDS>
@@ -36,7 +36,7 @@
    <PIN pinname="GraphNode" visible="1">
    </PIN>
    </NODE>
-   <PACK Name="addonpack" Version="35.0.0">
+   <PACK Name="addonpack" Version="36.0.0">
    </PACK>
    <NODE systemname="Multiply (Transform SceneGraph)" filename="plugins\VVVV.SceneGraph.dll" nodename="Multiply (Transform SceneGraph)" componentmode="Hidden" id="4">
    <BOUNDS type="Node" left="2144" top="2968" width="100" height="100">
@@ -157,7 +157,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="2528" top="5296" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Input String" slicecount="1" visible="1" values="Tyre">
+   <PIN pinname="Input String" slicecount="1" visible="1" values="Wheel">
    </PIN>
    <PIN pinname="Default" slicecount="1" values="||">
    </PIN>
@@ -506,4 +506,6 @@
    </LINK>
    <LINK srcnodeid="8" srcpinname="Output" dstnodeid="7" dstpinname="GraphNode">
    </LINK>
+   <PACK Name="dx11" Version="1.3.1">
+   </PACK>
    </PATCH>
