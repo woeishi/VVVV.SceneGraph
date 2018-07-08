@@ -17,7 +17,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="2" systemname="IOBox (String)">
    <BOUNDS type="Node" left="248" top="608" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="248" top="608" width="5048" height="688">
+   <BOUNDS type="Box" left="248" top="608" width="5220" height="690">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|simple way to load 3d files, browse the loaded scene, apply transformations and output everything together to the shader of choice&cr;&lf;&cr;&lf;no binsize and sift madness, spreadable of course|">
    </PIN>
@@ -241,7 +241,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="17" systemname="IOBox (String)">
    <BOUNDS type="Node" left="3192" top="5240" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="3192" top="5240" width="2624" height="432">
+   <BOUNDS type="Box" left="3192" top="5240" width="3000" height="495">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- apply additional transform on nodes names, which name contain this string|">
    </PIN>
@@ -255,7 +255,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="18" systemname="IOBox (String)">
    <BOUNDS type="Node" left="3336" top="5968" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="3336" top="5968" width="2624" height="432">
+   <BOUNDS type="Box" left="3336" top="5968" width="2850" height="480">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- get all the meshes with the according transformation and material|">
    </PIN>
@@ -269,7 +269,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="19" systemname="IOBox (String)">
    <BOUNDS type="Node" left="3472" top="3696" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="3472" top="3696" width="3704" height="584">
+   <BOUNDS type="Box" left="3472" top="3696" width="3840" height="960">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- see the whole model hierarchy with additional infos.&cr;&lf;click a node in the inspector and just the selected one plus children are returned on the output pin|">
    </PIN>
@@ -283,7 +283,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="20" systemname="IOBox (String)">
    <BOUNDS type="Node" left="304" top="3656" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="304" top="3656" width="1304" height="400">
+   <BOUNDS type="Box" left="304" top="3656" width="1335" height="525">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|use the selection of the inspector -&gt;|">
    </PIN>
@@ -329,7 +329,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="24" systemname="IOBox (String)">
    <BOUNDS type="Node" left="5448" top="6776" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="5448" top="6776" width="1416" height="232">
+   <BOUNDS type="Box" left="5448" top="6776" width="1515" height="240">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|all the nodes -----&gt;|">
    </PIN>
@@ -359,9 +359,9 @@
    </BOUNDS>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="28" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="416" top="7712" width="4760" height="560">
+   <BOUNDS type="Node" left="356" top="7622" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="416" top="7712" width="5760" height="400">
+   <BOUNDS type="Box" left="356" top="7622" width="5895" height="480">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|thanks to vux for dx11 and his assimp wrapper&cr;&lf;thanks to elias for some real gems buried deep down in the plugininterface|">
    </PIN>
@@ -369,9 +369,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="29" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="3592" top="136" width="4760" height="560">
+   <BOUNDS type="Node" left="2992" top="136" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="3592" top="136" width="3568" height="416">
+   <BOUNDS type="Box" left="2992" top="136" width="4095" height="495">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|SceneGraph v1 to a great part sponsored by decode.io&cr;&lf;3d loading lib is vuxens assimp lib (atm)|">
    </PIN>

@@ -1,5 +1,5 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.8.dtd" >
-   <PATCH nodename="D:\develop\VVVV.SceneGraph\release\SceneGraph\plugins\Selector (SceneGraph) help.v4p" scrollx="0" scrolly="0">
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta36.dtd" >
+   <PATCH nodename="D:\develop\VVVV.SceneGraph\release\SceneGraph\plugins\Selector (SceneGraph) help.v4p" scrollx="0" scrolly="-360">
    <BOUNDS type="Window" left="448" top="1472" width="9000" height="9200">
    </BOUNDS>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="3">
@@ -38,12 +38,12 @@
    <PIN pinname="String Type" slicecount="1" values="MultiLine">
    </PIN>
    </NODE>
-   <PACK Name="addonpack" Version="35.0.0">
+   <PACK Name="addonpack" Version="36.0.0">
    </PACK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="6" systemname="IOBox (String)">
    <BOUNDS type="Node" left="192" top="880" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="192" top="880" width="7608" height="968">
+   <BOUNDS type="Box" left="192" top="880" width="8130" height="1170">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|although a GraphNode always contains the information of the whole scene, the instance references a certain node within the scenegraph/scene hierachy. the &apos;Scene&apos; node always returns the GraphNode pointing to the root.&cr;&lf;&cr;&lf;The Selector lets you choose another node in the graph, thus limiting the operation of downstream nodes to just a part/subgraph of the whole scene.|">
    </PIN>
@@ -401,9 +401,9 @@
    <LINK srcnodeid="9" srcpinname="Output" dstnodeid="13" dstpinname="Width">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="28" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="2640" top="3352" width="2264" height="216">
+   <BOUNDS type="Node" left="2700" top="3352" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="2640" top="3352" width="1472" height="256">
+   <BOUNDS type="Box" left="2700" top="3352" width="1472" height="256">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- pointing to root|">
    </PIN>
@@ -417,7 +417,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="29" systemname="IOBox (String)">
    <BOUNDS type="Node" left="2680" top="3640" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="2680" top="3640" width="1472" height="256">
+   <BOUNDS type="Box" left="2680" top="3640" width="1950" height="300">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- transforming root|">
    </PIN>
@@ -459,7 +459,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="32" systemname="IOBox (String)">
    <BOUNDS type="Node" left="2688" top="6208" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="2688" top="6208" width="1752" height="384">
+   <BOUNDS type="Box" left="2688" top="6208" width="2385" height="435">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- output all meshes which are part of the root|">
    </PIN>
@@ -669,9 +669,9 @@
    <LINK srcnodeid="43" srcpinname="Specular" dstnodeid="39" dstpinname="Specular Color">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="38" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="7080" top="6176" width="2264" height="216">
+   <BOUNDS type="Node" left="7110" top="6101" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="7080" top="6176" width="1752" height="384">
+   <BOUNDS type="Box" left="7110" top="6101" width="1830" height="510">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- only finds Mesh_0 and Mesh_5 to output|">
    </PIN>
@@ -685,9 +685,9 @@
    <LINK srcnodeid="14" srcpinname="Render State" dstnodeid="39" dstpinname="Render State">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="44" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="448" top="7840" width="2264" height="216">
+   <BOUNDS type="Node" left="448" top="7720" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="448" top="7840" width="7568" height="728">
+   <BOUNDS type="Box" left="448" top="7720" width="7980" height="915">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|Selector comes with additional pins &apos;Resursion Depth&apos; and &apos;Include Self&apos; for the cases, where naming is ambiguous. Often the exporter just does some auto naming and mesh splitting.&cr;&lf;Recursion Depth greater than 0 also outputs children (and descendants) and &apos;Include Self&apos; off excludes the GraphNode matched by the selection. (e.g. for give me all direct children of node name &apos;foo&apos;|">
    </PIN>
@@ -724,4 +724,6 @@
    </LINK>
    <LINK srcnodeid="45" srcpinname="GraphNode" dstnodeid="37" dstpinname="GraphNode">
    </LINK>
+   <PACK Name="dx11" Version="1.3.1">
+   </PACK>
    </PATCH>

@@ -1,4 +1,4 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.8.dtd" >
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta36.dtd" >
    <PATCH nodename="D:\develop\VVVV.SceneGraph\release\SceneGraph\plugins\Merge (SceneGraph) help.v4p">
    <BOUNDS type="Window" left="3976" top="3008" width="9000" height="6000">
    </BOUNDS>
@@ -55,7 +55,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="8">
    <BOUNDS type="Node" left="5056" top="2328" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="5056" top="2328" width="3000" height="2088">
+   <BOUNDS type="Box" left="5056" top="2328" width="3210" height="2820">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|when dealing with larger scenes it&apos;s sometimes desireable for patchsanity to do some transformations think animations (in a subpatch) soley on a subgraph.&cr;&lf;&cr;&lf;for the final rendering the separation into animation parts can be impractical, since at that point its mostly about splitting along different materials.&cr;&lf;&cr;&lf;merge will try to combine the transforms of a subgraph back into the parent.|">
    </PIN>
@@ -71,7 +71,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="12">
    <BOUNDS type="Node" left="240" top="1024" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="240" top="1024" width="4760" height="544">
+   <BOUNDS type="Box" left="240" top="1024" width="4890" height="735">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|Oh, you made it here!&cr;&lf;Merge is a pretty special scenario node. Make sure you understand Transformations and Selectors in order to make use of this.|">
    </PIN>
@@ -131,9 +131,9 @@
    <LINK srcnodeid="14" srcpinname="Graph Out" dstnodeid="16" dstpinname="Graph In">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="17">
-   <BOUNDS type="Box" left="3128" top="2376" width="696" height="208">
+   <BOUNDS type="Box" left="3064" top="2424" width="696" height="208">
    </BOUNDS>
-   <BOUNDS type="Node" left="3128" top="2376" width="0" height="0">
+   <BOUNDS type="Node" left="3064" top="2424" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="1" values="foo">
    </PIN>
@@ -215,7 +215,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="24" systemname="IOBox (String)">
    <BOUNDS type="Node" left="2720" top="3144" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="2720" top="3144" width="1696" height="248">
+   <BOUNDS type="Box" left="2720" top="3144" width="2025" height="285">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- foo subgraph of root|">
    </PIN>
@@ -256,7 +256,7 @@
    </NODE>
    <LINK srcnodeid="22" srcpinname="Graph Out" dstnodeid="0" dstpinname="Graph In">
    </LINK>
-   <PACK Name="addonpack" Version="35.0.0">
+   <PACK Name="addonpack" Version="36.0.0">
    </PACK>
    <LINK srcnodeid="14" srcpinname="GraphNode" dstnodeid="22" dstpinname="GraphNode">
    </LINK>
@@ -268,4 +268,6 @@
    </LINK>
    <LINK srcnodeid="22" srcpinname="GraphNode" dstnodeid="0" dstpinname="GraphNode">
    </LINK>
+   <PACK Name="dx11" Version="1.3.1">
+   </PACK>
    </PATCH>

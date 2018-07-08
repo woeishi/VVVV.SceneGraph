@@ -1,4 +1,4 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.8.dtd" >
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta36.dtd" >
    <PATCH nodename="D:\develop\VVVV.SceneGraph\release\SceneGraph\plugins\Multiply (Transform SceneGraph XPath) help.v4p">
    <BOUNDS type="Window" left="2360" top="2592" width="9000" height="6840">
    </BOUNDS>
@@ -15,9 +15,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="2">
-   <BOUNDS type="Node" left="208" top="560" width="4760" height="560">
+   <BOUNDS type="Node" left="206" top="565" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="208" top="560" width="4720" height="224">
+   <BOUNDS type="Box" left="206" top="565" width="4290" height="585">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|Multiplies the given transformation on the selected nodes in the graph.|">
    </PIN>
@@ -303,9 +303,9 @@
    <LINK srcnodeid="21" srcpinname="Render State" dstnodeid="9" dstpinname="Render State">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="25">
-   <BOUNDS type="Node" left="352" top="1304" width="4760" height="560">
+   <BOUNDS type="Node" left="292" top="1304" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="352" top="1304" width="2504" height="888">
+   <BOUNDS type="Box" left="292" top="1304" width="2760" height="1155">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|simple case, connect to the scene and the transformation will be applied to the whole model. by actually applying it on the root object, which will also affect any children|">
    </PIN>
@@ -315,7 +315,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="27">
    <BOUNDS type="Node" left="5840" top="2256" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="5840" top="2256" width="2232" height="224">
+   <BOUNDS type="Box" left="5840" top="2256" width="2580" height="360">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|no selector = current graphnode|">
    </PIN>
@@ -351,7 +351,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="33">
    <BOUNDS type="Node" left="5712" top="3656" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="5712" top="3656" width="2368" height="736">
+   <BOUNDS type="Box" left="5712" top="3656" width="2625" height="855">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|select every node which name contains &apos;Mesh&apos; and take the first and the sixth match|">
    </PIN>
@@ -359,9 +359,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="34">
-   <BOUNDS type="Node" left="352" top="2536" width="4760" height="560">
+   <BOUNDS type="Node" left="292" top="2536" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="352" top="2536" width="2520" height="1992">
+   <BOUNDS type="Box" left="292" top="2536" width="2805" height="2550">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|explicitly apply the transformation on a mesh or a subgraph of the scene&cr;&lf;&cr;&lf;transformation are accumulative: no problem with transforming one element multiple times. it will add (or better multiply) up&cr;&lf;&cr;&lf;transformation hierarchy is kept: transforming a parent will always affect all of its children/descendants as well|">
    </PIN>
@@ -369,9 +369,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="36">
-   <BOUNDS type="Node" left="352" top="4920" width="4760" height="560">
+   <BOUNDS type="Node" left="299" top="5220" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="352" top="4920" width="2368" height="568">
+   <BOUNDS type="Box" left="299" top="5220" width="3345" height="540">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|in case the nodes can be selected by simple string matching of their names use this|">
    </PIN>
@@ -379,9 +379,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="37">
-   <BOUNDS type="Node" left="1112" top="5688" width="4760" height="424">
+   <BOUNDS type="Node" left="1052" top="5838" width="4760" height="424">
    </BOUNDS>
-   <BOUNDS type="Box" left="1112" top="5688" width="2912" height="256">
+   <BOUNDS type="Box" left="1052" top="5838" width="2912" height="256">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|* (Transform SceneGraph)|">
    </PIN>
@@ -390,7 +390,7 @@
    <PIN pinname="Size" slicecount="1" visible="1" values="10">
    </PIN>
    </NODE>
-   <PACK Name="addonpack" Version="35.0.0">
+   <PACK Name="addonpack" Version="36.0.0">
    </PACK>
    <NODE nodename="Multiply (Transform SceneGraph XPath)" componentmode="Hidden" id="18" systemname="Multiply (Transform SceneGraph XPath)" filename="VVVV.SceneGraph.dll">
    <BOUNDS type="Node" left="4856" top="3832" width="0" height="0">
@@ -415,9 +415,9 @@
    <LINK srcnodeid="20" srcpinname="Transform Out" dstnodeid="18" dstpinname="Transform">
    </LINK>
    <NODE systemname="Multiply (Transform SceneGraph)" filename="VVVV.SceneGraph.dll" nodename="Multiply (Transform SceneGraph)" componentmode="Hidden" id="35">
-   <BOUNDS type="Node" left="408" top="5688" width="592" height="256">
+   <BOUNDS type="Node" left="348" top="5838" width="592" height="256">
    </BOUNDS>
-   <BOUNDS type="Box" left="408" top="5688" width="1600" height="1600">
+   <BOUNDS type="Box" left="348" top="5838" width="1600" height="1600">
    </BOUNDS>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="38">
@@ -444,4 +444,6 @@
    </LINK>
    <LINK srcnodeid="18" srcpinname="GraphNode" dstnodeid="10" dstpinname="GraphNode">
    </LINK>
+   <PACK Name="dx11" Version="1.3.1">
+   </PACK>
    </PATCH>

@@ -1,4 +1,4 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.8.dtd" >
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta36.dtd" >
    <PATCH nodename="D:\develop\VVVV.SceneGraph\release\SceneGraph\plugins\Mesh (SceneGraph EX9) help.v4p" scrollx="0" scrolly="-360">
    <BOUNDS type="Window" left="424" top="1456" width="9000" height="6000">
    </BOUNDS>
@@ -25,9 +25,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="4">
-   <BOUNDS type="Node" left="4320" top="3504" width="4760" height="560">
+   <BOUNDS type="Node" left="4260" top="3660" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="4320" top="3504" width="3720" height="552">
+   <BOUNDS type="Box" left="4260" top="3660" width="3780" height="675">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|unlike the Model (SceneGraph) node this one expects the input GraphNode to be of type Mesh. it will not do any traversing |">
    </PIN>
@@ -167,9 +167,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="29">
-   <BOUNDS type="Box" left="1504" top="2800" width="280" height="296">
+   <BOUNDS type="Box" left="1204" top="2800" width="280" height="296">
    </BOUNDS>
-   <BOUNDS type="Node" left="1504" top="2800" width="0" height="0">
+   <BOUNDS type="Node" left="1204" top="2800" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
    </PIN>
@@ -209,7 +209,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="33" systemname="IOBox (String)">
    <BOUNDS type="Node" left="2352" top="2824" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="2352" top="2824" width="1728" height="432">
+   <BOUNDS type="Box" left="2352" top="2824" width="1755" height="510">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- all nodes which have &apos;Mesh&apos; in their name|">
    </PIN>
@@ -223,7 +223,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="34">
    <BOUNDS type="Node" left="232" top="992" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="232" top="992" width="4872" height="424">
+   <BOUNDS type="Box" left="232" top="992" width="5505" height="510">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|Geometry loading is actually handled by the scene in order to upload resources to the GPU only once and use the reference for multiple usage|">
    </PIN>
@@ -231,16 +231,16 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="35">
-   <BOUNDS type="Node" left="4256" top="1616" width="4760" height="560">
+   <BOUNDS type="Node" left="4260" top="1620" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="4256" top="1616" width="4488" height="1704">
+   <BOUNDS type="Box" left="4260" top="1620" width="4530" height="1935">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|the additional infos on the outputs are&cr;&lf;Bounds: Min Max Vector3&cr;&lf;Bones: Names and Matrices&cr;&lf;Color Channel Count&cr;&lf;UV Channel Count&cr;&lf;Vertex Count&cr;&lf;&cr;&lf;all these outputs are toggleable and hidden on the Model node by default|">
    </PIN>
    <PIN pinname="Output String" slicecount="1" visible="0" values="||">
    </PIN>
    </NODE>
-   <PACK Name="addonpack" Version="35.0.0">
+   <PACK Name="addonpack" Version="36.0.0">
    </PACK>
    <NODE systemname="Mesh (SceneGraph EX9)" filename="VVVV.SceneGraph.dll" nodename="Mesh (SceneGraph EX9)" componentmode="Hidden" id="31">
    <BOUNDS type="Node" left="600" top="3664" width="100" height="100">
@@ -268,7 +268,7 @@
    </NODE>
    <LINK srcnodeid="31" srcpinname="Geometry" dstnodeid="32" dstpinname="Geometry">
    </LINK>
-   <NODE systemname="Renderer (EX9)" filename="" nodename="Renderer (EX9)" componentmode="InAWindow" id="21">
+   <NODE systemname="RENDERER (EX9)" filename="" nodename="Renderer (EX9)" componentmode="InAWindow" id="21">
    <BOUNDS type="Node" left="608" top="4872" width="100" height="100">
    </BOUNDS>
    <BOUNDS type="Box" left="608" top="4872" width="3200" height="2400">
@@ -287,6 +287,8 @@
    </PIN>
    <PIN pinname="Windowed Depthbuffer Format" slicecount="1" values="D24X8">
    </PIN>
+   <PIN pinname="Auto Aspect Ratio" slicecount="1" values="0">
+   </PIN>
    </NODE>
    <LINK srcnodeid="20" srcpinname="Projection" dstnodeid="21" dstpinname="Projection">
    </LINK>
@@ -300,4 +302,6 @@
    </LINK>
    <LINK srcnodeid="28" srcpinname="GraphNode" dstnodeid="31" dstpinname="GraphNode">
    </LINK>
+   <PACK Name="dx11" Version="1.3.1">
+   </PACK>
    </PATCH>

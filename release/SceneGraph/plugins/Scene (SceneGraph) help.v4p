@@ -1,4 +1,4 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.8.dtd" >
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta36.dtd" >
    <PATCH nodename="D:\develop\VVVV.SceneGraph\release\SceneGraph\plugins\Scene (SceneGraph) help.v4p">
    <BOUNDS type="Window" left="2512" top="2616" width="9000" height="6000">
    </BOUNDS>
@@ -17,7 +17,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="2">
    <BOUNDS type="Node" left="208" top="640" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="208" top="640" width="5888" height="240">
+   <BOUNDS type="Box" left="208" top="640" width="6735" height="285">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|Loads 3d scene and outputs a scenegraph, handling transform hierarchies and resources|">
    </PIN>
@@ -255,7 +255,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="13">
    <BOUNDS type="Node" left="4728" top="2040" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="4728" top="2040" width="3496" height="1888">
+   <BOUNDS type="Box" left="4728" top="2040" width="3555" height="2505">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|loads an assimp compatible 3d file format, parses objects, transform, meshes and textures and constructs a navigatable scenegraph&cr;&lf;&cr;&lf;loading library is currently handled by the c# assimp wrapper of mr vux. hence the second output pin is a AssimpScene&cr;&lf;&cr;&lf;specify an Asset Root in case the model comes with textures and those are not in the original relative location to the 3d object file|">
    </PIN>
@@ -280,8 +280,10 @@
    </NODE>
    <LINK srcnodeid="0" srcpinname="Is Valid" dstnodeid="15" dstpinname="Y Input Value">
    </LINK>
-   <PACK Name="addonpack" Version="35.0.0">
+   <PACK Name="addonpack" Version="36.0.0">
    </PACK>
    <LINK srcnodeid="0" srcpinname="GraphNode" dstnodeid="7" dstpinname="GraphNode">
    </LINK>
+   <PACK Name="dx11" Version="1.3.1">
+   </PACK>
    </PATCH>

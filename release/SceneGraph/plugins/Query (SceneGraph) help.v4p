@@ -41,7 +41,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="4" systemname="IOBox (String)">
    <BOUNDS type="Node" left="208" top="976" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="208" top="976" width="4024" height="568">
+   <BOUNDS type="Box" left="208" top="976" width="4380" height="705">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|for more complex selections in the SceneGraph&cr;&lf;&cr;&lf;if you have no idea what that is for, please checkout this first:|">
    </PIN>
@@ -53,9 +53,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="6">
-   <BOUNDS type="Node" left="4696" top="1280" width="920" height="216">
+   <BOUNDS type="Node" left="5251" top="1385" width="920" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="4696" top="1280" width="2160" height="224">
+   <BOUNDS type="Box" left="5251" top="1385" width="2475" height="270">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|Selector (SceneGraph) help.v4p|">
    </PIN>
@@ -67,9 +67,9 @@
    </PIN>
    </NODE>
    <NODE nodename="Scene (SceneGraph)" componentmode="Hidden" id="10">
-   <BOUNDS type="Node" left="384" top="3344" width="520" height="256">
+   <BOUNDS type="Node" left="384" top="3494" width="520" height="256">
    </BOUNDS>
-   <BOUNDS type="Box" left="384" top="3344" width="0" height="0">
+   <BOUNDS type="Box" left="384" top="3494" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Filename" visible="1" slicecount="1" values="..\..\..\vvvv_50beta35.8_x64\lib\assets\geometries\6-subset-cube.dae">
    </PIN>
@@ -85,9 +85,9 @@
    </PIN>
    </NODE>
    <NODE systemname="Inspektor (SceneGraph)" filename="VVVV.SceneGraph.dll" nodename="Inspektor (SceneGraph)" componentmode="Hidden" id="12">
-   <BOUNDS type="Node" left="3752" top="3552" width="100" height="100">
+   <BOUNDS type="Node" left="3752" top="3702" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Box" left="3752" top="3552" width="1600" height="1600">
+   <BOUNDS type="Box" left="3752" top="3702" width="1600" height="1600">
    </BOUNDS>
    <PIN pinname="Graph In" visible="1">
    </PIN>
@@ -101,9 +101,9 @@
    <LINK srcnodeid="10" srcpinname="Graph" dstnodeid="12" dstpinname="Graph In">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="13" systemname="IOBox (String)">
-   <BOUNDS type="Box" left="920" top="4664" width="2224" height="256">
+   <BOUNDS type="Box" left="965" top="4664" width="2224" height="256">
    </BOUNDS>
-   <BOUNDS type="Node" left="920" top="4664" width="0" height="0">
+   <BOUNDS type="Node" left="965" top="4664" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="1" values=".//*[Diffuse]">
    </PIN>
@@ -133,7 +133,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="19" systemname="IOBox (String)">
    <BOUNDS type="Node" left="1144" top="5056" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="1144" top="5056" width="2696" height="416">
+   <BOUNDS type="Box" left="1144" top="5056" width="2895" height="465">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- all nodes in the current subgraph which have a diffuse texture|">
    </PIN>
@@ -145,9 +145,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="20" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="224" top="1672" width="2264" height="216">
+   <BOUNDS type="Node" left="224" top="1807" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="224" top="1672" width="6032" height="456">
+   <BOUNDS type="Box" left="224" top="1807" width="6885" height="510">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|when it comes to shading parts of the model differently this comes handy since you can select nodes/meshes by other properties than just its name (e.g. materialId, textureId,...)|">
    </PIN>
@@ -177,13 +177,13 @@
    <LINK srcnodeid="10" srcpinname="GraphNode" dstnodeid="12" dstpinname="GraphNode">
    </LINK>
    <NODE systemname="SystemFolder (File)" nodename="SystemFolder (File)" componentmode="Hidden" id="24">
-   <BOUNDS type="Node" left="384" top="2216" width="100" height="100">
+   <BOUNDS type="Node" left="384" top="2366" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Output" visible="1">
    </PIN>
    </NODE>
    <NODE systemname="Add (String)" nodename="Add (String)" componentmode="Hidden" id="23">
-   <BOUNDS type="Node" left="392" top="2832" width="100" height="100">
+   <BOUNDS type="Node" left="392" top="2982" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Input 2" visible="1">
    </PIN>
@@ -193,9 +193,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="22">
-   <BOUNDS type="Box" left="568" top="2528" width="3064" height="224">
+   <BOUNDS type="Box" left="568" top="2678" width="3064" height="224">
    </BOUNDS>
-   <BOUNDS type="Node" left="568" top="2528" width="0" height="0">
+   <BOUNDS type="Node" left="568" top="2678" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="1" values="lib\assets\geometries\astroBoy_walk.dae">
    </PIN>

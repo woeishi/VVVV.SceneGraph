@@ -1,4 +1,4 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.8.dtd" >
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta36.dtd" >
    <PATCH nodename="D:\develop\VVVV.SceneGraph\release\SceneGraph\plugins\Material (SceneGraph EX9) help.v4p">
    <BOUNDS type="Window" left="2896" top="3912" width="9000" height="6000">
    </BOUNDS>
@@ -27,7 +27,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="4">
    <BOUNDS type="Node" left="264" top="1184" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="264" top="1184" width="5216" height="424">
+   <BOUNDS type="Box" left="264" top="1184" width="5250" height="510">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|Texture loading is actually handled by the scene in order to upload resources to the GPU only once and use the reference for multiple usage|">
    </PIN>
@@ -147,7 +147,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="5" systemname="IOBox (String)">
    <BOUNDS type="Node" left="2072" top="3176" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="2072" top="3176" width="1728" height="432">
+   <BOUNDS type="Box" left="2072" top="3176" width="1785" height="510">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- all nodes which have &apos;Mesh&apos; in their name|">
    </PIN>
@@ -171,16 +171,16 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="14">
-   <BOUNDS type="Node" left="4312" top="2064" width="4760" height="560">
+   <BOUNDS type="Node" left="4312" top="1764" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="4312" top="2064" width="3896" height="1880">
+   <BOUNDS type="Box" left="4312" top="1764" width="4320" height="2370">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|it returns material properties as they are in Assimp, so for the mean time its Phong Properties:&cr;&lf;&cr;&lf;textures can be toggled individually and are filed by their usage intention (Diffuse, Ambient, Height, Normal...) watch out, if your exporter actually puts multiple textures on a mesh the same vertices on different usages&cr;&lf;&cr;&lf;if no texture is assigned to the material, the node outputs a default white texture to not just mess up the spreadcount or pass around nils|">
    </PIN>
    <PIN pinname="Output String" slicecount="1" visible="0" values="||">
    </PIN>
    </NODE>
-   <PACK Name="addonpack" Version="35.0.0">
+   <PACK Name="addonpack" Version="36.0.0">
    </PACK>
    <NODE nodename="Material (SceneGraph EX9)" componentmode="Hidden" id="0" systemname="Material (SceneGraph EX9)" filename="VVVV.SceneGraph.dll">
    <BOUNDS type="Node" left="328" top="3912" width="0" height="0">
@@ -195,9 +195,9 @@
    <LINK srcnodeid="0" srcpinname="Diffuse Texture Path" dstnodeid="13" dstpinname="Input String">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="15">
-   <BOUNDS type="Node" left="288" top="4768" width="4760" height="560">
+   <BOUNDS type="Node" left="288" top="4663" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="288" top="4768" width="5200" height="576">
+   <BOUNDS type="Box" left="288" top="4663" width="6300" height="675">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|known issue: doesn&apos;t get rid of pins properly when toggling texture pins off. sorry, plugininterface issue&cr;&lf;also the pin always gets created on the very left|">
    </PIN>
@@ -208,4 +208,6 @@
    </LINK>
    <LINK srcnodeid="8" srcpinname="GraphNode" dstnodeid="0" dstpinname="GraphNode">
    </LINK>
+   <PACK Name="dx11" Version="1.3.1">
+   </PACK>
    </PATCH>

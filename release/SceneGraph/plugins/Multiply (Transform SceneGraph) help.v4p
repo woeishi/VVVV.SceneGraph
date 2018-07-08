@@ -1,6 +1,6 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.8.dtd" >
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta36.dtd" >
    <PATCH nodename="D:\develop\VVVV.SceneGraph\release\SceneGraph\plugins\Multiply (Transform SceneGraph) help.v4p">
-   <BOUNDS type="Window" left="2360" top="2592" width="9000" height="6840">
+   <BOUNDS type="Window" left="2355" top="2580" width="9000" height="7470">
    </BOUNDS>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="3">
    <BOUNDS type="Node" left="208" top="208" width="4760" height="424">
@@ -17,7 +17,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="2">
    <BOUNDS type="Node" left="208" top="560" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="208" top="560" width="4720" height="224">
+   <BOUNDS type="Box" left="208" top="560" width="4305" height="525">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|Multiplies the given transformation on the selected nodes in the graph.|">
    </PIN>
@@ -357,7 +357,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="27">
    <BOUNDS type="Node" left="5752" top="2256" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="5752" top="2256" width="2232" height="224">
+   <BOUNDS type="Box" left="5752" top="2256" width="2520" height="315">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|no selector = current graphnode|">
    </PIN>
@@ -403,7 +403,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="34">
    <BOUNDS type="Node" left="352" top="2536" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="352" top="2536" width="2520" height="1992">
+   <BOUNDS type="Box" left="352" top="2536" width="2715" height="2760">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|explicitly apply the transformation on a mesh or a subgraph of the scene&cr;&lf;&cr;&lf;transformation are accumulative: no problem with transforming one element multiple times. it will add (or better multiply) up&cr;&lf;&cr;&lf;transformation hierarchy is kept: transforming a parent will always affect all of its children/descendants as well|">
    </PIN>
@@ -411,15 +411,15 @@
    </PIN>
    </NODE>
    <NODE systemname="Multiply (Transform SceneGraph XPath)" filename="VVVV.SceneGraph.dll" nodename="Multiply (Transform SceneGraph XPath)" componentmode="Hidden" id="35">
-   <BOUNDS type="Node" left="408" top="5688" width="592" height="256">
+   <BOUNDS type="Node" left="408" top="6138" width="592" height="256">
    </BOUNDS>
-   <BOUNDS type="Box" left="408" top="5688" width="1600" height="1600">
+   <BOUNDS type="Box" left="408" top="6138" width="1600" height="1600">
    </BOUNDS>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="36">
-   <BOUNDS type="Node" left="352" top="4920" width="4760" height="560">
+   <BOUNDS type="Node" left="352" top="5520" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="352" top="4920" width="2368" height="568">
+   <BOUNDS type="Box" left="352" top="5520" width="3795" height="600">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|for the cases, where simple string matching of a node&apos;s name is not enough there is an XPath version |">
    </PIN>
@@ -427,9 +427,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="37">
-   <BOUNDS type="Node" left="1112" top="5688" width="4760" height="424">
+   <BOUNDS type="Node" left="1112" top="6138" width="4760" height="424">
    </BOUNDS>
-   <BOUNDS type="Box" left="1112" top="5688" width="2912" height="256">
+   <BOUNDS type="Box" left="1112" top="6138" width="2912" height="256">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|* (Transform SceneGraph XPath)|">
    </PIN>
@@ -438,7 +438,7 @@
    <PIN pinname="Size" slicecount="1" visible="1" values="10">
    </PIN>
    </NODE>
-   <PACK Name="addonpack" Version="35.0.0">
+   <PACK Name="addonpack" Version="36.0.0">
    </PACK>
    <LINK srcnodeid="14" srcpinname="GraphNode" dstnodeid="0" dstpinname="GraphNode">
    </LINK>
@@ -446,4 +446,6 @@
    </LINK>
    <LINK srcnodeid="18" srcpinname="GraphNode" dstnodeid="10" dstpinname="GraphNode">
    </LINK>
+   <PACK Name="dx11" Version="1.3.1">
+   </PACK>
    </PATCH>

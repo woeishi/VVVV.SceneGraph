@@ -1,4 +1,4 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.8.dtd" >
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta36.dtd" >
    <PATCH nodename="D:\develop\VVVV.SceneGraph\release\SceneGraph\plugins\Camera (SceneGraph) help.v4p">
    <BOUNDS type="Window" left="448" top="1472" width="9000" height="6000">
    </BOUNDS>
@@ -34,7 +34,7 @@
    <PIN pinname="View" visible="1">
    </PIN>
    </NODE>
-   <PACK Name="addonpack" Version="35.0.0">
+   <PACK Name="addonpack" Version="36.0.0">
    </PACK>
    <NODE systemname="Selector (SceneGraph)" filename="VVVV.SceneGraph.dll" nodename="Selector (SceneGraph)" componentmode="Hidden" id="4">
    <BOUNDS type="Node" left="1864" top="3240" width="100" height="100">
@@ -279,9 +279,9 @@
    <LINK srcnodeid="19" srcpinname="Output" dstnodeid="18" dstpinname="Z">
    </LINK>
    <NODE systemname="IOBox (String)" nodename="IOBox (String)" componentmode="InABox" id="20">
-   <BOUNDS type="Node" left="2528" top="2968" width="100" height="100">
+   <BOUNDS type="Node" left="2453" top="2968" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Box" left="2528" top="2968" width="696" height="208">
+   <BOUNDS type="Box" left="2453" top="2968" width="720" height="255">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" values="Camera">
    </PIN>
@@ -291,9 +291,9 @@
    <LINK srcnodeid="20" srcpinname="Output String" dstnodeid="4" dstpinname="Selector">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="21" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="2568" top="2504" width="2264" height="216">
+   <BOUNDS type="Node" left="2568" top="2444" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="2568" top="2504" width="1664" height="400">
+   <BOUNDS type="Box" left="2568" top="2444" width="1740" height="465">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- transforming root, also affects the camera|">
    </PIN>
@@ -307,7 +307,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="22">
    <BOUNDS type="Node" left="4720" top="2280" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="4720" top="2280" width="3688" height="2208">
+   <BOUNDS type="Box" left="4720" top="2280" width="4035" height="2790">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|Since cameras are also just nodes in the scenegraph, they have their own transformation and also follow he transformation hierarchy. applying transforms to the root node will affect the camera as well, which is nice, if you use the root transformation to just get the whole model into scale and place, cameras will then just be in the correct relative space to the model.&cr;&lf;&cr;&lf;since the loading is done via assimp, and the used version has a bug with FOV (and also because everyone uses the aspect differently) the node doesn&apos;t output a projection matrix but the camera properties individually.|">
    </PIN>
@@ -320,4 +320,6 @@
    </LINK>
    <LINK srcnodeid="4" srcpinname="GraphNode" dstnodeid="0" dstpinname="GraphNode">
    </LINK>
+   <PACK Name="dx11" Version="1.3.1">
+   </PACK>
    </PATCH>

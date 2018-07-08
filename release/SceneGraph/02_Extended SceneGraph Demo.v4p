@@ -153,7 +153,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="15" systemname="IOBox (String)">
    <BOUNDS type="Node" left="2744" top="6344" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="2744" top="6344" width="3072" height="552">
+   <BOUNDS type="Box" left="2744" top="6344" width="3165" height="675">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|most of the times you need to apply a global transform on the whole scene to get it into scale and place|">
    </PIN>
@@ -165,9 +165,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="17" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="4712" top="12320" width="2264" height="216">
+   <BOUNDS type="Node" left="4082" top="12635" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="4712" top="12320" width="2448" height="432">
+   <BOUNDS type="Box" left="4082" top="12635" width="2610" height="555">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- xpath version for more complex selectors in the scenegraph|">
    </PIN>
@@ -211,7 +211,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="28" systemname="IOBox (String)">
    <BOUNDS type="Node" left="8" top="24320" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="8" top="24320" width="5760" height="400">
+   <BOUNDS type="Box" left="8" top="24320" width="5760" height="495">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|thanks to vux for dx11 and his assimp wrapper&cr;&lf;thanks to elias for some real gems buried deep down in the plugininterface|">
    </PIN>
@@ -219,9 +219,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="29" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="5016" top="176" width="4760" height="560">
+   <BOUNDS type="Node" left="4716" top="176" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="5016" top="176" width="2080" height="360">
+   <BOUNDS type="Box" left="4716" top="176" width="2310" height="570">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|SceneGraph v1 to a great part sponsored by decode.io|">
    </PIN>
@@ -239,9 +239,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="31" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="3736" top="4216" width="2264" height="216">
+   <BOUNDS type="Node" left="3766" top="4141" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="3736" top="4216" width="3552" height="928">
+   <BOUNDS type="Box" left="3766" top="4141" width="3435" height="1080">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|a GraphNode always holds the whole scenegraph with transform in hierachical order, info of meshes, materials and textures&cr;&lf;it can point to a specific node in the graphtree, standard is the rootnode|">
    </PIN>
@@ -273,7 +273,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="33" systemname="IOBox (String)">
    <BOUNDS type="Node" left="3384" top="2288" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="3384" top="2288" width="3872" height="560">
+   <BOUNDS type="Box" left="3384" top="2288" width="4035" height="855">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|in case the textures are moved away from the 3d file, specify the folder here&cr;&lf;didn&apos;t want to ship the textures, loaded from vvvvs folder|">
    </PIN>
@@ -455,9 +455,9 @@
    <LINK srcnodeid="45" srcpinname="Output String" dstnodeid="4" dstpinname="Selector">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="46" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="4088" top="7192" width="2264" height="216">
+   <BOUNDS type="Node" left="4088" top="7087" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="4088" top="7192" width="2616" height="584">
+   <BOUNDS type="Box" left="4088" top="7087" width="2775" height="675">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- no selector means apply the transformation on the current selection/pointer of the graphnode|">
    </PIN>
@@ -483,9 +483,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="48" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="2824" top="8888" width="2264" height="216">
+   <BOUNDS type="Node" left="2674" top="8888" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="2824" top="8888" width="3664" height="1016">
+   <BOUNDS type="Box" left="2674" top="8888" width="3900" height="1185">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- selecting just a subgraph here:&cr;&lf;moving the pointer to the node with the name &apos;Body&apos;&cr;&lf;&cr;&lf;even though all the info of the scene retain, the nodes below will only affect &apos;Body&apos; and its descendants|">
    </PIN>
@@ -599,9 +599,9 @@
    <LINK srcnodeid="55" srcpinname="Layer" dstnodeid="56" dstpinname="Input Node">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="57" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="2848" top="10064" width="2264" height="216">
+   <BOUNDS type="Node" left="2698" top="10124" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="2848" top="10064" width="3000" height="480">
+   <BOUNDS type="Box" left="2698" top="10124" width="3000" height="480">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|-1 means search to any depth of descendants for meshes to load|">
    </PIN>
@@ -685,7 +685,7 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="64" systemname="IOBox (String)">
-   <BOUNDS type="Box" left="1184" top="16224" width="2424" height="256">
+   <BOUNDS type="Box" left="1184" top="16224" width="2610" height="255">
    </BOUNDS>
    <BOUNDS type="Node" left="1184" top="16224" width="0" height="0">
    </BOUNDS>
@@ -701,7 +701,7 @@
    <LINK srcnodeid="64" srcpinname="Output String" dstnodeid="63" dstpinname="XPath">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="69" systemname="IOBox (String)">
-   <BOUNDS type="Box" left="3664" top="12344" width="1000" height="240">
+   <BOUNDS type="Box" left="3664" top="12344" width="1290" height="240">
    </BOUNDS>
    <BOUNDS type="Node" left="3664" top="12344" width="0" height="0">
    </BOUNDS>
@@ -717,9 +717,9 @@
    <LINK srcnodeid="69" srcpinname="Output String" dstnodeid="62" dstpinname="XPath">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="70" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="176" top="12672" width="2264" height="216">
+   <BOUNDS type="Node" left="176" top="12522" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="176" top="12672" width="1728" height="1448">
+   <BOUNDS type="Box" left="176" top="12522" width="1875" height="1800">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|transform hierarchy will always be kept.&cr;&lf;any time you transform a parent, it will affect all its descendants.&cr;&lf;even if the transform is applied further down the patch|">
    </PIN>
@@ -731,9 +731,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="71" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="4072" top="13064" width="2264" height="216">
+   <BOUNDS type="Node" left="4072" top="13364" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="4072" top="13064" width="2632" height="920">
+   <BOUNDS type="Box" left="4072" top="13364" width="2745" height="1095">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|transforms on the same object/node accumulate (and not overwrite). first the rotation for steerin on the front wheels, then the drive rotation of all 4 wheels|">
    </PIN>
@@ -799,7 +799,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="76" systemname="IOBox (String)">
    <BOUNDS type="Node" left="4496" top="15176" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="4496" top="15176" width="2552" height="1008">
+   <BOUNDS type="Box" left="4496" top="15176" width="2610" height="1110">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- GraphNode still points to the root node. connecting a model at this point would output the whole scene including the body already drawn above|">
    </PIN>
@@ -813,9 +813,9 @@
    <LINK srcnodeid="56" srcpinname="Output Node" dstnodeid="61" dstpinname="Layer 1">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="77" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="3720" top="16344" width="2264" height="216">
+   <BOUNDS type="Node" left="3720" top="16569" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="3720" top="16344" width="2520" height="616">
+   <BOUNDS type="Box" left="3720" top="16569" width="2580" height="795">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|get all the descendant nodes of the car except the ones from the node body which have a diffuse texture|">
    </PIN>
@@ -857,7 +857,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="81" systemname="IOBox (String)">
    <BOUNDS type="Node" left="2400" top="17448" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="2400" top="17448" width="2496" height="576">
+   <BOUNDS type="Box" left="2400" top="17448" width="2610" height="675">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|now its a spread of graphnodes each one pointing directly on a mesh node in the scene|">
    </PIN>
@@ -883,7 +883,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="83" systemname="IOBox (String)">
    <BOUNDS type="Node" left="768" top="18608" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="768" top="18608" width="2392" height="288">
+   <BOUNDS type="Box" left="768" top="18608" width="2850" height="270">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|check the inspector for further pins|">
    </PIN>
@@ -949,7 +949,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="88" systemname="IOBox (String)">
    <BOUNDS type="Node" left="3368" top="21024" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="3368" top="21024" width="3760" height="600">
+   <BOUNDS type="Box" left="3368" top="21024" width="3795" height="660">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|the model node is actually a shorthand parsing for any descendants which are mesh nodes and then feeding the result to these three nodes:|">
    </PIN>
@@ -1137,7 +1137,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="99" systemname="IOBox (String)">
    <BOUNDS type="Node" left="432" top="8008" width="4760" height="424">
    </BOUNDS>
-   <BOUNDS type="Box" left="432" top="8008" width="936" height="336">
+   <BOUNDS type="Box" left="432" top="8008" width="1305" height="360">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="selector">
    </PIN>
@@ -1173,7 +1173,7 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="102" systemname="IOBox (String)">
    <BOUNDS type="Node" left="784" top="20680" width="4760" height="424">
    </BOUNDS>
-   <BOUNDS type="Box" left="784" top="20680" width="2368" height="824">
+   <BOUNDS type="Box" left="784" top="20680" width="2415" height="1125">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|combined model node&cr;&lf;vs&cr;&lf;explicit single nodes|">
    </PIN>
