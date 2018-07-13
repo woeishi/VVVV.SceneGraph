@@ -198,11 +198,14 @@ namespace VVVV.SceneGraph
             }
         }
 
-        public void Dispose()
+        public void Dispose() => SafeDispose();
+
+        public void SafeDispose()
         {
             foreach (var l in FTokens.Values)
                 foreach (var t in l)
                     t.Dispose();
+            FTokens.Clear();
         }
     }
 }

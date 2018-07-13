@@ -11,7 +11,14 @@ namespace SceneGraph.Core
 
         internal RefCounter(Func<T> createResource) { Ctor = createResource; }
 
-        public void Dispose() => Resource?.Dispose();
+        public void Dispose()
+        {
+            if (IsValid)
+            {
+                Resource?.Dispose();
+                IsValid = false;
+            }
+        }
 
         internal T Take()
         {
@@ -41,7 +48,7 @@ namespace SceneGraph.Core
         {
             if (IsValid && Counter <= 0)
             {
-                (Resource as IDisposable)?.Dispose();
+                Resource?.Dispose();
                 IsValid = false;
                 System.Diagnostics.Debug.Assert(Counter == 0);
             }

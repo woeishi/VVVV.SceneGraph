@@ -41,8 +41,10 @@ namespace VVVV.SceneGraph
         public int PinStartIndex = 50;
         IIOContainer<ISpread<Matrix>> FLocal;
         IIOContainer<ISpread<Matrix>> FAncestral;
-        #pragma warning restore
+#pragma warning restore
         #endregion fields & pins
+
+        public void SafeDispose() { }
 
         public void OnImportsSatisfied()
         {

@@ -253,11 +253,14 @@ namespace VVVV.SceneGraph
             #endregion dynamic pins
         }
 
-        public void Dispose()
+        public void Dispose() => SafeDispose();
+
+        public void SafeDispose()
         {
             foreach (var l in FTokens.Values)
                 foreach (var t in l)
                     t.Dispose();
+            FTokens.Clear();
         }
 
         public void Update(DX11RenderContext context)

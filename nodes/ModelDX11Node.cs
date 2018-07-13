@@ -89,6 +89,10 @@ namespace VVVV.SceneGraph
 
         public void Dispose()
         {
+            (FMesh.PluginBase as INestedNode).SafeDispose();
+            (FTransform.PluginBase as INestedNode).SafeDispose();
+            (FMaterial.PluginBase as INestedNode).SafeDispose();
+
             FMesh.Dispose();
             FTransform.Dispose();
             FMaterial.Dispose();
