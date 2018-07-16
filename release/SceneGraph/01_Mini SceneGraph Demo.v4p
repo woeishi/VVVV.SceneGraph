@@ -369,9 +369,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="29" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="2992" top="136" width="4760" height="560">
+   <BOUNDS type="Node" left="3232" top="136" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="2992" top="136" width="4095" height="495">
+   <BOUNDS type="Box" left="3232" top="136" width="4095" height="495">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|SceneGraph v1 to a great part sponsored by decode.io&cr;&lf;3d loading lib is vuxens assimp lib (atm)|">
    </PIN>
