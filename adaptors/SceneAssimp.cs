@@ -63,15 +63,13 @@ namespace SceneGraph.Adaptors
             {
                 counter++;
 
-                id = i; //assimp child id and graphnode child id differ with meshcontainers
-                if (an.MeshCount > 0) //attach meshes as children before further nodes
+                id = i-an.MeshCount; //assimp child id and graphnode child id differ with meshcontainers
+                if (id < 0) //attach meshes as children before further nodes
                 {
                     n.Children[i] = new GraphNode(an.ToMesh(counter, this, an.MeshIndices[i]), an.RelativeTransform, n, this);
                     n.Children[i].LastDescendantID = counter;
-                    id -= an.MeshCount;
                 }
-
-                if (id >= 0) //prepended meshes in children list
+                else //prepended meshes in children list, now process other nodes
                 {
                     Element element;
                     var cam = Source.Cameras.Where(c => c.Name == an.Children[id].Name).FirstOrDefault();
