@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using SceneGraph.Core;
 using SlimDX;
 using AssimpNet;
@@ -7,17 +8,24 @@ namespace SceneGraph.Adaptors
 {
     internal static class AssimpAdaptor
     {
+        static string ParseName(this string nodeName)
+        {
+            var bytes = System.Text.Encoding.Default.GetBytes(nodeName);
+            var name = System.Text.Encoding.UTF8.GetString(bytes);
+            if (Regex.IsMatch(name, "^\\d"))
+                name = "_" + name;
+            return name;
+        }
+
         internal static Element ToElement(this AssimpNode node, int id)
         {
-            var bytes = System.Text.Encoding.Default.GetBytes(node.Name);
-            var name = System.Text.Encoding.UTF8.GetString(bytes);
+            var name = node.Name.ParseName();
             return new Element(id, name, node.MeshCount + node.Children.Count);
         }
 
         internal static CameraElement ToCamera(this AssimpNode node, int id, AssimpCamera camera)
         {
-            var bytes = System.Text.Encoding.Default.GetBytes(node.Name);
-            var name = System.Text.Encoding.UTF8.GetString(bytes);
+            var name = node.Name.ParseName();
             var view = Matrix.LookAtLH(camera.Position, camera.LookAt, camera.UpVector);
             return new CameraElement(id, name, view, camera.NearPlane, camera.FarPlane, camera.AspectRatio);
         }
