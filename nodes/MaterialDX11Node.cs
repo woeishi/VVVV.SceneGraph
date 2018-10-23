@@ -6,7 +6,7 @@ using SceneGraph.Core;
 using FeralTic.DX11;
 using FeralTic.DX11.Resources;
 using VVVV.DX11;
-using System;
+
 using System.Collections.Generic;
 
 namespace VVVV.SceneGraph
@@ -38,7 +38,7 @@ namespace VVVV.SceneGraph
                     {
                         for (int i = 0; i < FSelected.SliceCount; i++)
                         {
-                            var mat = (FSelected[i].Element as MeshElement).Material;
+                            var mat = FSelected[i].Material;
                             TextureInfo ti = null;
                             for (int t = 0; t < mat.Textures.Length; t++)
                             {

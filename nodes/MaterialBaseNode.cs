@@ -140,7 +140,7 @@ namespace VVVV.SceneGraph
                     {
                         FSelected.Add(input[i]);
 
-                        var material = ((MeshElement)FSelected[i].Element).Material;
+                        var material = FSelected[i].Material;
                         FMatID.Add(material.Index);
                         FAmbient.Add(material.AmbientColor);
                         FDiffuse.Add(material.DiffuseColor);
@@ -179,7 +179,7 @@ namespace VVVV.SceneGraph
                     {
                         for (int i = 0; i < FSelected.SliceCount; i++)
                         {
-                            var mat = (FSelected[i].Element as MeshElement).Material;
+                            var mat = FSelected[i].Material;
                             bool hit = false;
                             for (int t = 0; t < mat.Textures.Length; t++)
                             {

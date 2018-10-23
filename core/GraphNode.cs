@@ -22,6 +22,19 @@ namespace SceneGraph.Core
         public Matrix Local { get; private set; }
         public Matrix Accumulated => AccumulatedTransform.Matrix;
 
+        public MaterialInfo Material
+        {
+            get
+            {
+                if (!(Element is MeshElement))
+                    return null;
+                else
+                    return MaterialProxy??MaterialReference;
+            }
+        }
+        internal MaterialInfo MaterialReference;
+        internal MaterialInfo MaterialProxy;
+
         //only in use when initally parsing the scene
         internal GraphNode(Element element, Matrix accumulated, Matrix local, GraphNode parent = null, IScene scene = null)
         {
@@ -39,6 +52,7 @@ namespace SceneGraph.Core
 
         internal GraphNode(MeshElement element, Matrix accumulated, GraphNode parent = null, IScene scene = null) : this(element as Element, accumulated, Matrix.Identity, parent, scene)
         {
+            MaterialReference = element.Material;
             Children = new GraphNode[0];
         }
 
@@ -72,6 +86,8 @@ namespace SceneGraph.Core
             Transforms = new List<Transform>(other.Transforms);
             Local = other.Local;
             AccumulatedTransform = other.AccumulatedTransform;
+
+            MaterialReference = other.Material;
         }
 
         public void Fork()

@@ -16,7 +16,7 @@ namespace VVVV.SceneGraph
         public Info(GraphNode node, string intent)
         {
             Node = node;
-            TextureInfo = (node.Element as MeshElement).Material.Textures.First(t => t.Intent.ToString() == intent);
+            TextureInfo = node.Material.Textures.First(t => t.Intent.ToString() == intent);
         }
     }
     [PluginInfo(Name = "Material", Category = "SceneGraph", Version = "EX9",

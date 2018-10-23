@@ -213,8 +213,8 @@ namespace VVVV.SceneGraph
 
                 this.Secondary.Text += $" - materialId: {me.MaterialID}";
 
-                if (me.Material.Textures.Length > 0)
-                    this.Secondary.Text += $" - textures: {me.Material.Textures.Length}";
+                if (node.Material.Textures.Length > 0)
+                    this.Secondary.Text += $" - textures: {node.Material.Textures.Length}";
 
                 var grid = new Grid();
                 grid.Margin = new Thickness(1, 3, 1, 3);
@@ -226,27 +226,27 @@ namespace VVVV.SceneGraph
                 var lAmb = new Label();
                 Grid.SetRow(lAmb, 0);
                 Grid.SetColumn(lAmb, 0);
-                var cAmb = me.Material.AmbientColor.ToColor();
+                var cAmb = node.Material.AmbientColor.ToColor();
                 lAmb.Background = new SolidColorBrush(Color.FromArgb(cAmb.A, cAmb.R, cAmb.G, cAmb.B));
                 grid.Children.Add(lAmb);
 
                 var lDiff = new Label();
                 Grid.SetRow(lDiff, 0);
                 Grid.SetColumn(lDiff, 1);
-                var cDiff = me.Material.DiffuseColor.ToColor();
+                var cDiff = node.Material.DiffuseColor.ToColor();
                 lDiff.Background = new SolidColorBrush(Color.FromArgb(cDiff.A, cDiff.R, cDiff.G, cDiff.B));
                 grid.Children.Add(lDiff);
 
                 var lSpec = new Label();
                 Grid.SetRow(lSpec, 0);
                 Grid.SetColumn(lSpec, 2);
-                var cSpec = me.Material.SpecularColor.ToColor();
+                var cSpec = node.Material.SpecularColor.ToColor();
                 lSpec.Background = new SolidColorBrush(Color.FromArgb(cSpec.A, cSpec.R, cSpec.G, cSpec.B));
                 grid.Children.Add(lSpec);
 
                 this.Stack.Children.Add(grid);
 
-                foreach (var ti in me.Material.Textures)
+                foreach (var ti in node.Material.Textures)
                     this.Items.Add(new TextureInfoControl(ti));
             }
         }

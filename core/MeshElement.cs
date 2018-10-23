@@ -8,7 +8,7 @@ namespace SceneGraph.Core
         public MeshInfo Mesh { get; }
 
         public int MaterialID => Material.Index;
-        public MaterialInfo Material { get; }
+        internal MaterialInfo Material { get; }
 
         internal MeshElement(int id, IScene scene, MeshInfo meshInfo, MaterialInfo materialInfo) : base(id, $"Mesh_{meshInfo.Index}", 0)
         {

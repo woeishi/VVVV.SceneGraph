@@ -12,6 +12,18 @@ namespace SceneGraph.Core
         //public List<eAssimpTextureMapMode> TextureMapMode { get; }
         //public List<eAssimpTextureOp> TextureOperation { get; }
         public TextureInfo[] Textures {get; internal set; }
+
+        public MaterialInfo() {}
+
+        internal MaterialInfo(MaterialInfo other)
+        {
+            Index = other.Index;
+            AmbientColor = other.AmbientColor;
+            DiffuseColor = other.DiffuseColor;
+            SpecularColor = other.SpecularColor;
+            SpecularPower = other.SpecularPower;
+            Textures = other.Textures;
+        }
     }
 
     public enum TextureIntent
