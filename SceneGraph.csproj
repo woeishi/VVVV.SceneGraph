@@ -111,6 +111,7 @@
     <Compile Include="core\IResourceManager.cs" />
     <Compile Include="core\IScene.cs" />
     <Compile Include="core\MaterialInfo.cs" />
+    <Compile Include="core\MaterialModification.cs" />
     <Compile Include="core\MeshInfo.cs" />
     <Compile Include="core\RefCounter.cs" />
     <Compile Include="core\ResourceHandler.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="nodes\CameraNode.cs" />
     <Compile Include="nodes\MaterialBaseNode.cs" />
     <Compile Include="nodes\MaterialEX9Node.cs" />
+    <Compile Include="nodes\MaterialModifyNode.cs" />
     <Compile Include="nodes\MeshEX9Node.cs" />
     <Compile Include="nodes\ModelEX9Node.cs" />
     <Compile Include="nodes\MultiplyTransformXPathNode.cs" />
