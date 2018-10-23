@@ -133,8 +133,8 @@ namespace VVVV.SceneGraph
 
                 if (needsFlush)
                 {
-                    FRoot.Flush();
-                    FScene.Flush();
+                    FRoot.Flush(true);
+                    FScene.Flush(true);
                     needsFlush = false;
                 }
             }
