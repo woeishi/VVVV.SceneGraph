@@ -57,7 +57,13 @@ namespace VVVV.SceneGraph
         [Output("Affected", AutoFlush = false, BinVisibility = PinVisibility.OnlyInspector)]
         ISpread<ISpread<string>> FSelectedName;
 
-        Spread<GraphNode> FSelected = new Spread<GraphNode>(0);
+        [Output("Error Message")]
+        ISpread<string> FError;
+
+        [Output("Success")]
+        ISpread<bool> FSuccess;
+
+        Spread<Spread<GraphNode>> FSelected = new Spread<Spread<GraphNode>>(0);
 
         [Import]
         IIOFactory FIOFactory;
@@ -183,20 +189,44 @@ namespace VVVV.SceneGraph
 
                 spreadMax = FInput.CombineWith(FSelector);
                 FSelectedName.SliceCount = spreadMax;
-                FSelected.SliceCount = 0;
+                FSelected.SliceCount = spreadMax;
+                FError.SliceCount = spreadMax;
+                FSuccess.SliceCount = spreadMax;
                 for (int i = 0; i < spreadMax; i++)
                 {
+                    FSelected[i] = new Spread<GraphNode>(0);
                     FSelectedName[i] = new Spread<string>(0);
-                    if (FInput[i] != null)
+                    if (FInput[i] == null)
+                    {
+                        FSelected[i].SliceCount = 0;
+                        FSelectedName[i].SliceCount = 0;
+                        FError[i] = "Input is null";
+                        FSuccess[i] = false;
+                    }
+                    else
                     {
                         if (!string.IsNullOrWhiteSpace(FSelector[i]))
                         {
-                            var query = FSelector[i].Trim() + "//*[@nodetype='Mesh']";
-                            foreach (var n in FOutput[i].XPathQuery(query))
+                            try
                             {
-                                FSelected.Add(n);
-                                FSelectedName[i].Add(n.Name);
+                                var query = FSelector[i].Trim() + "//*[@nodetype='Mesh']";
+                                foreach (var n in FOutput[i].XPathQuery(query))
+                                {
+                                    FSelected[i].Add(n);
+                                    FSelectedName[i].Add(n.Name);
+                                }
+
+                                FError[i] = string.Empty;
+                                FSuccess[i] = true;
                             }
+                            catch (Exception e)
+                            {
+                                FSelected[i].SliceCount = 0;
+                                FSelectedName[i].SliceCount = 0;
+                                FError[i] = e.Message;
+                                FSuccess[i] = false;
+                            }
+
                         }
                     }
                 }
@@ -224,7 +254,8 @@ namespace VVVV.SceneGraph
                     var spa = FTogSpecPower[0] ? FSPAmountContainer.IOObject[i] : 0.0f;
                     var spm = FTogSpecPower[0] ? FSPModeContainer.IOObject[i] : MaterialModification.BlendMode.Add;
 
-                    FSelected[i]?.Modify(ac, aa, am, dc, da, dm, sc, sa, sm, sp, spa, spm);
+                    foreach (var node in FSelected[i])
+                        node?.Modify(ac, aa, am, dc, da, dm, sc, sa, sm, sp, spa, spm);
                 }
                 FOutput.Flush(true);
             }

@@ -33,7 +33,7 @@ namespace VVVV.SceneGraph
         [Output("Affected", AutoFlush = false, BinVisibility = PinVisibility.OnlyInspector)]
         ISpread<ISpread<string>> FSelectedName;
 
-        Spread<GraphNode> FSelected = new Spread<GraphNode>(0);
+        Spread<Spread<GraphNode>> FSelected = new Spread<Spread<GraphNode>>(0);
         #pragma warning restore
         #endregion fields & pins
 
@@ -52,10 +52,11 @@ namespace VVVV.SceneGraph
                     FOutput[i] = FInput[i]==null?FInput[i]:GraphNode.CloneGraph(FInput[i]);
 
                 spreadMax = FInput.CombineWith(FSelector);
+                FSelected.SliceCount = spreadMax;
                 FSelectedName.SliceCount = spreadMax;
-                FSelected.SliceCount = 0;
                 for (int i = 0; i < spreadMax; i++)
                 {
+                    FSelected[i] = new Spread<GraphNode>(0);
                     FSelectedName[i] = new Spread<string>(0);
                     if (FInput[i] != null)
                     {
@@ -66,7 +67,7 @@ namespace VVVV.SceneGraph
                             {
                                 selected = n;
                                 selected.Fork();
-                                FSelected.Add(selected);
+                                FSelected[i].Add(selected);
                                 FSelectedName[i].Add(selected.Name);
                             }
                         }
@@ -74,7 +75,7 @@ namespace VVVV.SceneGraph
                         {
                             selected = FOutput[i];
                             selected.Fork();
-                            FSelected.Add(selected);
+                            FSelected[i].Add(selected);
                             FSelectedName[i].Add(selected.Name);
                         }
                     }
@@ -84,7 +85,8 @@ namespace VVVV.SceneGraph
             }
             
             for (int i = 0; i < FSelected.SliceCount; i++)
-                FSelected[i]?.Transform(FTransform[i]);
+                foreach (var node in FSelected[i])
+                    node?.Transform(FTransform[i]);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace VVVV.SceneGraph
         [Output("Success")]
         ISpread<bool> FSuccess;
 
-        Spread<GraphNode> FSelected = new Spread<GraphNode>(0);
+        Spread<Spread<GraphNode>> FSelected = new Spread<Spread<GraphNode>>(0);
         #pragma warning restore
         #endregion fields & pins
 
@@ -56,11 +56,12 @@ namespace VVVV.SceneGraph
 
                 spreadMax = FInput.CombineWith(FQuery);
                 FSelectedName.SliceCount = spreadMax;
-                FSelected.SliceCount = 0;
+                FSelected.SliceCount = spreadMax;
                 FError.SliceCount = spreadMax;
                 FSuccess.SliceCount = spreadMax;
                 for (int i = 0; i < spreadMax; i++)
                 {
+                    FSelected[i] = new Spread<GraphNode>(0);
                     FSelectedName[i] = new Spread<string>(0);
                     if (FInput[i] != null)
                     {
@@ -73,27 +74,19 @@ namespace VVVV.SceneGraph
                                 {
                                     selected = n;
                                     selected.Fork();
-                                    FSelected.Add(selected);
+                                    FSelected[i].Add(selected);
                                     FSelectedName[i].Add(selected.Name);
-
-                                    FError[i] = string.Empty;
-                                    FSuccess[i] = true;
                                 }
+                                FError[i] = string.Empty;
+                                FSuccess[i] = true;
                             }
                             catch (Exception e)
                             {
-                                FSelected.Add(null);
+                                FSelected[i].SliceCount = 0;
                                 FSelectedName[i].SliceCount = 0;
                                 FError[i] = e.Message;
                                 FSuccess[i] = false;
                             }
-                        }
-                        else
-                        {
-                            selected = FOutput[i];
-                            selected.Fork();
-                            FSelected.Add(selected);
-                            FSelectedName[i].Add(selected.Name);
                         }
                     }
                 }
@@ -102,7 +95,8 @@ namespace VVVV.SceneGraph
             }
             
             for (int i = 0; i < FSelected.SliceCount; i++)
-                FSelected[i]?.Transform(FTransform[i]);
+                foreach(var node in FSelected[i])
+                    node?.Transform(FTransform[i]);
         }
     }
 }
