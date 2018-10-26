@@ -22,3 +22,5 @@ obj/
 *.sln.docstates
 
 release/**/*.dll
+
+sandbox/*
