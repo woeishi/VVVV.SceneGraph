@@ -49,7 +49,9 @@ namespace SceneGraph.Adaptors
         protected override void CreateGraph()
         {
             int counter = 0;
-            Root = new GraphNode(Source.RootNode.ToElement(0), Source.RootNode.RelativeTransform, Source.RootNode.LocalTransform, null, this);
+            var local = Source.RootNode.LocalTransform.Validate();
+            var tracks = Source.Animations.SelectMany(stack => stack.Channels.Where(c => c.Name == Source.RootNode.Name).Select(c => c.ToTrack(stack))).ToList();
+            Root = new GraphNode(Source.RootNode.ToElement(0), Source.RootNode.RelativeTransform, local, tracks, null, this);
             TraverseGraph(Root, Source.RootNode, ref counter);
             Root.LastDescendantID = counter;
 
@@ -78,7 +80,9 @@ namespace SceneGraph.Adaptors
                     else
                         element = an.Children[id].ToElement(counter);
 
-                    n.Children[i] = new GraphNode(element, an.Children[id].RelativeTransform, an.Children[id].LocalTransform, n, this);
+                    var local = an.Children[id].LocalTransform.Validate();
+                    var tracks = Source.Animations.SelectMany(stack => stack.Channels.Where(c => c.Name == an.Children[id].Name).Select(c => c.ToTrack(stack))).ToList();
+                    n.Children[i] = new GraphNode(element, an.Children[id].RelativeTransform, local, tracks, n, this);
                     TraverseGraph(n.Children[i], an.Children[id], ref counter);
                     n.Children[i].LastDescendantID = counter;
                 }

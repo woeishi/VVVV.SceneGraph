@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using SceneGraph.Core;
 using SlimDX;
 using AssimpNet;
+using SceneGraph.Core.Animation;
 
 namespace SceneGraph.Adaptors
 {
@@ -73,6 +74,36 @@ namespace SceneGraph.Adaptors
                 };
             }
             return mat;
+        }
+
+        internal static Matrix Validate(this Matrix m)
+        {
+            bool faulted = m.M11 == 0 && m.M12 == 0 && m.M13 == 0;
+            faulted &= m.M21 == 0 && m.M22 == 0 && m.M23 == 0;
+            faulted &= m.M31 == 0 && m.M32 == 0 && m.M33 == 0;
+            return faulted ? Matrix.Identity : m;
+        }
+
+        static Quaternion Zero = new Quaternion(0, 0, 1, 0);
+
+        internal static Channel ToTrack(this AssimpAnimationChannel channel, AssimpAnimation stack)
+        {
+            var result = new Channel(stack.Name, (float)stack.Duration, (float)stack.TicksPerSecond);
+            foreach (var p in channel.PositionKeys)
+                result.AppendPosition((float)p.Time, p.Value);
+            foreach (var s in channel.ScalingKeys)
+                result.AppendScale((float)s.Time, s.Value);
+            int i = 0;
+            foreach (var r in channel.RotationKeys)
+            {
+                var val = r.Value;
+                if (val == Zero)
+                    if (result.Scale.Count > i && result.Scale[i] == Vector3.Zero)
+                        val = Quaternion.Identity;
+                result.AppendRoatation((float)r.Time, val);
+                i++;
+            }
+            return result;
         }
     }
 }
