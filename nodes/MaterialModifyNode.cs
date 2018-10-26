@@ -9,7 +9,7 @@ using SceneGraph.Core;
 namespace VVVV.SceneGraph
 {
     [PluginInfo(Name = "ModifyMaterial", Category = "SceneGraph",
-                Help = "xxx", Tags = "Color, Alpha",
+                Help = "Applies color parameter changes on the selected mesh instances in the graph.", Tags = "Color, Alpha",
                 Author = "woei")]
     public class MaterialModifyNode : IPluginEvaluate, IPartImportsSatisfiedNotification
     {
@@ -47,8 +47,8 @@ namespace VVVV.SceneGraph
         IIOContainer<IDiffSpread<float>> FSPAmountContainer;
         IIOContainer<IDiffSpread<MaterialModification.BlendMode>> FSPModeContainer;
 
-        [Input("XPath", DefaultString = ".", Order = 100)]
-        IDiffSpread<string> FSelector;
+        [Input("XPath", DefaultString = ".//*", Order = 100)]
+        IDiffSpread<string> FQuery;
         
 
         [Output("GraphNode", AutoFlush = false)]
@@ -181,13 +181,13 @@ namespace VVVV.SceneGraph
 
         public void Evaluate(int spreadMax)
         {
-            if (FInput.IsChanged || FSelector.IsChanged)
+            if (FInput.IsChanged || FQuery.IsChanged)
             {
                 FOutput.SliceCount = FInput.SliceCount;
                 for (int i = 0; i < FInput.SliceCount; i++)
                     FOutput[i] = FInput[i] == null ? FInput[i] : GraphNode.CloneGraph(FInput[i]);
 
-                spreadMax = FInput.CombineWith(FSelector);
+                spreadMax = FInput.CombineWith(FQuery);
                 FSelectedName.SliceCount = spreadMax;
                 FSelected.SliceCount = spreadMax;
                 FError.SliceCount = spreadMax;
@@ -196,37 +196,32 @@ namespace VVVV.SceneGraph
                 {
                     FSelected[i] = new Spread<GraphNode>(0);
                     FSelectedName[i] = new Spread<string>(0);
-                    if (FInput[i] == null)
+                    if (FInput[i] == null || string.IsNullOrWhiteSpace(FQuery[i]))
                     {
-                        FSelected[i].SliceCount = 0;
-                        FSelectedName[i].SliceCount = 0;
-                        FError[i] = "Input is null";
+                        FError[i] = "Input is invalid";
                         FSuccess[i] = false;
                     }
                     else
                     {
-                        if (!string.IsNullOrWhiteSpace(FSelector[i]))
+                        try
                         {
-                            try
+                            foreach (var n in FOutput[i].XPathQuery(FQuery[i].Trim()))
                             {
-                                var query = FSelector[i].Trim() + "//*[@nodetype='Mesh']";
-                                foreach (var n in FOutput[i].XPathQuery(query))
+                                if (n.Material != null)
                                 {
                                     FSelected[i].Add(n);
                                     FSelectedName[i].Add(n.Name);
                                 }
-
-                                FError[i] = string.Empty;
-                                FSuccess[i] = true;
                             }
-                            catch (Exception e)
-                            {
-                                FSelected[i].SliceCount = 0;
-                                FSelectedName[i].SliceCount = 0;
-                                FError[i] = e.Message;
-                                FSuccess[i] = false;
-                            }
-
+                            FError[i] = string.Empty;
+                            FSuccess[i] = true;
+                        }
+                        catch (Exception e)
+                        {
+                            FSelected[i].SliceCount = 0;
+                            FSelectedName[i].SliceCount = 0;
+                            FError[i] = e.Message;
+                            FSuccess[i] = false;
                         }
                     }
                 }
@@ -234,7 +229,7 @@ namespace VVVV.SceneGraph
                 FOutput.Flush();
             }
 
-            if (FInput.IsChanged || FSelector.IsChanged || AmbientIsChanged() || DiffuseIsChanged() || SpecularIsChanged() || SpecularPowerIsChanged())
+            if (FInput.IsChanged || FQuery.IsChanged || AmbientIsChanged() || DiffuseIsChanged() || SpecularIsChanged() || SpecularPowerIsChanged())
             {
                 for (int i = 0; i < FSelected.SliceCount; i++)
                 {
