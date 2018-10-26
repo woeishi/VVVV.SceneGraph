@@ -63,30 +63,31 @@ namespace VVVV.SceneGraph
                 {
                     FSelected[i] = new Spread<GraphNode>(0);
                     FSelectedName[i] = new Spread<string>(0);
-                    if (FInput[i] != null)
+                    if (FInput[i] == null || string.IsNullOrWhiteSpace(FQuery[i]))
                     {
-                        GraphNode selected = null;
-                        if (!string.IsNullOrWhiteSpace(FQuery[i]))
+                        FError[i] = "Input is invalid";
+                        FSuccess[i] = false;
+                    }
+                    else
+                    {
+                        try
                         {
-                            try
+                            foreach (var n in FOutput[i].XPathQuery(FQuery[i]))
                             {
-                                foreach (var n in FOutput[i].XPathQuery(FQuery[i]))
-                                {
-                                    selected = n;
-                                    selected.Fork();
-                                    FSelected[i].Add(selected);
-                                    FSelectedName[i].Add(selected.Name);
-                                }
-                                FError[i] = string.Empty;
-                                FSuccess[i] = true;
+                                var selected = n;
+                                selected.Fork();
+                                FSelected[i].Add(selected);
+                                FSelectedName[i].Add(selected.Name);
                             }
-                            catch (Exception e)
-                            {
-                                FSelected[i].SliceCount = 0;
-                                FSelectedName[i].SliceCount = 0;
-                                FError[i] = e.Message;
-                                FSuccess[i] = false;
-                            }
+                            FError[i] = string.Empty;
+                            FSuccess[i] = true;
+                        }
+                        catch (Exception e)
+                        {
+                            FSelected[i].SliceCount = 0;
+                            FSelectedName[i].SliceCount = 0;
+                            FError[i] = e.Message;
+                            FSuccess[i] = false;
                         }
                     }
                 }
