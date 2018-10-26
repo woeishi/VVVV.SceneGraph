@@ -49,6 +49,7 @@ namespace SceneGraph.Core
 
             Transforms = new List<Transform>();
             Transforms.Add(new Transform(local, this));
+            Transforms[0].Changed += MarkBranchChanged;
             AccumulatedTransform = new Transform(accumulated, this);
             
             Local = local;
@@ -86,7 +87,10 @@ namespace SceneGraph.Core
 
             Transforms = new List<Transform>(other.Transforms);
             Local = other.Local;
+            foreach (var t in Transforms)
+                t.Changed += MarkBranchChanged;
             AccumulatedTransform = other.AccumulatedTransform;
+
             Tracks = new List<Channel>();
             foreach (var t in other.Tracks)
                 Tracks.Add(new Channel(t));
@@ -94,16 +98,25 @@ namespace SceneGraph.Core
             MaterialReference = other.Material;
         }
 
+        public void DisposeGraph()
+        {
+            foreach (var t in Transforms)
+                t.Changed -= MarkBranchChanged;
+            foreach (var c in Children)
+                c.DisposeGraph();
+        }
+
         public void Fork()
         {
+            Transforms[0].Changed -= MarkBranchChanged;
             Transforms.Insert(0,new Transform(Transforms[0], this));
             //from the fork onward all nodes have to hold their own accumulated transform
+            Transforms[0].Changed += MarkBranchChanged;
             CloneAccumulated(this);
         }
         void CloneAccumulated(GraphNode node)
         {
-            var m = node.Accumulated;
-            node.AccumulatedTransform = new Transform(m, node);
+            node.AccumulatedTransform = new Transform(node.Accumulated, node);
             foreach (var c in node.Children)
                 CloneAccumulated(c);
         }
@@ -131,6 +144,8 @@ namespace SceneGraph.Core
 
             var tmp = right.Transforms.GetRange(0, ri + 1);
             left.Transforms.InsertRange(0, tmp);
+            foreach (var t in tmp)
+                t.Changed += MarkBranchChanged;
 
             for (int i = 0; i < left.Children.Length; i++)
                 MergeTransforms(left.Children[i], right.Children[i]);
@@ -138,13 +153,41 @@ namespace SceneGraph.Core
 
         public void Transform(Matrix transient)
         {
-            //TO-DO graph is dirty mechanism
-            //LocalTransient = transient;
             Transforms[0].Matrix = transient;
-            UpdateTransformGraph();
+            Transforms[0].MarkChanged();
         }
 
-        public void UpdateTransformGraph()
+        void MarkBranchChanged(object sender, EventArgs e)
+        {
+            this.AccumulatedTransform.IsDirty = true;
+            foreach (var c in this.Children)
+                c.MarkBranchChanged(sender, e);
+        }
+
+        
+
+        public void ResolveTransformGraph()
+        {
+            if (this.AccumulatedTransform.IsDirty)
+            {
+                Stack<GraphNode> nodes = new Stack<GraphNode>();
+                nodes.Push(this);
+                var node = this;
+                while (node.Parent != null && node.Parent.AccumulatedTransform.IsDirty)
+                {
+                    node = node.Parent;
+                    nodes.Push(node);
+                }
+
+                while (nodes.Count > 0)
+                {
+                    var n = nodes.Pop();
+                    n.ResolveNodeTransform();
+                }
+            }
+        }
+
+        void ResolveNodeTransform()
         {
             Local = Transforms[0].Matrix;
             for (int i = 1; i < Transforms.Count; i++)
@@ -155,16 +198,18 @@ namespace SceneGraph.Core
             else
                 AccumulatedTransform.Matrix = Local;
 
-            foreach (var c in this.Children)
-                c.UpdateTransformGraph();
+            AccumulatedTransform.IsDirty = false;
         }
 
         public void ForkAnimation()
         {
             if (Tracks.Count > 0)
             {
+                Transforms[Transforms.Count - 1].Changed -= MarkBranchChanged;
                 Tracks[0].Original = Transforms[Transforms.Count - 1];
-                Transforms[Transforms.Count - 1] = new Transform(Transforms[Transforms.Count - 1].Matrix, this);
+                var t = new Transform(Transforms[Transforms.Count - 1].Matrix, this);
+                Transforms[Transforms.Count - 1] = t;
+                t.Changed += MarkBranchChanged;
             }
             CloneAccumulated(this);
         }
@@ -172,14 +217,21 @@ namespace SceneGraph.Core
         public void Animate(float time, bool normalize, int index = 0)
         {
             if (Tracks.Count > 0)
+            {
                 Transforms[Transforms.Count - 1].Matrix = Tracks[index].GetMatrix(time, normalize);
-            UpdateTransformGraph();
+                Transforms[Transforms.Count - 1].MarkChanged();
+            }
         }
 
         public void ResetAnimation()
         {
             if (Tracks[0].Original != null)
+            {
+                Transforms[Transforms.Count - 1].Changed -= MarkBranchChanged;
                 Transforms[Transforms.Count - 1] = Tracks[0].Original;
+                Transforms[Transforms.Count - 1].Changed += MarkBranchChanged;
+                Transforms[Transforms.Count - 1].MarkChanged();
+            }
         }
     }
 }

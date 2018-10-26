@@ -54,14 +54,7 @@ namespace VVVV.SceneGraph
             FRoot.Flush();
             FScene.Flush();
 
-            FRoot.Connected += FRoot_Connected;
             FMainloop.OnResetCache += FMainloop_OnResetCache;
-        }
-
-        void FRoot_Connected(object sender, PinConnectionEventArgs args)
-        {
-            foreach (var n in FRoot)
-                n?.UpdateTransformGraph();
         }
 
         void FMainloop_OnResetCache(object sender, EventArgs e)
@@ -73,7 +66,6 @@ namespace VVVV.SceneGraph
         public void Dispose()
 		{
             FMainloop.OnResetCache -= FMainloop_OnResetCache;
-            FRoot.Connected -= FRoot_Connected;
             foreach (var s in FScene)
                 s?.Dispose();
 		}        

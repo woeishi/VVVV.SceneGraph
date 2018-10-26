@@ -48,8 +48,13 @@ namespace VVVV.SceneGraph
 
         public void Evaluate(int spreadMax)
         {
+            bool graphChanged = false;
             if (FInput.IsChanged || FQuery.IsChanged)
             {
+                graphChanged = true;
+                foreach (var n in FOutput)
+                    n?.DisposeGraph();
+
                 FOutput.SliceCount = FInput.SliceCount;
                 for (int i = 0; i < FInput.SliceCount; i++)
                     FOutput[i] = FInput[i]==null?FInput[i]:GraphNode.CloneGraph(FInput[i]);
@@ -95,9 +100,10 @@ namespace VVVV.SceneGraph
                 FOutput.Flush();
             }
             
-            for (int i = 0; i < FSelected.SliceCount; i++)
-                foreach(var node in FSelected[i])
-                    node?.Transform(FTransform[i]);
+            if (FTransform.IsChanged || graphChanged)
+                for (int i = 0; i < FSelected.SliceCount; i++)
+                    foreach(var node in FSelected[i])
+                        node?.Transform(FTransform[i]);
         }
     }
 }

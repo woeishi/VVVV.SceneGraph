@@ -21,7 +21,7 @@ namespace VVVV.SceneGraph
         IDiffSpread<float> FTime;
 
         [Input("Normalize Time")]
-        ISpread<bool> FNormalize;
+        IDiffSpread<bool> FNormalize;
 
         [Input("Animation Index", Visibility = PinVisibility.OnlyInspector)]
         IDiffSpread<int> FIndex;
@@ -53,11 +53,16 @@ namespace VVVV.SceneGraph
 
         public void Evaluate(int spreadMax)
         {
+            bool graphChanged = false;
             if (FInput.IsChanged || FQuery.IsChanged)
             {
+                graphChanged = true;
                 foreach (var s in FSelected)
                     foreach (var n in s)
                         n.ResetAnimation();
+
+                foreach (var n in FOutput)
+                    n?.DisposeGraph();
 
                 FOutput.SliceCount = FInput.SliceCount;
                 for (int i = 0; i < FInput.SliceCount; i++)
@@ -109,7 +114,7 @@ namespace VVVV.SceneGraph
                 FOutput.Flush();
             }
 
-            //if (FTime.IsChanged || FInput.IsChanged || FQuery.IsChanged)
+            if (FTime.IsChanged || FNormalize.IsChanged || FIndex.IsChanged || graphChanged)
                 for (int i = 0; i < FSelected.SliceCount; i++)
                     foreach (var node in FSelected[i])
                         node?.Animate(FTime[i], FNormalize[i], FIndex[i]);

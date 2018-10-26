@@ -97,6 +97,7 @@ namespace VVVV.SceneGraph
             {
                 if (FSelected[i] != null && FSelected[i].Element != null)
                 {
+                    FSelected[i].ResolveTransformGraph();
                     FTransform[i] = FSelected[i].Accumulated;
                     if (FLocal != null)
                     {

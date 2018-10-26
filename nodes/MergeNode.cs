@@ -42,6 +42,9 @@ namespace VVVV.SceneGraph
         {
             if (FInput.IsChanged || FPart.IsChanged)
             {
+                foreach (var n in FOutput)
+                    n?.DisposeGraph();
+
                 FOutput.SliceCount = FInput.SliceCount;
                 FError.SliceCount = spreadMax;
                 FSelected.SliceCount = 0;
@@ -69,8 +72,6 @@ namespace VVVV.SceneGraph
                 }
                 FOutput.Flush();
             }
-            foreach (var n in FSelected)
-                n.UpdateTransformGraph();
         }
     }
 }

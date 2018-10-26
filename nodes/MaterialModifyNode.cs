@@ -183,7 +183,12 @@ namespace VVVV.SceneGraph
         {
             if (FInput.IsChanged || FQuery.IsChanged)
             {
+                foreach (var n in FOutput)
+                    n?.DisposeGraph();
+
                 FOutput.SliceCount = FInput.SliceCount;
+                
+
                 for (int i = 0; i < FInput.SliceCount; i++)
                     FOutput[i] = FInput[i] == null ? FInput[i] : GraphNode.CloneGraph(FInput[i]);
 
