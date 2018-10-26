@@ -123,6 +123,7 @@
     <Compile Include="core\GraphTraversing.cs" />
     <Compile Include="core\MeshElement.cs" />
     <Compile Include="core\Scene.cs" />
+    <Compile Include="core\Animation.cs" />
     <Compile Include="core\Transform.cs" />
     <Compile Include="backends\EX9ResourceManager.cs" />
     <Compile Include="backends\EX9Utils.cs" />

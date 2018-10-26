@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using SlimDX;
+using SceneGraph.Core.Animation;
 
 namespace SceneGraph.Core
 {
@@ -16,11 +17,14 @@ namespace SceneGraph.Core
         public int ID => Element.ID;
         public string Name => Element.Name;
 
+        public override string ToString() => $"{Element.Name} [{Element.Type}]";
+
         List<Transform> Transforms;
         Transform AccumulatedTransform;
         
         public Matrix Local { get; private set; }
         public Matrix Accumulated => AccumulatedTransform.Matrix;
+        public List<Channel> Tracks { get; }
 
         public MaterialInfo Material
         {
@@ -36,7 +40,7 @@ namespace SceneGraph.Core
         internal MaterialInfo MaterialProxy;
 
         //only in use when initally parsing the scene
-        internal GraphNode(Element element, Matrix accumulated, Matrix local, GraphNode parent = null, IScene scene = null)
+        internal GraphNode(Element element, Matrix accumulated, Matrix local, List<Channel> tracks, GraphNode parent = null, IScene scene = null)
         {
             Scene = scene;
             Element = element;
@@ -46,19 +50,16 @@ namespace SceneGraph.Core
             Transforms = new List<Transform>();
             Transforms.Add(new Transform(local, this));
             AccumulatedTransform = new Transform(accumulated, this);
-
+            
             Local = local;
+
+            Tracks = tracks;
         }
 
-        internal GraphNode(MeshElement element, Matrix accumulated, GraphNode parent = null, IScene scene = null) : this(element as Element, accumulated, Matrix.Identity, parent, scene)
+        internal GraphNode(MeshElement element, Matrix accumulated, GraphNode parent = null, IScene scene = null) : this(element as Element, accumulated, Matrix.Identity, new List<Channel>(), parent, scene)
         {
             MaterialReference = element.Material;
             Children = new GraphNode[0];
-        }
-
-        public override string ToString()
-        {
-            return $"{Element.Name} [{Element.Type}]";
         }
 
         public static GraphNode CloneGraph(GraphNode original)
@@ -86,6 +87,9 @@ namespace SceneGraph.Core
             Transforms = new List<Transform>(other.Transforms);
             Local = other.Local;
             AccumulatedTransform = other.AccumulatedTransform;
+            Tracks = new List<Channel>();
+            foreach (var t in other.Tracks)
+                Tracks.Add(new Channel(t));
 
             MaterialReference = other.Material;
         }
@@ -153,6 +157,29 @@ namespace SceneGraph.Core
 
             foreach (var c in this.Children)
                 c.UpdateTransformGraph();
+        }
+
+        public void ForkAnimation()
+        {
+            if (Tracks.Count > 0)
+            {
+                Tracks[0].Original = Transforms[Transforms.Count - 1];
+                Transforms[Transforms.Count - 1] = new Transform(Transforms[Transforms.Count - 1].Matrix, this);
+            }
+            CloneAccumulated(this);
+        }
+        
+        public void Animate(float time, bool normalize, int index = 0)
+        {
+            if (Tracks.Count > 0)
+                Transforms[Transforms.Count - 1].Matrix = Tracks[index].GetMatrix(time, normalize);
+            UpdateTransformGraph();
+        }
+
+        public void ResetAnimation()
+        {
+            if (Tracks[0].Original != null)
+                Transforms[Transforms.Count - 1] = Tracks[0].Original;
         }
     }
 }

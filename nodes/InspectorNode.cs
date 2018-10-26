@@ -197,6 +197,8 @@ namespace VVVV.SceneGraph
                 SliceIndex = sliceIndex;
                 
                 this.Secondary.Text = $"[id {node.ID}]";
+                foreach (var t in node.Tracks)
+                    this.Secondary.Text += $" - {t.Name} tps:{t.TicksPerSecond} t:{t.Duration}";
             }
         }
 

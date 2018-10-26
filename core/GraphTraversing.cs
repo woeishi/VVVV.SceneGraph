@@ -83,6 +83,15 @@ namespace SceneGraph.Core
                 }
             }
 
+            foreach (var t in node.Tracks)
+            {
+                var track = new XElement("Animation");
+                track.Add(new XAttribute("stackName", t.Name));
+                track.Add(new XAttribute("duration", t.Duration));
+                track.Add(new XAttribute("ticksPerSecond", t.TicksPerSecond));
+                x.Add(track);
+            }
+
             foreach (var c in node.Children)
                 x.Add(c.ToXElement());
             return x;
