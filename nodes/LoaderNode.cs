@@ -89,7 +89,12 @@ namespace VVVV.SceneGraph
                         FScene[i]?.Dispose();
                     needsFlush = true;
                 }
-                FScene.SliceCount = spreadMax;
+                // FScene.SliceCount = spreadMax;
+                // on expanding the spread, it will fill the new slices by repeating
+                // causes disposal of resources in use
+                // ResizeAndDismiss to make sure added slices are null
+                // shrinking is already handled above, so no need for ResizeAndDispose
+                FScene.ResizeAndDismiss(spreadMax, () => null);
                 FRoot.SliceCount = spreadMax;
                 FIsValid.SliceCount = spreadMax;
                 for (int i = 0; i < spreadMax; i++)
