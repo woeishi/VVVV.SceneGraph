@@ -15,6 +15,7 @@ namespace SceneGraph.Adaptors
             var name = System.Text.Encoding.UTF8.GetString(bytes);
             if (Regex.IsMatch(name, "^\\d"))
                 name = "_" + name;
+            name = name.Replace("$", "_");
             return name;
         }
 
