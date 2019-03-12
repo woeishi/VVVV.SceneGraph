@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 
 using SlimDX;
-using SceneGraph.Core.Animation;
+
+using SceneGraph.Core.Animations;
 
 namespace SceneGraph.Core
 {
@@ -24,7 +25,10 @@ namespace SceneGraph.Core
         
         public Matrix Local { get; private set; }
         public Matrix Accumulated => AccumulatedTransform.Matrix;
-        public List<Channel> Tracks { get; }
+
+        public AnimationInfo AnimationsReference { get; }
+        public AnimationInfo AnimationsProxy { get; internal set; }
+        Transform AnimationStash = null;
 
         public MaterialInfo Material
         {
@@ -39,8 +43,9 @@ namespace SceneGraph.Core
         internal MaterialInfo MaterialReference;
         internal MaterialInfo MaterialProxy;
 
+
         //only in use when initally parsing the scene
-        internal GraphNode(Element element, Matrix accumulated, Matrix local, List<Channel> tracks, GraphNode parent = null, IScene scene = null)
+        internal GraphNode(Element element, Matrix accumulated, Matrix local, AnimationInfo animationInfo = null, GraphNode parent = null, IScene scene = null)
         {
             Scene = scene;
             Element = element;
@@ -51,13 +56,13 @@ namespace SceneGraph.Core
             Transforms.Add(new Transform(local, this));
             Transforms[0].Changed += MarkBranchChanged;
             AccumulatedTransform = new Transform(accumulated, this);
-            
-            Local = local;
 
-            Tracks = tracks;
+            AnimationsReference = animationInfo;
+
+            Local = local;
         }
 
-        internal GraphNode(MeshElement element, Matrix accumulated, GraphNode parent = null, IScene scene = null) : this(element as Element, accumulated, Matrix.Identity, new List<Channel>(), parent, scene)
+        internal GraphNode(MeshElement element, Matrix accumulated, AnimationInfo animationInfo = null, GraphNode parent = null, IScene scene = null) : this(element as Element, accumulated, Matrix.Identity, animationInfo, parent, scene)
         {
             MaterialReference = element.Material;
             Children = new GraphNode[0];
@@ -91,9 +96,7 @@ namespace SceneGraph.Core
                 t.Changed += MarkBranchChanged;
             AccumulatedTransform = other.AccumulatedTransform;
 
-            Tracks = new List<Channel>();
-            foreach (var t in other.Tracks)
-                Tracks.Add(new Channel(t));
+            AnimationsReference = other.AnimationsReference;
 
             MaterialReference = other.Material;
         }
@@ -203,32 +206,35 @@ namespace SceneGraph.Core
 
         public void ForkAnimation()
         {
-            if (Tracks.Count > 0)
-            {
-                Transforms[Transforms.Count - 1].Changed -= MarkBranchChanged;
-                Tracks[0].Original = Transforms[Transforms.Count - 1];
-                var t = new Transform(Transforms[Transforms.Count - 1].Matrix, this);
-                Transforms[Transforms.Count - 1] = t;
-                t.Changed += MarkBranchChanged;
-            }
+            Transforms[Transforms.Count - 1].Changed -= MarkBranchChanged;
+            AnimationStash = Transforms[Transforms.Count - 1];
+            var t = new Transform(Transforms[Transforms.Count - 1].Matrix, this);
+            Transforms[Transforms.Count - 1] = t;
+            t.Changed += MarkBranchChanged;
+
             CloneAccumulated(this);
         }
         
-        public void Animate(float time, bool normalize, int index = 0)
+        public void Animate(float time, bool normalize)
         {
-            if (Tracks.Count > 0)
+            var m = Matrix.Identity;
+            foreach (var animation in AnimationsProxy.Animations)
             {
-                Transforms[Transforms.Count - 1].Matrix = Tracks[index].GetMatrix(time, normalize);
-                Transforms[Transforms.Count - 1].MarkChanged();
+                var lookup = normalize ? animation.Duration * time : time;
+                foreach (var c in animation.Channels)
+                    m = Matrix.Multiply(m, (c as IChannel<Matrix>).Sample(lookup));
             }
+            Transforms[Transforms.Count - 1].Matrix = m;
+            Transforms[Transforms.Count - 1].MarkChanged();
         }
 
         public void ResetAnimation()
         {
-            if (Tracks[0].Original != null)
+            // if (Tracks[0].Original != null)
+            if (AnimationStash != null)
             {
                 Transforms[Transforms.Count - 1].Changed -= MarkBranchChanged;
-                Transforms[Transforms.Count - 1] = Tracks[0].Original;
+                Transforms[Transforms.Count - 1] = AnimationStash;
                 Transforms[Transforms.Count - 1].Changed += MarkBranchChanged;
                 Transforms[Transforms.Count - 1].MarkChanged();
             }

@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
-using SceneGraph.Core;
+
 using SlimDX;
+
+using SceneGraph.Core;
+using SceneGraph.Core.Animations;
+
 using AssimpNet;
-using SceneGraph.Core.Animation;
 
 namespace SceneGraph.Adaptors
 {
@@ -87,24 +92,25 @@ namespace SceneGraph.Adaptors
 
         static Quaternion Zero = new Quaternion(0, 0, 1, 0);
 
-        internal static Channel ToTrack(this AssimpAnimationChannel channel, AssimpAnimation stack)
+        internal static Animation ToAnimation(this AssimpAnimation animation)
         {
-            var result = new Channel(stack.Name, (float)stack.Duration, (float)stack.TicksPerSecond);
-            foreach (var p in channel.PositionKeys)
-                result.AppendPosition((float)p.Time, p.Value);
-            foreach (var s in channel.ScalingKeys)
-                result.AppendScale((float)s.Time, s.Value);
-            int i = 0;
-            foreach (var r in channel.RotationKeys)
-            {
-                var val = r.Value;
+            var channels = animation.Channels.SelectMany(c => c.ToChannels());
+            return Animation.Create(animation.Name, (float)animation.Duration, (float)animation.TicksPerSecond, channels);
+        }
+
+        internal static IEnumerable<IChannel> ToChannels(this AssimpAnimationChannel channel)
+        {
+            var scales = channel.ScalingKeys.Select(ak => new Marker<Vector3>((float)ak.Time, ak.Value)).ToList();
+            var rotations = channel.RotationKeys.Select((ak, i) => {
+                var val = ak.Value;
                 if (val == Zero)
-                    if (result.Scale.Count > i && result.Scale[i] == Vector3.Zero)
+                    if (scales.Count > i && scales[i].Value == Vector3.Zero)
                         val = Quaternion.Identity;
-                result.AppendRoatation((float)r.Time, val);
-                i++;
-            }
-            return result;
+                return new Marker<Quaternion>((float)ak.Time, val);
+            });
+            yield return scales.ToScale();
+            yield return rotations.ToRotation();
+            yield return channel.PositionKeys.Select(ak => new Marker<Vector3>((float)ak.Time, ak.Value)).ToTranslation();
         }
     }
 }

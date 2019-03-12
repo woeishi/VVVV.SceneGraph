@@ -4,13 +4,14 @@ using System.ComponentModel.Composition;
 using VVVV.PluginInterfaces.V2;
 
 using SceneGraph.Core;
+using SceneGraph.Core.Animations;
 
 namespace VVVV.SceneGraph
 {
-    [PluginInfo(Name = "Animation", Category = "Transform", Version = "SceneGraph XPath",
-                Help = "Applies transformation on selected nodes sampled from animation information of the given time.", Tags = "matrix, query, xpath",
+    [PluginInfo(Name = "Animate", Category = "Transform", Version = "SceneGraph XPath",
+                Help = "Applies the animation selected directly or via its containing node.", Tags = "matrix, query, xpath",
                 Author = "woei")]
-    public class AnimationXPathNode : IPluginEvaluate, IPartImportsSatisfiedNotification
+    public class AnimateXPathNode : IPluginEvaluate, IPartImportsSatisfiedNotification
     {
         #region fields & pins
         #pragma warning disable 0649
@@ -23,9 +24,6 @@ namespace VVVV.SceneGraph
         [Input("Normalize Time")]
         IDiffSpread<bool> FNormalize;
 
-        [Input("Animation Index", Visibility = PinVisibility.OnlyInspector)]
-        IDiffSpread<int> FIndex;
-
         [Input("XPath", DefaultString = ".//*")]
         IDiffSpread<string> FQuery;
 
@@ -34,6 +32,9 @@ namespace VVVV.SceneGraph
 
         [Output("Affected", AutoFlush = false, BinVisibility = PinVisibility.OnlyInspector)]
         ISpread<ISpread<string>> FSelectedName;
+
+        [Output("Animation Names", AutoFlush = false)]
+        ISpread<ISpread<string>> FAnimNames;
 
         [Output("Error Message")]
         ISpread<string> FError;
@@ -49,6 +50,10 @@ namespace VVVV.SceneGraph
         {
             FOutput.SliceCount = 0;
             FOutput.Flush();
+            FSelectedName.SliceCount = 0;
+            FSelectedName.Flush();
+            FAnimNames.SliceCount = 0;
+            FAnimNames.Flush();
         }
 
         public void Evaluate(int spreadMax)
@@ -71,6 +76,7 @@ namespace VVVV.SceneGraph
                 spreadMax = FInput.CombineWith(FQuery);
                 FSelectedName.SliceCount = spreadMax;
                 FSelected.SliceCount = spreadMax;
+                FAnimNames.SliceCount = 0;
                 FError.SliceCount = spreadMax;
                 FSuccess.SliceCount = spreadMax;
                 for (int i = 0; i < spreadMax; i++)
@@ -88,15 +94,13 @@ namespace VVVV.SceneGraph
                     {
                         try
                         {
-                            foreach (var n in FOutput[i].XPathQuery(FQuery[i].Trim()))
+                            foreach (var n in FOutput[i].XPathQueryAnimation(FQuery[i].Trim()))
                             {
-                                if (n.Tracks.Count > 0)
-                                {
-                                    var selected = n;
-                                    selected.ForkAnimation();
-                                    FSelected[i].Add(selected);
-                                    FSelectedName[i].Add(selected.Name);
-                                }
+                                var selected = n;
+                                selected.ForkAnimation();
+                                FSelected[i].Add(selected);
+                                FSelectedName[i].Add(selected.Name);
+                                FAnimNames.Add(n.AnimationsProxy.AnimationNames.ToSpread());
                             }
                             FError[i] = string.Empty;
                             FSuccess[i] = true;
@@ -111,13 +115,14 @@ namespace VVVV.SceneGraph
                     }
                 }
                 FSelectedName.Flush();
+                FAnimNames.Flush();
                 FOutput.Flush();
             }
 
-            if (FTime.IsChanged || FNormalize.IsChanged || FIndex.IsChanged || graphChanged)
+            if (FTime.IsChanged || FNormalize.IsChanged || graphChanged)
                 for (int i = 0; i < FSelected.SliceCount; i++)
                     foreach (var node in FSelected[i])
-                        node?.Animate(FTime[i], FNormalize[i], FIndex[i]);
+                        node?.Animate(FTime[i], FNormalize[i]);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using SceneGraph.Core;
+using SceneGraph.Core.Animations;
 using SceneGraph.DX11;
 using SceneGraph.EX9;
 using AssimpNet;
@@ -43,6 +44,8 @@ namespace SceneGraph.Adaptors
                 (i, device) => EX9Utils.CreateTexture(device, TextureInfos[i].FullPath));
             AddResourceManager(ex9);
 
+            InitializeAnimations(Source.Animations.Count, i => Source.Animations[i].ToAnimation());
+
             CreateGraph();
         }
 
@@ -50,12 +53,25 @@ namespace SceneGraph.Adaptors
         {
             int counter = 0;
             var local = Source.RootNode.LocalTransform.Validate();
-            var tracks = Source.Animations.SelectMany(stack => stack.Channels.Where(c => c.Name == Source.RootNode.Name).Select(c => c.ToTrack(stack))).ToList();
-            Root = new GraphNode(Source.RootNode.ToElement(0), Source.RootNode.RelativeTransform, local, tracks, null, this);
+            var element = Source.RootNode.ToElement(0);
+            var animationInfo = LoadAnimationInfo(Source.RootNode.Name);
+            Root = new GraphNode(element, Source.RootNode.RelativeTransform, local, animationInfo, null, this);
             TraverseGraph(Root, Source.RootNode, ref counter);
             Root.LastDescendantID = counter;
 
             base.CreateGraph();
+        }
+
+        AnimationInfo LoadAnimationInfo(string key)
+        {
+            var animations = Source.Animations
+                .Select((a, i) => new Animation(Animations[i], a.Channels
+                    .Select((c, j) => new { c, j })
+                    .Where(e => e.c.Name == key)
+                    .SelectMany(e => new[] { Animations[i].Channels[e.j * 3], Animations[i].Channels[e.j * 3 + 1], Animations[i].Channels[e.j * 3 + 2] })))
+                .Where(a => a.Channels.Length > 0);
+            return AnimationInfo.Create(animations.ToArray());
+            
         }
 
         void TraverseGraph(GraphNode n, AssimpNode an, ref int counter)
@@ -68,7 +84,7 @@ namespace SceneGraph.Adaptors
                 id = i-an.MeshCount; //assimp child id and graphnode child id differ with meshcontainers
                 if (id < 0) //attach meshes as children before further nodes
                 {
-                    n.Children[i] = new GraphNode(an.ToMesh(counter, this, an.MeshIndices[i]), an.RelativeTransform, n, this);
+                    n.Children[i] = new GraphNode(an.ToMesh(counter, this, an.MeshIndices[i]), an.RelativeTransform, null, n, this);
                     n.Children[i].LastDescendantID = counter;
                 }
                 else //prepended meshes in children list, now process other nodes
@@ -81,8 +97,9 @@ namespace SceneGraph.Adaptors
                         element = an.Children[id].ToElement(counter);
 
                     var local = an.Children[id].LocalTransform.Validate();
-                    var tracks = Source.Animations.SelectMany(stack => stack.Channels.Where(c => c.Name == an.Children[id].Name).Select(c => c.ToTrack(stack))).ToList();
-                    n.Children[i] = new GraphNode(element, an.Children[id].RelativeTransform, local, tracks, n, this);
+
+                    var animationInfo = LoadAnimationInfo(an.Children[id].Name);
+                    n.Children[i] = new GraphNode(element, an.Children[id].RelativeTransform, local, animationInfo, n, this);
                     TraverseGraph(n.Children[i], an.Children[id], ref counter);
                     n.Children[i].LastDescendantID = counter;
                 }

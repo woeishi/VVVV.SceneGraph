@@ -106,6 +106,10 @@
   <ItemGroup>
     <Compile Include="adaptors\AssimpAdaptor.cs" />
     <Compile Include="adaptors\SceneAssimp.cs" />
+    <Compile Include="core\animation\AnimationExtensions.cs" />
+    <Compile Include="core\animation\Channel.cs" />
+    <Compile Include="core\animation\ChannelExtensions.cs" />
+    <Compile Include="core\animation\Marker.cs" />
     <Compile Include="core\CameraElement.cs" />
     <Compile Include="core\GraphNodeExtensions.cs" />
     <Compile Include="core\IResourceManager.cs" />
@@ -123,12 +127,13 @@
     <Compile Include="core\GraphTraversing.cs" />
     <Compile Include="core\MeshElement.cs" />
     <Compile Include="core\Scene.cs" />
-    <Compile Include="core\Animation.cs" />
+    <Compile Include="core\animation\Animation.cs" />
     <Compile Include="core\Transform.cs" />
     <Compile Include="backends\EX9ResourceManager.cs" />
     <Compile Include="backends\EX9Utils.cs" />
+    <Compile Include="nodes\AnimateNode.cs" />
+    <Compile Include="nodes\AnimateXPathNode.cs" />
     <Compile Include="nodes\AnimationInfoNode.cs" />
-    <Compile Include="nodes\AnimationNode.cs" />
     <Compile Include="nodes\CameraNode.cs" />
     <Compile Include="nodes\MaterialBaseNode.cs" />
     <Compile Include="nodes\MaterialEX9Node.cs" />

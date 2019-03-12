@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
+using SceneGraph.Core.Animations;
+
 namespace SceneGraph.Core
 {
     public class Scene<T> : IScene
@@ -20,6 +22,8 @@ namespace SceneGraph.Core
         public MaterialInfo[] MaterialInfos { get; protected set; }
         public TextureInfo[] TextureInfos { get; protected set; }
         List<IResourceManager> ResourceManager { get; set; }
+
+        public Animation[] Animations { get; protected set; }
 
         public Scene(string path)
         {
@@ -70,6 +74,13 @@ namespace SceneGraph.Core
         }
 
         internal void AddResourceManager(IResourceManager mgrs) => ResourceManager.Add(mgrs);
+
+        protected void InitializeAnimations(int animationCount, Func<int, Animation> animationCreate)
+        {
+            Animations = new Animation[animationCount];
+            for (int i = 0; i < animationCount; i++)
+                Animations[i] = animationCreate(i);
+        }
 
         protected virtual void CreateGraph()
         {

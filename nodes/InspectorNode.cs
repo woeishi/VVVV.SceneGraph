@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Linq;
 using System.ComponentModel.Composition;
 
 using VVVV.PluginInterfaces.V2;
@@ -9,7 +10,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms.Integration;
 using System.Windows.Media;
-using System.Xml.Linq;
 
 namespace VVVV.SceneGraph
 {
@@ -197,8 +197,9 @@ namespace VVVV.SceneGraph
                 SliceIndex = sliceIndex;
                 
                 this.Secondary.Text = $"[id {node.ID}]";
-                foreach (var t in node.Tracks)
-                    this.Secondary.Text += $" - {t.Name} tps:{t.TicksPerSecond} t:{t.Duration}";
+                if (node.AnimationsReference != null)
+                    foreach (var a in node.AnimationsReference.Animations)
+                        this.Secondary.Text += $" - {a.Name} tps:{a.TicksPerSecond} t:{a.Duration}";
             }
         }
 

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
+using SceneGraph.Core.Animations;
+
 namespace SceneGraph.Core
 {
     public static class GraphTraversing
@@ -63,15 +65,15 @@ namespace SceneGraph.Core
 
         internal static XElement ToXElement(this GraphNode node)
         {
-            var x = new XElement(node.Name);
-            x.Add(new XAttribute("id", node.ID));
-            x.Add(new XAttribute("nodetype", node.Element.Type));
+            var element = new XElement(node.Name);
+            element.Add(new XAttribute("id", node.ID));
+            element.Add(new XAttribute("nodetype", node.Element.Type));
 
             var me = node.Element as MeshElement;
             if (me != null)
             {
-                x.Add(new XAttribute("meshId", me.MeshID));
-                x.Add(new XAttribute("materialId", me.MaterialID));
+                element.Add(new XAttribute("meshId", me.MeshID));
+                element.Add(new XAttribute("materialId", me.MaterialID));
 
                 var textures = node.Material.Textures;
                 foreach (var t in textures)
@@ -79,22 +81,15 @@ namespace SceneGraph.Core
                     var txml = new XElement(t.Intent.ToString());
                     txml.Add(new XAttribute("textureId",t.Index));
                     txml.Add(new XAttribute("path", t.Path));
-                    x.Add(txml);
+                    element.Add(txml);
                 }
             }
 
-            foreach (var t in node.Tracks)
-            {
-                var track = new XElement("Animation");
-                track.Add(new XAttribute("stackName", t.Name));
-                track.Add(new XAttribute("duration", t.Duration));
-                track.Add(new XAttribute("ticksPerSecond", t.TicksPerSecond));
-                x.Add(track);
-            }
+            element.AppendAnimations(node);
 
             foreach (var c in node.Children)
-                x.Add(c.ToXElement());
-            return x;
+                element.Add(c.ToXElement());
+            return element;
         }
 
         public static XElement XElement(this GraphNode node)
