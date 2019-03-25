@@ -137,7 +137,9 @@
     <Compile Include="nodes\CameraNode.cs" />
     <Compile Include="nodes\MaterialBaseNode.cs" />
     <Compile Include="nodes\MaterialEX9Node.cs" />
-    <Compile Include="nodes\MaterialModifyNode.cs" />
+    <Compile Include="nodes\ModifyColorBase.cs" />
+    <Compile Include="nodes\ModifyColorNode.cs" />
+    <Compile Include="nodes\ModifyColorXPathNode.cs" />
     <Compile Include="nodes\MeshEX9Node.cs" />
     <Compile Include="nodes\ModelEX9Node.cs" />
     <Compile Include="nodes\MultiplyTransformXPathNode.cs" />

@@ -5,13 +5,12 @@ using VVVV.PluginInterfaces.V2;
 
 using SlimDX;
 using SceneGraph.Core;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace VVVV.SceneGraph
 {
-    [PluginInfo(Name = "ModifyMaterial", Category = "SceneGraph",
-                Help = "Applies color parameter changes on the selected mesh instances in the graph.", Tags = "Color, Alpha",
-                Author = "woei")]
-    public class MaterialModifyNode : IPluginEvaluate, IPartImportsSatisfiedNotification
+    public abstract class ModifyColorBase : IPluginEvaluate, IPartImportsSatisfiedNotification
     {
         #region fields & pins
         #pragma warning disable 0649
@@ -47,21 +46,12 @@ namespace VVVV.SceneGraph
         IIOContainer<IDiffSpread<float>> FSPAmountContainer;
         IIOContainer<IDiffSpread<MaterialModification.BlendMode>> FSPModeContainer;
 
-        [Input("XPath", DefaultString = ".//*", Order = 100)]
-        IDiffSpread<string> FQuery;
-        
 
         [Output("GraphNode", AutoFlush = false)]
         ISpread<GraphNode> FOutput;
 
         [Output("Affected", AutoFlush = false, BinVisibility = PinVisibility.OnlyInspector)]
         ISpread<ISpread<string>> FSelectedName;
-
-        [Output("Error Message")]
-        ISpread<string> FError;
-
-        [Output("Success")]
-        ISpread<bool> FSuccess;
 
         Spread<Spread<GraphNode>> FSelected = new Spread<Spread<GraphNode>>(0);
 
@@ -81,6 +71,9 @@ namespace VVVV.SceneGraph
             FTogSpecPower.Changed += FTogSpecPower_Changed;
             FOutput.SliceCount = 0;
             FOutput.Flush();
+            FSelectedName.SliceCount = 0;
+            FSelectedName.Flush();
+            ImportsSatisfied();
         }
 
         void FTogAmbient_Changed(IDiffSpread<bool> spread)
@@ -179,62 +172,57 @@ namespace VVVV.SceneGraph
                 return FTogSpecPower.IsChanged;
         }
 
+        protected virtual void ImportsSatisfied() { }
+
+        protected abstract bool InputChanged();
+
+        protected abstract int SpreadMax();
+
+        protected virtual void SetOutputSliceCount(int spreadMax) { }
+
+        protected virtual bool SliceIsNotValid(int i) => false;
+
+        protected virtual void SetNotValidSlice(int i) { }
+
+        protected abstract IEnumerable<GraphNode> SelectNodes(GraphNode node, int i);
+
         public void Evaluate(int spreadMax)
         {
-            if (FInput.IsChanged || FQuery.IsChanged)
+            bool graphChanged = false;
+            if (FInput.IsChanged || InputChanged())
             {
+                graphChanged = true;
                 foreach (var n in FOutput)
                     n?.DisposeGraph();
 
                 FOutput.SliceCount = FInput.SliceCount;
-                
 
                 for (int i = 0; i < FInput.SliceCount; i++)
                     FOutput[i] = FInput[i] == null ? FInput[i] : GraphNode.CloneGraph(FInput[i]);
 
-                spreadMax = FInput.CombineWith(FQuery);
+                spreadMax = SpreadMax().CombineWith(FInput);
                 FSelectedName.SliceCount = spreadMax;
                 FSelected.SliceCount = spreadMax;
-                FError.SliceCount = spreadMax;
-                FSuccess.SliceCount = spreadMax;
+                SetOutputSliceCount(spreadMax);
                 for (int i = 0; i < spreadMax; i++)
                 {
                     FSelected[i] = new Spread<GraphNode>(0);
                     FSelectedName[i] = new Spread<string>(0);
-                    if (FInput[i] == null || string.IsNullOrWhiteSpace(FQuery[i]))
-                    {
-                        FError[i] = "Input is invalid";
-                        FSuccess[i] = false;
-                    }
+                    if (FInput[i] == null || SliceIsNotValid(i))
+                        SetNotValidSlice(i);
                     else
                     {
-                        try
-                        {
-                            foreach (var n in FOutput[i].XPathQuery(FQuery[i].Trim()))
-                            {
-                                if (n.Material != null)
-                                {
-                                    FSelected[i].Add(n);
-                                    FSelectedName[i].Add(n.Name);
-                                }
-                            }
-                            FError[i] = string.Empty;
-                            FSuccess[i] = true;
-                        }
-                        catch (Exception e)
-                        {
-                            FSelected[i].SliceCount = 0;
-                            FSelectedName[i].SliceCount = 0;
-                            FError[i] = e.Message;
-                            FSuccess[i] = false;
-                        }
+                        var selected = SelectNodes(FOutput[i], i);
+                        FSelected[i].AddRange(selected);
+                        FSelectedName[i].AddRange(selected.Select(e => e.Name));
                     }
                 }
                 FSelectedName.Flush();
                 FOutput.Flush();
             }
 
-            if (FInput.IsChanged || FQuery.IsChanged || AmbientIsChanged() || DiffuseIsChanged() || SpecularIsChanged() || SpecularPowerIsChanged())
+            if (FInput.IsChanged || graphChanged ||
+                AmbientIsChanged() || DiffuseIsChanged() || SpecularIsChanged() || SpecularPowerIsChanged())
             {
                 for (int i = 0; i < FSelected.SliceCount; i++)
                 {
