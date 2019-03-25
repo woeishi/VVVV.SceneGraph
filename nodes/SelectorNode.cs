@@ -66,7 +66,7 @@ namespace VVVV.SceneGraph
                         {
                             foreach (var n in selected)
                             {
-                                var exp = n.ExpandNodes(FRecLimit[i]);
+                                var exp = n.ExpandNodes(FRecLimit[i], FIncludeSelf[i]);
                                 FOutput[i].AddRange(exp);
                                 FSelectedName[i].AddRange(exp.Select(e => e.Name));
                             }
@@ -77,7 +77,7 @@ namespace VVVV.SceneGraph
                     {
                         if (FInput[i] != null)
                         {
-                            var exp = FInput[i].ExpandNodes(FRecLimit[i]);
+                            var exp = FInput[i].ExpandNodes(FRecLimit[i], FIncludeSelf[i]);
                             FOutput[i].AssignFrom(exp);
                             FSelectedName[i].AddRange(exp.Select(e => e.Name));
                         }
