@@ -11,6 +11,9 @@ obj/
 #windows stuff
 *.db
 
+#vs
+.vs/
+
 #nuget stuff
 .nuget
 **/packages/*
