@@ -63,8 +63,6 @@ namespace SceneGraph.Core
             return start;
         }
 
-        static Color4 Scale(Color4 a, Vector4 b) => new Color4(a.Red * b.X, a.Green * b.Y, a.Blue * b.Z, a.Alpha * b.W);
-
-        
+        static Color4 Scale(Color4 a, Vector4 b) => new Color4(a.Alpha * b.W, a.Red * b.X, a.Green * b.Y, a.Blue * b.Z);
     }
 }
