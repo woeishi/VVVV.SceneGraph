@@ -44,6 +44,8 @@ namespace VVVV.SceneGraph
         {
             FOutput.SliceCount = 0;
             FOutput.Flush();
+            FSelectedName.SliceCount = 0;
+            FSelectedName.Flush();
         }
 
         public void Evaluate(int spreadMax)
