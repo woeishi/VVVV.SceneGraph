@@ -1,4 +1,4 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta36.dtd" >
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta37.dtd" >
    <PATCH nodename="D:\develop\VVVV.SceneGraph\release\SceneGraph\01_Mini SceneGraph Demo.v4p" systemname="01_Mini SceneGraph Demo" filename="D:\develop\VVVV.SceneGraph\release\SceneGraph\01_Mini SceneGraph Demo.v4p" scrollx="0" scrolly="0">
    <BOUNDS type="Window" left="0" top="184" width="7504" height="8688">
    </BOUNDS>
@@ -15,9 +15,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="2" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="248" top="608" width="4760" height="560">
+   <BOUNDS type="Node" left="248" top="688" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="248" top="608" width="5220" height="690">
+   <BOUNDS type="Box" left="248" top="688" width="5220" height="690">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|simple way to load 3d files, browse the loaded scene, apply transformations and output everything together to the shader of choice&cr;&lf;&cr;&lf;no binsize and sift madness, spreadable of course|">
    </PIN>
@@ -25,9 +25,9 @@
    </PIN>
    </NODE>
    <NODE nodename="Scene (SceneGraph)" componentmode="Hidden" id="0" systemname="Scene (SceneGraph)" filename="plugins\VVVV.SceneGraph.dll">
-   <BOUNDS type="Node" left="2320" top="1952" width="0" height="0">
+   <BOUNDS type="Node" left="2320" top="2032" width="0" height="0">
    </BOUNDS>
-   <BOUNDS type="Box" left="2320" top="1952" width="0" height="0">
+   <BOUNDS type="Box" left="2320" top="2032" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Graph" visible="1">
    </PIN>
@@ -39,9 +39,9 @@
    <PACK Name="addonpack" Version="36.0.0">
    </PACK>
    <NODE systemname="Multiply (Transform SceneGraph)" filename="plugins\VVVV.SceneGraph.dll" nodename="Multiply (Transform SceneGraph)" componentmode="Hidden" id="4">
-   <BOUNDS type="Node" left="2144" top="2968" width="100" height="100">
+   <BOUNDS type="Node" left="2144" top="2728" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Box" left="2144" top="2968" width="1600" height="1600">
+   <BOUNDS type="Box" left="2144" top="2728" width="1600" height="1600">
    </BOUNDS>
    <PIN pinname="Graph In" visible="1">
    </PIN>
@@ -53,9 +53,9 @@
    </PIN>
    </NODE>
    <NODE systemname="Inspektor (SceneGraph)" filename="plugins\VVVV.SceneGraph.dll" nodename="Inspektor (SceneGraph)" componentmode="InAWindow" id="5">
-   <BOUNDS type="Node" left="2408" top="3672" width="100" height="100">
+   <BOUNDS type="Node" left="2408" top="3192" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Box" left="2408" top="3672" width="1600" height="1600">
+   <BOUNDS type="Box" left="2408" top="3192" width="1600" height="1600">
    </BOUNDS>
    <PIN pinname="Graph In" visible="1">
    </PIN>
@@ -67,9 +67,9 @@
    </PIN>
    </NODE>
    <NODE systemname="Multiply (Transform SceneGraph)" filename="plugins\VVVV.SceneGraph.dll" nodename="Multiply (Transform SceneGraph)" componentmode="Hidden" id="7">
-   <BOUNDS type="Node" left="1592" top="5576" width="1000" height="256">
+   <BOUNDS type="Node" left="1592" top="5096" width="1000" height="256">
    </BOUNDS>
-   <BOUNDS type="Box" left="1592" top="5576" width="1600" height="1600">
+   <BOUNDS type="Box" left="1592" top="5096" width="1600" height="1600">
    </BOUNDS>
    <PIN pinname="Graph In" visible="1" slicecount="1" values="||">
    </PIN>
@@ -85,7 +85,7 @@
    </PIN>
    </NODE>
    <NODE systemname="Switch (Node Input)" nodename="Switch (Node Input)" componentmode="Hidden" id="8">
-   <BOUNDS type="Node" left="1904" top="4072" width="100" height="100">
+   <BOUNDS type="Node" left="1904" top="3592" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Input 1" visible="1" slicecount="1" values="||">
    </PIN>
@@ -97,9 +97,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="9" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="1744" top="3688" width="304" height="320">
+   <BOUNDS type="Box" left="1744" top="3208" width="304" height="320">
    </BOUNDS>
-   <BOUNDS type="Node" left="1744" top="3688" width="0" height="0">
+   <BOUNDS type="Node" left="1744" top="3208" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
    </PIN>
@@ -117,7 +117,7 @@
    <LINK srcnodeid="9" srcpinname="Y Output Value" dstnodeid="8" dstpinname="Switch">
    </LINK>
    <NODE systemname="PhongDirectional (DX11.Effect)" filename="%VVVV%\packs\dx11\nodes\dx11\PhongDirectional.fx" nodename="PhongDirectional (DX11.Effect)" componentmode="Hidden" id="10">
-   <BOUNDS type="Node" left="1600" top="6664" width="100" height="100">
+   <BOUNDS type="Node" left="1600" top="6184" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Geometry" visible="1" slicecount="1" values="||">
    </PIN>
@@ -133,9 +133,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="11" systemname="IOBox (String)">
-   <BOUNDS type="Box" left="2320" top="1576" width="1608" height="224">
+   <BOUNDS type="Box" left="2320" top="1656" width="1608" height="224">
    </BOUNDS>
-   <BOUNDS type="Node" left="2320" top="1576" width="0" height="0">
+   <BOUNDS type="Node" left="2320" top="1656" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="1" values="assets\simplecar.fbx">
    </PIN>
@@ -153,9 +153,9 @@
    <LINK srcnodeid="11" srcpinname="Output String" dstnodeid="0" dstpinname="Filename">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="12" systemname="IOBox (String)">
-   <BOUNDS type="Box" left="2528" top="5296" width="488" height="224">
+   <BOUNDS type="Box" left="2528" top="4816" width="488" height="224">
    </BOUNDS>
-   <BOUNDS type="Node" left="2528" top="5296" width="0" height="0">
+   <BOUNDS type="Node" left="2528" top="4816" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="1" values="Wheel">
    </PIN>
@@ -169,9 +169,9 @@
    <LINK srcnodeid="12" srcpinname="Output String" dstnodeid="7" dstpinname="Selector">
    </LINK>
    <NODE systemname="Renderer (DX11)" filename="%VVVV%\packs\dx11\nodes\plugins\base\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11)" componentmode="InAWindow" id="13">
-   <BOUNDS type="Node" left="1448" top="7272" width="100" height="100">
+   <BOUNDS type="Node" left="1448" top="6792" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Box" left="1448" top="7272" width="3200" height="2400">
+   <BOUNDS type="Box" left="1448" top="6792" width="3200" height="2400">
    </BOUNDS>
    <BOUNDS type="Window" left="7344" top="4248" width="4288" height="4608">
    </BOUNDS>
@@ -191,7 +191,7 @@
    <LINK srcnodeid="10" srcpinname="Layer" dstnodeid="13" dstpinname="Layers">
    </LINK>
    <NODE systemname="Camera (Transform Softimage)" filename="%VVVV%\lib\packs\VL.EditingFramework.0.55.43-g436959e253\vvvv\nodes\modules\Camera (Transform Softimage).v4p" nodename="Camera (Transform Softimage)" componentmode="Hidden" id="14">
-   <BOUNDS type="Node" left="2656" top="6960" width="100" height="100">
+   <BOUNDS type="Node" left="2656" top="6480" width="100" height="100">
    </BOUNDS>
    <PIN pinname="View" visible="1">
    </PIN>
@@ -205,9 +205,9 @@
    <LINK srcnodeid="14" srcpinname="Projection" dstnodeid="13" dstpinname="Projection">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="15" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="2976" top="2984" width="2264" height="216">
+   <BOUNDS type="Node" left="2976" top="2744" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="2976" top="2984" width="2160" height="224">
+   <BOUNDS type="Box" left="2976" top="2744" width="2880" height="328">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- transforming the whole scene|">
    </PIN>
@@ -219,9 +219,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="16" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="2216" top="5088" width="280" height="272">
+   <BOUNDS type="Box" left="2216" top="4608" width="280" height="272">
    </BOUNDS>
-   <BOUNDS type="Node" left="2216" top="5088" width="0" height="0">
+   <BOUNDS type="Node" left="2216" top="4608" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
    </PIN>
@@ -239,9 +239,9 @@
    <LINK srcnodeid="16" srcpinname="Y Output Value" dstnodeid="7" dstpinname="Matches | Contains">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="17" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="3192" top="5240" width="2264" height="216">
+   <BOUNDS type="Node" left="3192" top="4760" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="3192" top="5240" width="3000" height="495">
+   <BOUNDS type="Box" left="3192" top="4760" width="3000" height="495">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- apply additional transform on nodes names, which name contain this string|">
    </PIN>
@@ -253,9 +253,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="18" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="3336" top="5968" width="2264" height="216">
+   <BOUNDS type="Node" left="3336" top="5488" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="3336" top="5968" width="2850" height="480">
+   <BOUNDS type="Box" left="3336" top="5488" width="2850" height="480">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- get all the meshes with the according transformation and material|">
    </PIN>
@@ -267,9 +267,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="19" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="3472" top="3696" width="2264" height="216">
+   <BOUNDS type="Node" left="3472" top="3216" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="3472" top="3696" width="3840" height="960">
+   <BOUNDS type="Box" left="3472" top="3216" width="3840" height="960">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- see the whole model hierarchy with additional infos.&cr;&lf;click a node in the inspector and just the selected one plus children are returned on the output pin|">
    </PIN>
@@ -281,9 +281,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="20" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="304" top="3656" width="2264" height="216">
+   <BOUNDS type="Node" left="304" top="3176" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="304" top="3656" width="1335" height="525">
+   <BOUNDS type="Box" left="304" top="3176" width="1335" height="525">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|use the selection of the inspector -&gt;|">
    </PIN>
@@ -295,7 +295,7 @@
    </PIN>
    </NODE>
    <NODE systemname="UniformScale (Transform)" nodename="UniformScale (Transform)" componentmode="Hidden" id="21">
-   <BOUNDS type="Node" left="560" top="2464" width="100" height="100">
+   <BOUNDS type="Node" left="560" top="2224" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
@@ -307,7 +307,7 @@
    <LINK srcnodeid="21" srcpinname="Transform Out" dstnodeid="4" dstpinname="Transform">
    </LINK>
    <NODE systemname="Rotate (Transform)" nodename="Rotate (Transform)" componentmode="Hidden" id="22">
-   <BOUNDS type="Node" left="560" top="2136" width="100" height="100">
+   <BOUNDS type="Node" left="560" top="1896" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
@@ -317,7 +317,7 @@
    <LINK srcnodeid="22" srcpinname="Transform Out" dstnodeid="21" dstpinname="Transform In">
    </LINK>
    <NODE systemname="Rotate (Transform)" nodename="Rotate (Transform)" componentmode="Hidden" id="23">
-   <BOUNDS type="Node" left="624" top="5024" width="100" height="100">
+   <BOUNDS type="Node" left="624" top="4544" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
@@ -327,9 +327,9 @@
    <LINK srcnodeid="23" srcpinname="Transform Out" dstnodeid="7" dstpinname="Transform">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="24" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="5448" top="6776" width="2264" height="216">
+   <BOUNDS type="Node" left="5448" top="6296" width="2264" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="5448" top="6776" width="1515" height="240">
+   <BOUNDS type="Box" left="5448" top="6296" width="1515" height="240">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|all the nodes -----&gt;|">
    </PIN>
@@ -359,9 +359,9 @@
    </BOUNDS>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="28" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="356" top="7622" width="4760" height="560">
+   <BOUNDS type="Node" left="356" top="7142" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="356" top="7622" width="5895" height="480">
+   <BOUNDS type="Box" left="356" top="7142" width="5895" height="480">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|thanks to vux for dx11 and his assimp wrapper&cr;&lf;thanks to elias for some real gems buried deep down in the plugininterface|">
    </PIN>
@@ -369,11 +369,11 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="29" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="3232" top="136" width="4760" height="560">
+   <BOUNDS type="Node" left="352" top="7704" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="3232" top="136" width="4095" height="495">
+   <BOUNDS type="Box" left="352" top="7704" width="6272" height="448">
    </BOUNDS>
-   <PIN pinname="Input String" slicecount="1" visible="0" values="|SceneGraph v1 to a great part sponsored by decode.io&cr;&lf;3d loading lib is vuxens assimp lib (atm)|">
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|SceneGraph v1 to a great part sponsored by decode.io&cr;&lf;v2.0 supported by meso.design and wirmachenbunt.de|">
    </PIN>
    <PIN pinname="Output String" slicecount="1" visible="0" values="||">
    </PIN>
@@ -403,9 +403,9 @@
    </BOUNDS>
    </NODE>
    <NODE id="32" systemname="Selector (SceneGraph)" filename="plugins\VVVV.SceneGraph.dll" nodename="Selector (SceneGraph)" componentmode="Hidden">
-   <BOUNDS type="Node" left="9344" top="3416" width="100" height="100">
+   <BOUNDS type="Node" left="9344" top="3408" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Box" left="9344" top="3416" width="1600" height="1600">
+   <BOUNDS type="Box" left="9344" top="3408" width="1600" height="1600">
    </BOUNDS>
    </NODE>
    <NODE systemname="Scene (SceneGraph)" filename="plugins\VVVV.SceneGraph.dll" nodename="Scene (SceneGraph)" componentmode="Hidden" id="38">
@@ -415,15 +415,15 @@
    </BOUNDS>
    </NODE>
    <NODE systemname="GraphNode (SceneGraph Split)" filename="plugins\VVVV.SceneGraph.dll" nodename="GraphNode (SceneGraph Split)" componentmode="Hidden" id="39">
-   <BOUNDS type="Node" left="12024" top="3416" width="100" height="100">
+   <BOUNDS type="Node" left="14496" top="3944" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Box" left="12024" top="3416" width="1600" height="1600">
+   <BOUNDS type="Box" left="14496" top="3944" width="1600" height="1600">
    </BOUNDS>
    </NODE>
    <NODE systemname="Inspektor (SceneGraph)" filename="plugins\VVVV.SceneGraph.dll" nodename="Inspektor (SceneGraph)" componentmode="Hidden" id="40">
-   <BOUNDS type="Node" left="12304" top="1728" width="100" height="100">
+   <BOUNDS type="Node" left="14784" top="1728" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Box" left="12304" top="1728" width="1600" height="1600">
+   <BOUNDS type="Box" left="14784" top="1728" width="1600" height="1600">
    </BOUNDS>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="41" systemname="IOBox (String)">
@@ -457,7 +457,7 @@
    <LINK srcnodeid="5" srcpinname="GraphNode" dstnodeid="8" dstpinname="Input 2">
    </LINK>
    <NODE systemname="LFO (Animation)" nodename="LFO (Animation)" componentmode="Hidden" id="45">
-   <BOUNDS type="Node" left="896" top="1800" width="100" height="100">
+   <BOUNDS type="Node" left="896" top="1560" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Period" slicecount="1" values="12">
    </PIN>
@@ -467,7 +467,7 @@
    <LINK srcnodeid="45" srcpinname="Output" dstnodeid="22" dstpinname="Y">
    </LINK>
    <NODE systemname="LFO (Animation)" nodename="LFO (Animation)" componentmode="Hidden" id="46">
-   <BOUNDS type="Node" left="1144" top="4680" width="100" height="100">
+   <BOUNDS type="Node" left="1144" top="4200" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Period" slicecount="1" values="5">
    </PIN>
@@ -479,9 +479,9 @@
    <LINK srcnodeid="46" srcpinname="Output" dstnodeid="23" dstpinname="Z">
    </LINK>
    <NODE systemname="Model (SceneGraph DX11)" filename="plugins\VVVV.SceneGraph.dll" nodename="Model (SceneGraph DX11)" componentmode="Hidden" id="47">
-   <BOUNDS type="Node" left="1592" top="6072" width="100" height="100">
+   <BOUNDS type="Node" left="1592" top="5592" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Box" left="1592" top="6072" width="1600" height="1600">
+   <BOUNDS type="Box" left="1592" top="5592" width="1600" height="1600">
    </BOUNDS>
    <PIN pinname="GraphNode" visible="1">
    </PIN>
@@ -508,4 +508,40 @@
    </LINK>
    <PACK Name="dx11" Version="1.3.1">
    </PACK>
+   <NODE systemname="ModifyColor (SceneGraph)" filename="plugins\VVVV.SceneGraph.dll" nodename="ModifyColor (SceneGraph)" componentmode="Hidden" id="48">
+   <BOUNDS type="Node" left="9320" top="4224" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="9320" top="4224" width="1600" height="1600">
+   </BOUNDS>
+   </NODE>
+   <NODE systemname="ModifyColor (SceneGraph XPath)" filename="plugins\VVVV.SceneGraph.dll" nodename="ModifyColor (SceneGraph XPath)" componentmode="Hidden" id="49">
+   <BOUNDS type="Node" left="10392" top="4224" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="10392" top="4224" width="1600" height="1600">
+   </BOUNDS>
+   </NODE>
+   <NODE systemname="Animate (Transform SceneGraph)" filename="plugins\VVVV.SceneGraph.dll" nodename="Animate (Transform SceneGraph)" componentmode="Hidden" id="50">
+   <BOUNDS type="Node" left="11848" top="2440" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="11848" top="2440" width="1600" height="1600">
+   </BOUNDS>
+   </NODE>
+   <NODE systemname="Animate (Transform SceneGraph XPath)" filename="plugins\VVVV.SceneGraph.dll" nodename="Animate (Transform SceneGraph XPath)" componentmode="Hidden" id="51">
+   <BOUNDS type="Node" left="12984" top="2440" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="12984" top="2440" width="1600" height="1600">
+   </BOUNDS>
+   </NODE>
+   <NODE systemname="AnimationInfo (SceneGraph)" filename="plugins\VVVV.SceneGraph.dll" nodename="AnimationInfo (SceneGraph)" componentmode="Hidden" id="52">
+   <BOUNDS type="Node" left="14640" top="2440" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="14640" top="2440" width="1600" height="1600">
+   </BOUNDS>
+   </NODE>
+   <NODE systemname="Merge (SceneGraph)" filename="plugins\VVVV.SceneGraph.dll" nodename="Merge (SceneGraph)" componentmode="Hidden" id="53">
+   <BOUNDS type="Node" left="12960" top="3552" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="12960" top="3552" width="1600" height="1600">
+   </BOUNDS>
+   </NODE>
    </PATCH>

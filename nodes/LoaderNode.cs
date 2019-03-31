@@ -13,7 +13,7 @@ namespace VVVV.SceneGraph
 {
 	[PluginInfo(Name = "Scene", Category = "SceneGraph",
 	            Help = "Loads 3d scene and outputs a scenegraph, handling transform hierarchies and resources", Tags = "SceneFile, Loader, Reader, assimp",
-	            Author = "woei", Credits = "v1.0 to a huge amount sponsored by decode.io")]
+	            Author = "woei", Credits = "v1.0 to a huge amount sponsored by decode.io, v2.0 supported by meso.design and wirmachenbunt.de")]
 	public class LoaderSceneGraphNode : IPluginEvaluate, IDisposable, IPartImportsSatisfiedNotification
 	{
 		#region fields & pins
